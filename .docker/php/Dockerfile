@@ -16,9 +16,9 @@ RUN apt-get update -y && apt-get upgrade -y \
 
 WORKDIR /var/www
 
-RUN  composer install
-
 COPY --chown=www-data:www-data . /var/www
+
+RUN  composer install
 
 EXPOSE 9000
 CMD ["php-fpm"]
