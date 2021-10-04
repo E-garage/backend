@@ -18,5 +18,7 @@ WORKDIR /var/www
 
 RUN chown -R www-data:www-data /var/www && chmod 755 /var/www
 
+RUN  composer install
+
 EXPOSE 9000
 CMD ["php-fpm"]
