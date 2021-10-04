@@ -1,0 +1,8 @@
+parameters:
+	level: max
+	checkMissingIterableValueType: false
+	paths:
+		- tests
+		- app
+	excludes_analyse:
+	    - app/Http/Middleware/Authenticate.php
