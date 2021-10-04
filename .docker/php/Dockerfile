@@ -20,5 +20,7 @@ COPY --chown=www-data:www-data . /var/www
 
 RUN  composer install
 
+RUN php artisan key:generate
+
 EXPOSE 9000
 CMD ["php-fpm"]
