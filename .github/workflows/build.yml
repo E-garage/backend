@@ -11,6 +11,8 @@ jobs:
       - name: Build
         run: |
           docker-compose -f docker-compose_ci.yml up -d
+          cp .env.example .env
+          php artisan key:generate
           echo "Build done."
       - name: Test
         run: |

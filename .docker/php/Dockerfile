@@ -16,11 +16,9 @@ RUN apt-get update -y && apt-get upgrade -y \
 
 WORKDIR /var/www
 
-COPY --chown=www-data:www-data . /var/www
-
 RUN  composer install
 
-RUN php artisan key:generate
+COPY --chown=www-data:www-data . /var/www
 
 EXPOSE 9000
 CMD ["php-fpm"]
