@@ -16,7 +16,7 @@ RUN apt-get update -y && apt-get upgrade -y \
 
 WORKDIR /var/www
 
-RUN chown -R www-data:www-data /var/www && chmod 755 /var/www
+COPY --chown=www-data:www-data . /var/www
 
 RUN  composer install
 
