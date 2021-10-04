@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  # PHP-FPM - Service
+  php:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+    working_dir: /var/www
+    environment:
+      - DOCKER=1
+    links:
+      - "db:db"
+  db:
+    image: 'postgres:13'
+    environment:
+      PGPASSWORD: '${DB_PASSWORD}'
+      POSTGRES_DB: '${DB_DATABASE}'
+      POSTGRES_USER: '${DB_USERNAME}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'

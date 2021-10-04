@@ -1,0 +1,48 @@
+version: '3'
+services:
+    web:
+        image: nginx
+        volumes:
+            - ./:/var/www
+            - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
+        ports:
+            - 80:80
+        networks:
+            - egarage
+    php:
+        build:
+            context: .
+            dockerfile: .docker/php/Dockerfile-dev
+        working_dir: /var/www
+        environment:
+            - DOCKER=1
+        volumes:
+            - ./:/var/www
+            - .docker/php/php-dev.ini:/usr/local/etc/php/conf.d/php.ini
+        ports:
+            - 9000:9000
+        depends_on:
+            - db
+        networks:
+            - egarage
+    db:
+        image: 'postgres:13'
+        ports:
+            - '${FORWARD_DB_PORT:-5432}:5432'
+        environment:
+            PGPASSWORD: '${DB_PASSWORD}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD}'
+        volumes:
+            - './.docker/databases:/var/lib/postgresql/data'
+        networks:
+            - egarage
+        healthcheck:
+            test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
+            retries: 3
+            timeout: 5s
+# Networks
+networks:
+    egarage:
+        driver: bridge

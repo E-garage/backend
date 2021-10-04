@@ -1,0 +1,20 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build
+        run: |
+          docker-compose -f docker-compose_ci.yml up -d
+          echo "Build done."
+      - name: Test
+        run: |
+          docker-compose -f ./docker-compose_ci.yml exec -T php composer phpstan
+          docker-compose -f ./docker-compose_ci.yml exec -T php composer cs:check
+          docker-compose -f ./docker-compose_ci.yml exec -T php composer test
+          echo "Testing and lintering successfully!"
