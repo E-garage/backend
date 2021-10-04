@@ -10,9 +10,9 @@ jobs:
       - uses: actions/checkout@v1
       - name: Build
         run: |
-          docker-compose -f docker-compose_ci.yml up -d
           cp .env.example .env
-          php artisan key:generate
+          docker-compose -f docker-compose_ci.yml up -d
+          docker-compose -f ./docker-compose_ci.yml exec -T php artisan key:generate
           echo "Build done."
       - name: Test
         run: |
