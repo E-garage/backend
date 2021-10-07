@@ -17,10 +17,10 @@
 ### Windows
 
 1. `docker-compose up`
-2. `docker-compose exec php /bin/bash php`
-2. `$ cp .env.example .env`
-3. `$ php artisan key:generate`
-4. `$ composer install`
+2. `docker-compose exec php /bin/bash`
+3. `$ composer install`
+4. `$ cp .env.example .env`
+5. `$ php artisan key:generate`
 
 ## All commands
 1. `Make install`
