@@ -26,3 +26,5 @@ cs-fix:
 run-tests:
 	docker compose exec php composer cs:check --quiet
 	docker compose exec php composer test
+openapi:
+	docker compose exec php php artisan l5-swagger:generate

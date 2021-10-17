@@ -1,0 +1,25 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "E-garage Api",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/docs/v1": {
+            "get": {
+                "tags": [
+                    "documentation"
+                ],
+                "summary": "E-garage api",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
