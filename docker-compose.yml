@@ -35,14 +35,17 @@ services:
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD}'
         volumes:
-            - './.docker/databases:/var/lib/postgresql/data'
+            - postgres-vol:/var/lib/postgresql/data
         networks:
             - egarage
         healthcheck:
-            test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
+            test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
             retries: 3
             timeout: 5s
 # Networks
 networks:
     egarage:
         driver: bridge
+
+volumes:
+    postgres-vol:
