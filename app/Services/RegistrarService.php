@@ -57,7 +57,7 @@ class RegistrarService
      */
     private function setName()
     {
-        $this->user->name = $this->credentials['name'];
+        $this->user->name = (string) $this->credentials['name'];
     }
 
     /**
@@ -65,7 +65,7 @@ class RegistrarService
      */
     private function setEmail()
     {
-        $this->user->email = $this->credentials['email'];
+        $this->user->email = (string) $this->credentials['email'];
     }
 
     /**
@@ -74,6 +74,6 @@ class RegistrarService
     private function hashAndSetPassword()
     {
         $this->credentials['password'] = Hash::make($this->credentials['password']);
-        $this->user->password = $this->credentials['password'];
+        $this->user->password = (string) $this->credentials['password'];
     }
 }
