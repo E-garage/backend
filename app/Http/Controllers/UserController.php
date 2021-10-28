@@ -33,9 +33,9 @@ class UserController extends Controller
     private function getCredentialsFromRequest(Request $request): Collection
     {
         $credentials = new Collection([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password
+            'name' => (string) $request->name,
+            'email' => (string) $request->email,
+            'password' => (string) $request->password
         ]);
 
         return $credentials;
