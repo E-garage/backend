@@ -25,9 +25,9 @@ interface BaseRepository
     public function findTrashedById(int $id): ?Model;
 
     /**
-     * Create a model.
+     * Save a model.
      */
-    public function create(Collection $data): ?Model;
+    public function save(Collection $data): bool;
 
     /**
      * Update a model.

@@ -39,9 +39,9 @@ class RegistrarService
     public function register(): User
     {
         $this->hashPassword();
-        $this->user = $this->repository->create($this->credentials);
+        $is_created = $this->repository->save($this->credentials);
 
-        if (empty($this->user)) {
+        if (!$is_created) {
             throw new UserNotRegisteredException();
         }
 

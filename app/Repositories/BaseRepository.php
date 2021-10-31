@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Repositories\RepositoryInterfaces\BaseRepository as BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BaseRepository implements BaseRepositoryInterface
 {
@@ -27,17 +28,19 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function findById(int $id, array $columns = ['*'], array $relations = []): ?Model
     {
-        return $this->model->select($columns)->with($relations)->findOrFail($id);
+        return $this->model->with($relations)->findOrFail($id, $columns);
     }
 
     public function findTrashedById(int $id): ?Model
     {
-        return $this->model->onlyTrashed()->findOrFail($id);
+        if($this->isModelUsingSoftDeletes()) {
+            return $this->model->onlyTrashed()->findOrFail($id);
+        }
     }
 
-    public function create(Collection $data): ?Model
+    public function save(Collection $data): bool
     {
-        return $this->model->create($data->toArray());
+        return $this->model->saveOrFail($data->toArray());
     }
 
     public function update(Collection $data): bool
@@ -52,11 +55,21 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function restoreById(int $id): bool
     {
-        return $this->findTrashedById($id)->restore();
+        if($this->isModelUsingSoftDeletes()) {
+            return $this->findTrashedById($id)->restore();
+        }
     }
 
     public function permamentlyDeleteById(int $id): bool
     {
-        return $this->model->forceDelete();
+        if($this->isModelUsingSoftDeletes()) {
+            return $this->findTrashedById($id)->forceDelete();
+        }
+    }
+
+    private function isModelUsingSoftDeletes(): bool
+    {
+        $traits_used_by_model = class_uses_recursive($this->model);
+        return in_array(SoftDeletes::class, $traits_used_by_model);
     }
 }
