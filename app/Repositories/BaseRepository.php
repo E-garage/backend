@@ -47,7 +47,7 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function deleteById(int $id): bool
     {
-        return $this->model->delete($id);
+        return $this->findById($id)->delete();
     }
 
     public function restoreById(int $id): bool
