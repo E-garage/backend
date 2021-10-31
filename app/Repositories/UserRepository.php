@@ -8,11 +8,13 @@ use App\Models\User;
 
 class UserRepository extends BaseRepository
 {
+    protected User $model;
+
     /**
      * UserRepository constructor.
      */
-    public function __construct(User $user)
+    public function __construct(User $model)
     {
-        parent::__construct($user);
+        $this->model = $model;
     }
 }
