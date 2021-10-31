@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Repositories;
 
@@ -10,14 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseRepository implements BaseRepositoryInterface
 {
-    /**
-     * @var Model $model
-     */
     protected Model $model;
 
     /**
      * BaseRepository constructor.
-     * @param Model $model
      */
     protected function __construct(Model $model)
     {

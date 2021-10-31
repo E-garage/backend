@@ -1,39 +1,28 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Services;
 
-use App\Models\User;
-use Illuminate\Support\Collection;
 use App\Exceptions\UserNotRegisteredException;
+use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 
 /**
-* Service for registering users.
-* @package App\Services
-*/
+ * Service for registering users.
+ */
 class RegistrarService
 {
-    /**
-     * @var User $user
-     */
     protected User $user;
 
-    /**
-     * @var UserRepository $repository
-     */
     protected UserRepository $repository;
 
-    /**
-     * @var Collection $credentials
-     */
     protected Collection $credentials;
 
     /**
      * RegistrarService constructor.
-     * @param Collection $credentials
      */
     public function __construct(Collection $credentials)
     {
@@ -44,7 +33,7 @@ class RegistrarService
 
     /**
      * Register a user.
-     * @return User
+     *
      * @throws UserNotRegisteredException
      */
     public function register(): User
@@ -52,8 +41,9 @@ class RegistrarService
         $this->hashPassword();
         $this->user = $this->repository->create($this->credentials);
 
-        if(empty($this->user))
+        if (empty($this->user)) {
             throw new UserNotRegisteredException();
+        }
 
         return $this->user;
     }

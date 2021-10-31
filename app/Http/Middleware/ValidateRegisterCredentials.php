@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Http\Middleware;
 
@@ -13,24 +13,21 @@ class ValidateRegisterCredentials
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
-     * @return mixed
      */
-    public function handle(Request $request, Closure $next): Mixed
+    public function handle(Request $request, Closure $next): mixed
     {
         $rules = [
             'name' => 'required|min:3|max:50',
             'email' => 'required|email',
             'password' => 'required|min:8|max:50|confirmed',
-            'password_confirmation' => 'min:8|max:50'
+            'password_confirmation' => 'min:8|max:50',
         ];
 
         $validator = Validator::make($request->all(), $rules);
 
-        if($validator->fails())
+        if ($validator->fails()) {
             throw new ValidationException($validator);
+        }
 
         return $next($request);
     }
