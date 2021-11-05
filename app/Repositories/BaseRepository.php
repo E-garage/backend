@@ -36,12 +36,12 @@ class BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    public function save(Collection $data): bool
+    public function save(Collection $data): ?Model
     {
         try {
-            return $this->model->saveOrFail($data->toArray());
+            return $this->model->create($data->toArray());
         } catch (Throwable) {
-            return false;
+            return null;
         }
     }
 
