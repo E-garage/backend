@@ -7,7 +7,8 @@ namespace App\Repositories;
 use App\Repositories\RepositoryInterfaces\BaseRepository as BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Throwable;
 
 class BaseRepository implements BaseRepositoryInterface
 {
@@ -28,48 +29,37 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function findById(int $id, array $columns = ['*'], array $relations = []): ?Model
     {
-        return $this->model->with($relations)->findOrFail($id, $columns);
-    }
-
-    public function findTrashedById(int $id): ?Model
-    {
-        if($this->isModelUsingSoftDeletes()) {
-            return $this->model->onlyTrashed()->findOrFail($id);
+        try{
+            return $this->model->with($relations)->findOrFail($id, $columns);
+        } catch(ModelNotFoundException) {
+            return null;
         }
     }
 
     public function save(Collection $data): bool
     {
-        return $this->model->saveOrFail($data->toArray());
+        try{
+            return $this->model->saveOrFail($data->toArray());
+        } catch(Throwable){
+            return false;
+        }
     }
 
     public function update(Collection $data): bool
     {
-        return $this->model->update($data->toArray());
+        try{
+            return $this->model->updateOrFail($data->toArray());
+        } catch(Throwable){
+            return false;
+        }
     }
 
     public function deleteById(int $id): bool
     {
-        return $this->findById($id)->delete();
-    }
-
-    public function restoreById(int $id): bool
-    {
-        if($this->isModelUsingSoftDeletes()) {
-            return $this->findTrashedById($id)->restore();
+        try{
+            return $this->findById($id)->deleteOrFail();
+        } catch(Throwable){
+            return false;
         }
-    }
-
-    public function permamentlyDeleteById(int $id): bool
-    {
-        if($this->isModelUsingSoftDeletes()) {
-            return $this->findTrashedById($id)->forceDelete();
-        }
-    }
-
-    private function isModelUsingSoftDeletes(): bool
-    {
-        $traits_used_by_model = class_uses_recursive($this->model);
-        return in_array(SoftDeletes::class, $traits_used_by_model);
     }
 }
