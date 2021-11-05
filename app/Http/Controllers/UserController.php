@@ -74,7 +74,7 @@ class UserController extends Controller
         $credentials = $this->getCredentialsFromRequest($request);
         $registrar = new RegistrarService($credentials);
 
-        try{
+        try {
             $user = $registrar->register();
         } catch (UserNotRegisteredException) {
             return new JsonResponse("Couldn't create the user", 400);

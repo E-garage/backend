@@ -26,7 +26,7 @@ class ValidateRegisterCredentials
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return new JsonResponse("The given data was invalid.", 400);
+            return new JsonResponse('The given data was invalid.', 400);
         }
 
         return $next($request);

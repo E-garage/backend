@@ -3,14 +3,13 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_successfully_registered()
+    public function testUserSuccessfullyRegistered()
     {
         $data = [
             'name' => 'JohnDoe',
@@ -26,7 +25,7 @@ class RegistrationTest extends TestCase
         $response->assertStatus(201);
     }
 
-    public function test_user_registration_data_is_invalid()
+    public function testUserRegistrationDataIsInvalid()
     {
         //we want to hit /signup route with empty data
         $response = $this->post('api/v1/auth/signup');
