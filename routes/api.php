@@ -16,6 +16,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+})->name('login');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -27,6 +31,6 @@ Route::get('/email/verify/{id}/{hash}', fn(EmailVerificationRequest $request) =>
 Route::prefix('/v1/auth')->group(function ()
 {
     Route::post('/signup', [UserController::class, 'create'])
-        ->middleware(['auth:sanctum', 'validate.register'])
+        ->middleware('validate.register')
         ->name('register');
 });
