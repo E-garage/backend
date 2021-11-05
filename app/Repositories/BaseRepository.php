@@ -29,36 +29,36 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function findById(int $id, array $columns = ['*'], array $relations = []): ?Model
     {
-        try{
+        try {
             return $this->model->with($relations)->findOrFail($id, $columns);
-        } catch(ModelNotFoundException) {
+        } catch (ModelNotFoundException) {
             return null;
         }
     }
 
     public function save(Collection $data): bool
     {
-        try{
+        try {
             return $this->model->saveOrFail($data->toArray());
-        } catch(Throwable){
+        } catch (Throwable) {
             return false;
         }
     }
 
     public function update(Collection $data): bool
     {
-        try{
+        try {
             return $this->model->updateOrFail($data->toArray());
-        } catch(Throwable){
+        } catch (Throwable) {
             return false;
         }
     }
 
     public function deleteById(int $id): bool
     {
-        try{
+        try {
             return $this->findById($id)->deleteOrFail();
-        } catch(Throwable){
+        } catch (Throwable) {
             return false;
         }
     }
