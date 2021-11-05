@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\UserNotRegisteredException;
 use App\Services\RegistrarService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -72,7 +73,12 @@ class UserController extends Controller
     {
         $credentials = $this->getCredentialsFromRequest($request);
         $registrar = new RegistrarService($credentials);
-        $user = $registrar->register();
+
+        try{
+            $user = $registrar->register();
+        } catch (UserNotRegisteredException) {
+            return new JsonResponse("Couldn't create the user", 400);
+        }
 
         return new JsonResponse($user, 201);
     }

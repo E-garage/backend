@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 class ValidateRegisterCredentials
 {
@@ -26,7 +26,7 @@ class ValidateRegisterCredentials
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            throw new ValidationException($validator);
+            return new JsonResponse("The given data was invalid.", 400);
         }
 
         return $next($request);
