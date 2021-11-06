@@ -8,7 +8,6 @@ use App\Repositories\RepositoryInterfaces\BaseRepository as BaseRepositoryInterf
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Throwable;
 
 class BaseRepository implements BaseRepositoryInterface
 {
@@ -36,12 +35,12 @@ class BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    public function save(Collection $data): ?Model
+    public function save(): bool
     {
         try {
-            return $this->model->create($data->toArray());
-        } catch (Throwable) {
-            return null;
+            return $this->model->saveOrFail();
+        } catch (\Throwable) {
+            return false;
         }
     }
 
@@ -49,7 +48,7 @@ class BaseRepository implements BaseRepositoryInterface
     {
         try {
             return $this->model->updateOrFail($data->toArray());
-        } catch (Throwable) {
+        } catch (\Throwable) {
             return false;
         }
     }
@@ -58,7 +57,7 @@ class BaseRepository implements BaseRepositoryInterface
     {
         try {
             return $this->findById($id)->deleteOrFail();
-        } catch (Throwable) {
+        } catch (\Throwable) {
             return false;
         }
     }
