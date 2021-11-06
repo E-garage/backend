@@ -27,7 +27,6 @@ class RegistrarService
     public function __construct(Collection $credentials)
     {
         $this->user = new User();
-        $this->repository = new UserRepository($this->user);
         $this->credentials = $credentials;
     }
 
@@ -39,9 +38,12 @@ class RegistrarService
     public function register(): User
     {
         $this->hashPassword();
-        $created = $this->repository->save($this->credentials);
+        $this->assignDataToModel();
 
-        if (empty($created)) {
+        $this->repository = new UserRepository($this->user);
+        $created = $this->repository->save();
+
+        if (!$created) {
             throw new UserNotRegisteredException();
         }
 
@@ -54,5 +56,15 @@ class RegistrarService
     private function hashPassword()
     {
         $this->credentials['password'] = Hash::make($this->credentials['password']);
+    }
+
+    /**
+     * Assign data to user's model.
+     */
+    private function assignDataToModel()
+    {
+        $this->user->name = $this->credentials['name'];
+        $this->user->email = $this->credentials['email'];
+        $this->user->password = $this->credentials['password'];
     }
 }

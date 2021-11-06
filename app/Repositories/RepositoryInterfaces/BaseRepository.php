@@ -22,7 +22,7 @@ interface BaseRepository
     /**
      * Save a model.
      */
-    public function save(Collection $data): ?Model;
+    public function save(): bool;
 
     /**
      * Update a model.
