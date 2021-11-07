@@ -15,6 +15,7 @@ class UserFactory
     {
         $this->user = new User();
     }
+
     /**
      * Create the user from request.
      */
@@ -22,7 +23,7 @@ class UserFactory
     {
         $this->user->name = $data['name'];
         $this->user->email = $data['email'];
-        $this->password = $this->hashPassword($data['password']);
+        $this->user->password = $this->hashPassword($data['password']);
 
         return $this->user;
     }
