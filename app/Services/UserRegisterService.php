@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
-use App\Exceptions\UserNotRegisteredException;
 use App\Models\User;
 use App\Repositories\UserRepository;
 
@@ -28,16 +27,10 @@ class UserRegisterService
 
     /**
      * Register a user.
-     *
-     * @throws UserNotRegisteredException
      */
     public function register(): User
     {
-        $created = $this->repository->save();
-
-        if (!$created) {
-            throw new UserNotRegisteredException();
-        }
+        $this->repository->save();
 
         return $this->user;
     }

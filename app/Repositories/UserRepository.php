@@ -4,19 +4,22 @@ declare(strict_types = 1);
 
 namespace App\Repositories;
 
-use App\Models\User;
+use App\Exceptions\UserNotDeletedException;
+use App\Exceptions\UserNotSavedToDatabaseException;
+use App\Exceptions\UserNotUpdatedException;
 use App\Repositories\RepositoryInterfaces\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserRepository implements BaseRepository
 {
-    protected User $model;
+    protected Model $model;
 
     /**
      * UserRepository constructor.
      */
-    public function __construct(User $model)
+    public function __construct(Model $model)
     {
         $this->model = $model;
     }
@@ -26,7 +29,7 @@ class UserRepository implements BaseRepository
         return $this->model->all();
     }
 
-    public function findById(int $id, array $columns = ['*'], array $relations = []): ?User
+    public function findById(int $id, array $columns = ['*'], array $relations = []): ?Model
     {
         try {
             return $this->model->with($relations)->findOrFail($id, $columns);
@@ -35,30 +38,30 @@ class UserRepository implements BaseRepository
         }
     }
 
-    public function save(): bool
+    public function save(): void
     {
         try {
-            return $this->model->saveOrFail();
+            $this->model->saveOrFail();
         } catch (\Throwable) {
-            return false;
+            throw new UserNotSavedToDatabaseException();
         }
     }
 
-    public function update(Collection $data): bool
+    public function update(Collection $data): void
     {
         try {
-            return $this->model->updateOrFail($data->toArray());
+            $this->model->updateOrFail($data->toArray());
         } catch (\Throwable) {
-            return false;
+            throw new UserNotUpdatedException();
         }
     }
 
-    public function deleteById(int $id): bool
+    public function deleteById(int $id): void
     {
         try {
-            return $this->findById($id)->deleteOrFail();
+            $this->findById($id)->deleteOrFail();
         } catch (\Throwable) {
-            return false;
+            throw new UserNotDeletedException();
         }
     }
 }

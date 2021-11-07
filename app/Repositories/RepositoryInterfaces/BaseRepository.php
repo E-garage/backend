@@ -22,15 +22,15 @@ interface BaseRepository
     /**
      * Save a model.
      */
-    public function save(): bool;
+    public function save(): void;
 
     /**
      * Update a model.
      */
-    public function update(Collection $data): bool;
+    public function update(Collection $data): void;
 
     /**
      * Delete a model by id.
      */
-    public function deleteById(int $id): bool;
+    public function deleteById(int $id): void;
 }
