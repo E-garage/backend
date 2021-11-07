@@ -9,18 +9,22 @@ use Illuminate\Support\Facades\Hash;
 
 class UserFactory
 {
+    private User $user;
+
+    public function __construct()
+    {
+        $this->user = new User();
+    }
     /**
      * Create the user from request.
      */
     public function createFromRequest(array $data): User
     {
-        $user = new User();
+        $this->user->name = $data['name'];
+        $this->user->email = $data['email'];
+        $this->password = $this->hashPassword($data['password']);
 
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->password = $this->hashPassword($data['password']);
-
-        return $user;
+        return $this->user;
     }
 
     /**
