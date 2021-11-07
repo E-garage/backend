@@ -17,6 +17,75 @@
                     }
                 }
             }
+        },
+        "/v1/auth/signup": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Operates about user",
+                "operationId": "929edd4e8a0e398a45a0f3efc9bbba5d",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "User object that needs to be added to the database.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "email|string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "name": "JohnDoe",
+                    "email": "cool@email.com",
+                    "password": "12345678",
+                    "password_confirmation": "12345678"
+                }
+            }
         }
     },
     "security": [
