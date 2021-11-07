@@ -31,6 +31,6 @@ class RegistrationTest extends TestCase
         $response = $this->post('api/v1/auth/signup');
 
         //we want to assert we get proper status
-        $response->assertStatus(400);
+        $response->assertStatus(302);
     }
 }
