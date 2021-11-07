@@ -4,13 +4,23 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Factories\UserFactory;
 use App\Services\UserRegisterService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    private UserFactory $user_factory;
+
+    /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->user_factory = new UserFactory();
+    }
+
     /**
      * @OA\Post(
      *     path="/v1/auth/signup",
@@ -70,25 +80,26 @@ class UserController extends Controller
      */
     public function create(Request $request): JsonResponse
     {
-        $credentials = $this->getCredentialsFromRequest($request);
-        $registrar = new UserRegisterService($credentials);
+        $data = $this->getDataFromRequest($request);
+        $user = $this->user_factory->createFromRequest($data);
+        $registrar = new UserRegisterService($user);
 
-        $user = $registrar->register();
+        $registrar->register();
 
         return new JsonResponse($user, 201);
     }
 
     /**
-     * Extract credentials from request.
+     * Extract data from request.
      */
-    private function getCredentialsFromRequest(Request $request): Collection
+    private function getDataFromRequest(Request $request): array
     {
-        $credentials = new Collection([
+        $data = [
             'name' => (string)$request['name'],
             'email' => (string)$request['email'],
             'password' => (string)$request['password'],
-        ]);
+        ];
 
-        return $credentials;
+        return $data;
     }
 }

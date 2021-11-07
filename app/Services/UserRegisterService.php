@@ -7,8 +7,6 @@ namespace App\Services;
 use App\Exceptions\UserNotRegisteredException;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * Service for registering users.
@@ -19,15 +17,13 @@ class UserRegisterService
 
     protected UserRepository $repository;
 
-    protected Collection $credentials;
-
     /**
      * UserRegisterService constructor.
      */
-    public function __construct(Collection $credentials)
+    public function __construct(User $user)
     {
-        $this->user = new User();
-        $this->credentials = $credentials;
+        $this->user = $user;
+        $this->repository = new UserRepository($this->user);
     }
 
     /**
@@ -37,10 +33,6 @@ class UserRegisterService
      */
     public function register(): User
     {
-        $this->hashPassword();
-        $this->assignDataToModel();
-
-        $this->repository = new UserRepository($this->user);
         $created = $this->repository->save();
 
         if (!$created) {
@@ -48,23 +40,5 @@ class UserRegisterService
         }
 
         return $this->user;
-    }
-
-    /**
-     * Hash user's password.
-     */
-    private function hashPassword()
-    {
-        $this->credentials['password'] = Hash::make($this->credentials['password']);
-    }
-
-    /**
-     * Assign data to user's model.
-     */
-    private function assignDataToModel()
-    {
-        $this->user->name = $this->credentials['name'];
-        $this->user->email = $this->credentials['email'];
-        $this->user->password = $this->credentials['password'];
     }
 }
