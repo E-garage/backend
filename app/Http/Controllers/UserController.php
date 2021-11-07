@@ -11,14 +11,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    private UserFactory $user_factory;
+    private UserFactory $userFactory;
 
     /**
      * UserController constructor.
      */
     public function __construct()
     {
-        $this->user_factory = new UserFactory();
+        $this->userFactory = new UserFactory();
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
     public function create(Request $request): JsonResponse
     {
         $data = $this->getDataFromRequest($request);
-        $user = $this->user_factory->createFromRequest($data);
+        $user = $this->userFactory->createFromRequest($data);
         $registrar = new UserRegisterService($user);
 
         $registrar->register();
