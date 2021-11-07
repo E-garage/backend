@@ -6,8 +6,8 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Repositories\RepositoryInterfaces\BaseRepository;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserRepository implements BaseRepository
