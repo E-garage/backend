@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 /**
  * Service for registering users.
  */
-class RegistrarService
+class UserRegisterService
 {
     protected User $user;
 
@@ -22,7 +22,7 @@ class RegistrarService
     protected Collection $credentials;
 
     /**
-     * RegistrarService constructor.
+     * UserRegisterService constructor.
      */
     public function __construct(Collection $credentials)
     {
