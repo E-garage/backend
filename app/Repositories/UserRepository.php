@@ -7,12 +7,11 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Repositories\RepositoryInterfaces\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserRepository implements BaseRepository
 {
-    protected Model $model;
+    protected User $model;
 
     /**
      * UserRepository constructor.
@@ -27,7 +26,7 @@ class UserRepository implements BaseRepository
         return $this->model->all();
     }
 
-    public function findById(int $id, array $columns = ['*'], array $relations = []): ?Model
+    public function findById(int $id, array $columns = ['*'], array $relations = []): ?User
     {
         try {
             return $this->model->with($relations)->findOrFail($id, $columns);
