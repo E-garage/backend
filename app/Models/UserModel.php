@@ -19,7 +19,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 
 /**
- * App\Models\UserModel
+ * App\Models\UserModel.
  *
  * @property string $name
  * @property string $email
@@ -29,10 +29,11 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
- * @property-read Collection|PersonalAccessToken[] $tokens
- * @property-read int|null $tokens_count
+ * @property DatabaseNotificationCollection|DatabaseNotification[] $notifications
+ * @property int|null $notifications_count
+ * @property Collection|PersonalAccessToken[] $tokens
+ * @property int|null $tokens_count
+ *
  * @method static Builder|UserModel newModelQuery()
  * @method static Builder|UserModel newQuery()
  * @method static Builder|UserModel query()
