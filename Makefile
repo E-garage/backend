@@ -30,4 +30,8 @@ run-tests:
 openapi:
 	docker compose exec php php artisan l5-swagger:generate
 ide-helper:
+	docker compose exec php php artisan ide-helper:generate
+ide-helper-meta:
+	docker compose exec php php artisan ide-helper:meta
+ide-helper-models:
 	docker compose exec php php artisan ide-helper:models --write
