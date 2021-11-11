@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Http;
 
+use App\Validators\ValidateRegisterCredentials;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -66,6 +67,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'validate.register' => \App\Http\Middleware\ValidateRegisterCredentials::class,
+        'validate.register' => ValidateRegisterCredentials::class,
     ];
 }

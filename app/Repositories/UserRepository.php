@@ -38,6 +38,9 @@ class UserRepository implements BaseRepository
         }
     }
 
+    /**
+     * @throws UserNotSavedToDatabaseException
+     */
     public function save(): void
     {
         try {
@@ -47,6 +50,9 @@ class UserRepository implements BaseRepository
         }
     }
 
+    /**
+     * @throws UserNotUpdatedException
+     */
     public function update(Collection $data): void
     {
         try {
@@ -56,6 +62,9 @@ class UserRepository implements BaseRepository
         }
     }
 
+    /**
+     * @throws UserNotDeletedException
+     */
     public function deleteById(int $id): void
     {
         try {

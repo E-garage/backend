@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\UserNotSavedToDatabaseException;
 use App\Models\User;
 use App\Repositories\UserRepository;
 
@@ -27,6 +28,7 @@ class UserRegisterService
 
     /**
      * Register a user.
+     * @throws UserNotSavedToDatabaseException
      */
     public function register(): User
     {

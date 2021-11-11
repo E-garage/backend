@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\Middleware;
+namespace App\Validators;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -13,6 +13,8 @@ class ValidateRegisterCredentials
 {
     /**
      * Handle an incoming request.
+     *
+     * @throws ValidationException
      */
     public function handle(Request $request, Closure $next): mixed
     {
