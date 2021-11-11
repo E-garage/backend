@@ -54,7 +54,7 @@ class RegisterController extends Controller
      *         ),
      *  ),
      * ),
-     *     @OA\Component(
+     * @OA\Component(
      *         @OA\Schema(
      *             schema="User",
      *             type="object",
@@ -78,14 +78,16 @@ class RegisterController extends Controller
      *   )
      *
      * Create the user.
+     *
+     * @throws \App\Exceptions\UserNotSavedToDatabaseException
      */
     public function create(Request $request): JsonResponse
     {
         $data = $this->getDataFromRequest($request);
         $user = $this->userFactory->createFromRequest($data);
-        $registrar = new UserRegisterService($user);
+        $register = new UserRegisterService($user);
 
-        $registrar->register();
+        $register->register();
 
         return new JsonResponse($user, 201);
     }

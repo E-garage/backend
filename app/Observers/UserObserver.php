@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Observers;
 
-use App\Models\User;
+use App\Models\UserModel;
 use Illuminate\Auth\Events\Registered;
 
 class UserObserver
@@ -12,7 +12,7 @@ class UserObserver
     /**
      * Handle the task "saved" event.
      */
-    public function saved(User $user): void
+    public function saved(UserModel $user): void
     {
         event(new Registered($user));
     }

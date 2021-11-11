@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Exceptions\UserNotSavedToDatabaseException;
-use App\Models\User;
+use App\Models\UserModel;
 use App\Repositories\UserRepository;
 
 /**
@@ -13,14 +13,14 @@ use App\Repositories\UserRepository;
  */
 class UserRegisterService
 {
-    protected User $user;
+    protected UserModel $user;
 
     protected UserRepository $repository;
 
     /**
      * UserRegisterService constructor.
      */
-    public function __construct(User $user)
+    public function __construct(UserModel $user)
     {
         $this->user = $user;
         $this->repository = new UserRepository($this->user);
@@ -28,9 +28,10 @@ class UserRegisterService
 
     /**
      * Register a user.
+     *
      * @throws UserNotSavedToDatabaseException
      */
-    public function register(): User
+    public function register(): UserModel
     {
         $this->repository->save();
 

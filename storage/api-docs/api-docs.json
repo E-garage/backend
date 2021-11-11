@@ -24,7 +24,7 @@
                     "User"
                 ],
                 "summary": "Operates about user",
-                "operationId": "0d37b5f91a9d87b77e02809901038dce",
+                "operationId": "1d6e8dd4740d98dd9a11a5f5addf5c72",
                 "parameters": [
                     {
                         "parameter": "user_credentials_in_query_required",
