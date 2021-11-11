@@ -77,7 +77,6 @@ class RegisterController extends Controller
      *         example={"name": "JohnDoe", "email": "cool@email.com", "password": "12345678", "password_confirmation": "12345678"}
      *   )
      *
-     *
      * @throws \App\Exceptions\UserNotSavedToDatabaseException
      */
     public function create(Request $request): JsonResponse
@@ -87,7 +86,6 @@ class RegisterController extends Controller
         $register = new UserRegisterService($user);
 
         $register->register();
-
 
         return new JsonResponse($user, 201);
     }

@@ -26,7 +26,7 @@ class UserRegisterService
         $this->repository = new UserRepository($this->user);
     }
 
-     /**
+    /**
      * @throws UserNotSavedToDatabaseException
      */
     public function register(): UserModel
