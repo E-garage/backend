@@ -4,7 +4,8 @@ install:
 
 db-create:
 	docker compose exec php php artisan migrate
-
+db-refresh:
+	docker compose exec php php artisan migrate:refresh
 start:
 	docker compose up -d
 
@@ -28,3 +29,9 @@ run-tests:
 	docker compose exec php composer test
 openapi:
 	docker compose exec php php artisan l5-swagger:generate
+ide-helper:
+	docker compose exec php php artisan ide-helper:generate
+ide-helper-meta:
+	docker compose exec php php artisan ide-helper:meta
+ide-helper-models:
+	docker compose exec php php artisan ide-helper:models --write

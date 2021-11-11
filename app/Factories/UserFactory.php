@@ -4,22 +4,22 @@ declare(strict_types = 1);
 
 namespace App\Factories;
 
-use App\Models\User;
+use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
 
 class UserFactory
 {
-    private User $user;
+    private UserModel $user;
 
     public function __construct()
     {
-        $this->user = new User();
+        $this->user = new UserModel();
     }
 
     /**
      * Create the user from request.
      */
-    public function createFromRequest(array $data): User
+    public function createFromRequest(array $data): UserModel
     {
         $this->user->name = $data['name'];
         $this->user->email = $data['email'];

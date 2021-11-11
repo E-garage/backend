@@ -7,32 +7,31 @@ namespace App\Repositories;
 use App\Exceptions\UserNotDeletedException;
 use App\Exceptions\UserNotSavedToDatabaseException;
 use App\Exceptions\UserNotUpdatedException;
-use App\Repositories\RepositoryInterfaces\BaseRepository;
+use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserRepository implements BaseRepository
+class UserRepository
 {
-    protected Model $model;
+    protected UserModel $userModel;
 
     /**
      * UserRepository constructor.
      */
-    public function __construct(Model $model)
+    public function __construct(UserModel $userModel)
     {
-        $this->model = $model;
+        $this->userModel = $userModel;
     }
 
     public function all(): Collection
     {
-        return $this->model->all();
+        return UserModel::all();
     }
 
-    public function findById(int $id, array $columns = ['*'], array $relations = []): ?Model
+    public function findById(string $id): ?UserModel
     {
         try {
-            return $this->model->with($relations)->findOrFail($id, $columns);
+            return $this->userModel::where('id', $id)->first();
         } catch (ModelNotFoundException) {
             return null;
         }
@@ -44,7 +43,7 @@ class UserRepository implements BaseRepository
     public function save(): void
     {
         try {
-            $this->model->saveOrFail();
+            $this->userModel->saveOrFail();
         } catch (\Throwable) {
             throw new UserNotSavedToDatabaseException();
         }
@@ -53,10 +52,10 @@ class UserRepository implements BaseRepository
     /**
      * @throws UserNotUpdatedException
      */
-    public function update(Collection $data): void
+    public function update(UserModel $userModel): void
     {
         try {
-            $this->model->updateOrFail($data->toArray());
+            $userModel->updateOrFail($userModel->toArray());
         } catch (\Throwable) {
             throw new UserNotUpdatedException();
         }
@@ -65,7 +64,7 @@ class UserRepository implements BaseRepository
     /**
      * @throws UserNotDeletedException
      */
-    public function deleteById(int $id): void
+    public function deleteById(string $id): void
     {
         try {
             $this->findById($id)->deleteOrFail();

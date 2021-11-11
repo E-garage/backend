@@ -5,4 +5,9 @@ parameters:
 		- tests
 		- app
 	excludes_analyse:
-	    - app/Http/Middleware/Authenticate.php
+	    - app/Http/Middleware/*
+	    - app/Providers/*
+	    - app/Traits/*
+	    - app/Validators/*
+	autoload_files:
+	    - _ide_helper.php
