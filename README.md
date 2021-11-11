@@ -8,6 +8,8 @@
 </p>
 
 ## How to run ?
+### Setup env
+1. Config mailtrap 
 ### Mac/Linux
 1. `$ Make install`
 2. `$ Make start`
@@ -30,3 +32,4 @@
 5. `Make cs-check`
 6. `Make cs-fix`
 7. `Make run-tests`
+

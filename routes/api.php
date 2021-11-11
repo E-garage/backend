@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\User\RegisterController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -30,7 +30,7 @@ Route::get('/email/verify/{id}/{hash}', fn(EmailVerificationRequest $request) =>
 
 Route::prefix('/v1/auth')->group(function ()
 {
-    Route::post('/signup', [UserController::class, 'create'])
+    Route::post('/signup', [RegisterController::class, 'create'])
         ->middleware('validate.register')
         ->name('register');
 });

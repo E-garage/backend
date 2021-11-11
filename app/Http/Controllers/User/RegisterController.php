@@ -2,14 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Factories\UserFactory;
+use App\Http\Controllers\Controller;
 use App\Services\UserRegisterService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class RegisterController extends Controller
 {
     private UserFactory $userFactory;
 
@@ -23,7 +24,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/v1/auth/signup",
+     *     path="/api/v1/auth/signup",
      *     tags={"User"},
      *     summary="Operates about user",
      *     @OA\Parameter(

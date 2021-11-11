@@ -18,13 +18,13 @@
                 }
             }
         },
-        "/v1/auth/signup": {
+        "/api/v1/auth/signup": {
             "post": {
                 "tags": [
                     "User"
                 ],
                 "summary": "Operates about user",
-                "operationId": "929edd4e8a0e398a45a0f3efc9bbba5d",
+                "operationId": "0d37b5f91a9d87b77e02809901038dce",
                 "parameters": [
                     {
                         "parameter": "user_credentials_in_query_required",
