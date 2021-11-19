@@ -77,13 +77,19 @@ class LoginController extends Controller
 
         $login->login();
 
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-        return new JsonResponse($user, 201);
+        $response = [
+            'user' => $user,
+            'accessToken' => $token,
+            'token_type' => 'Bearer'
+        ];
+
+        return new JsonResponse($response, 201);
     }
     public function logout(Request $request): JsonResponse
     {
 
-//        $user->tokens()->where('id', $tokenId)->delete();
     }
 
     /**
