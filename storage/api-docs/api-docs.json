@@ -18,6 +18,48 @@
                 }
             }
         },
+        "/api/v1/auth/login": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Operates about user",
+                "operationId": "d57f2a71cce3c867371f8c5e2aff0ed9",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "User object that needs to be log in.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Login"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Loged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Login"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/auth/signup": {
             "post": {
                 "tags": [
@@ -33,7 +75,7 @@
                         "description": "User object that needs to be added to the database.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/components/schemas/User"
+                            "$ref": "#/components/schemas/Register"
                         }
                     }
                 ],
@@ -41,7 +83,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "$ref": "#/components/schemas/Register"
                             }
                         }
                     }
@@ -52,7 +94,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/Register"
                                 }
                             }
                         }
@@ -63,7 +105,22 @@
     },
     "components": {
         "schemas": {
-            "User": {
+            "Login": {
+                "properties": {
+                    "email": {
+                        "type": "email|string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "email": "cool@email.com",
+                    "password": "12345678"
+                }
+            },
+            "Register": {
                 "properties": {
                     "name": {
                         "type": "string"

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\RegisterController;
@@ -33,4 +34,8 @@ Route::prefix('/v1/auth')->group(function ()
     Route::post('/signup', [RegisterController::class, 'create'])
         ->middleware('validate.register')
         ->name('register');
+
+    Route::get('/login', [LoginController::class, 'login'])
+        ->middleware('validate.login')
+        ->name('login');
 });

@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Http\Controllers\User;
 
 use App\Factories\UserFactory;
 use App\Http\Controllers\Controller;
-use App\Services\UserRegisterService;
+use App\Services\UserLoginService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class RegisterController extends Controller
+class LoginController extends Controller
 {
     private UserFactory $userFactory;
 
@@ -23,8 +21,8 @@ class RegisterController extends Controller
     }
 
     /**
-     * @OA\Post(
-     *     path="/api/v1/auth/signup",
+     * @OA\GET(
+     *     path="/api/v1/auth/login",
      *     tags={"User"},
      *     summary="Operates about user",
      *     @OA\Parameter(
@@ -32,36 +30,32 @@ class RegisterController extends Controller
      *         name="body",
      *         in="query",
      *         required=true,
-     *         description="User object that needs to be added to the database.",
-     *         @OA\Schema(ref="#/components/schemas/Register"),
+     *         description="User object that needs to be log in.",
+     *         @OA\Schema(ref="#/components/schemas/Login"),
      *     ),
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
-     *                 ref="#/components/schemas/Register",
+     *                 ref="#/components/schemas/Login",
      *             ),
      *         ),
      *     ),
      *     @OA\Response(
      *         response="201",
-     *         description="Created",
+     *         description="Loged in",
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
-     *                 ref="#/components/schemas/Register",
+     *                 ref="#/components/schemas/Login",
      *             ),
      *         ),
      *  ),
      * ),
-     * @OA\Component(
+     *     @OA\Component(
      *         @OA\Schema(
-     *             schema="Register",
+     *             schema="Login",
      *             type="object",
-     *         @OA\Property(
-     *             property="name",
-     *             type="string"
-     *         ),
      *         @OA\Property(
      *             property="email",
      *             type="email|string"
@@ -70,24 +64,26 @@ class RegisterController extends Controller
      *             property="password",
      *             type="string"
      *         ),
-     *         @OA\Property(
-     *             property="password_confirmation",
-     *             type="string"
-     *         ),
-     *         example={"name": "JohnDoe", "email": "cool@email.com", "password": "12345678", "password_confirmation": "12345678"}
+     *         example={"email": "cool@email.com", "password": "12345678"}
      *   )
      *
-     * @throws \App\Exceptions\UserNotSavedToDatabaseException
+     * Create the user.
      */
-    public function create(Request $request): JsonResponse
+    public function login(Request $request): JsonResponse
     {
         $data = $this->getDataFromRequest($request);
-        $user = $this->userFactory->createFromRequest($data);
-        $register = new UserRegisterService($user);
+        $user = $this->userFactory->getUser($data);
+        $login = new UserLoginService($user);
 
-        $register->register();
+        $login->login();
+
 
         return new JsonResponse($user, 201);
+    }
+    public function logout(Request $request): JsonResponse
+    {
+
+//        $user->tokens()->where('id', $tokenId)->delete();
     }
 
     /**
@@ -96,9 +92,9 @@ class RegisterController extends Controller
     private function getDataFromRequest(Request $request): array
     {
         $data = [
-            'name' => (string)$request['name'],
             'email' => (string)$request['email'],
             'password' => (string)$request['password'],
+            'remember_me' => (bool)$request['remember'] ?: false,
         ];
 
         return $data;
