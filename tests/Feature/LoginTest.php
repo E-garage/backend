@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -26,11 +24,11 @@ class LoginTest extends TestCase
         //we want to assert we get proper status
         $response->assertStatus(201);
     }
+
     public function testUserLoginDataIsInvalid()
     {
         $response = $this->get('api/v1/auth/login');
 
         $response->assertStatus(302);
-
     }
 }

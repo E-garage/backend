@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\UserLoginService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -75,21 +76,20 @@ class LoginController extends Controller
         $user = $this->userFactory->getUser($data);
         $login = new UserLoginService($user);
 
-        $login->login();
+        $loggedUser = $login->login();
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
+        $token = $loggedUser->createToken('auth_token')->plainTextToken;
         $response = [
             'user' => $user,
             'accessToken' => $token,
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
         ];
 
         return new JsonResponse($response, 201);
     }
+
     public function logout(Request $request): JsonResponse
     {
-
     }
 
     /**
@@ -100,9 +100,12 @@ class LoginController extends Controller
         $data = [
             'email' => (string)$request['email'],
             'password' => (string)$request['password'],
-            'remember_me' => (bool)$request['remember'] ?: false,
         ];
 
         return $data;
+    }
+
+    private function error(string $string, int $int)
+    {
     }
 }

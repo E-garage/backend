@@ -25,7 +25,6 @@ class ValidateLoginCredentials
 
         $validator = Validator::make($request->all(), $rules);
 
-
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }

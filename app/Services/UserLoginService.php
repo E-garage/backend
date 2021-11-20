@@ -5,10 +5,10 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Exceptions\UserCredentialsInvalidExecption;
-use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserNotSavedToDatabaseException;
 use App\Models\UserModel;
 use App\Repositories\UserRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -36,26 +36,23 @@ class UserLoginService
      */
     public function login(): UserModel
     {
-        if($this->repository->findByEmail($this->user->email)){
-            $this->checkpassword();
-            return $this->user;
-        } else {
-            throw new UserNotFoundException();
-        }
-    }
-    private function checkpassword(): UserModel
-    {
-        if (Hash::check($this->user->password, $this->repository->findByEmail($this->user->email)->getAttribute('password'))) {
-            return $this->user;
-        }else {
+        try {
+            $user = $this->repository->findByEmail($this->user->email);
+
+            if (Hash::check($this->user->password, $user->password)) {
+                return $user;
+            } else {
+                throw new UserCredentialsInvalidExecption();
+            }
+        } catch (ModelNotFoundException $e) {
             throw new UserCredentialsInvalidExecption();
         }
     }
-    /**
-    logout a user
-    **/
-    public function logout() : UserModel
-    {
 
+    /**
+     * logout a user.
+     **/
+    public function logout(): UserModel
+    {
     }
 }

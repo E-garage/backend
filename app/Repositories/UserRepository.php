@@ -27,6 +27,7 @@ class UserRepository
     {
         return UserModel::all();
     }
+
     public function findByEmail(string $email): ?UserModel
     {
         try {

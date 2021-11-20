@@ -37,5 +37,6 @@ Route::prefix('/v1/auth')->group(function ()
 
     Route::get('/login', [LoginController::class, 'login'])
         ->middleware('validate.login')
+
         ->name('login');
 });
