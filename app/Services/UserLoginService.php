@@ -48,11 +48,4 @@ class UserLoginService
             throw new UserCredentialsInvalidExecption();
         }
     }
-
-    /**
-     * logout a user.
-     **/
-    public function logout(): UserModel
-    {
-    }
 }

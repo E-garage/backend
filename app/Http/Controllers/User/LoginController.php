@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Factories\UserFactory;
 use App\Http\Controllers\Controller;
 use App\Services\UserLoginService;
+use http\Client\Curl\User;
+use http\Message;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,9 +90,6 @@ class LoginController extends Controller
         return new JsonResponse($response, 201);
     }
 
-    public function logout(Request $request): JsonResponse
-    {
-    }
 
     /**
      * Extract data from request.
