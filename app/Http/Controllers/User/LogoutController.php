@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Auth;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
+
     public function logout(Request $request): JsonResponse
     {
-        if ( $request->bearerToken()) {
+        if ( !is_null($request->bearerToken()) ) {
             auth()->user()->tokens()->delete();
             $response = [
                 'message' => 'Logged out',
@@ -25,5 +24,4 @@ class LogoutController extends Controller
             return new JsonResponse($response, 500);
         }
     }
-
 }
