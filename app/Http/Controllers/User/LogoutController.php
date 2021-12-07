@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use _PHPStan_76800bfb5\Nette\Neon\Exception;
+
 use App\Exceptions\TokenNotFoundException;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Concerns\InteractsWithInput;
-use App\Models\UserModel;
 use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
@@ -40,12 +38,15 @@ class LogoutController extends Controller
      *         description="Unauthorized",
      *     ),
      *    ),
+     * @param Request $request
+     * @return JsonResponse
+     * @throws TokenNotFoundException
      */
     public function logout(Request $request): JsonResponse
     {
         if ( Auth::check() || !is_null($request->bearerToken()) ) {
             try {
-                auth()->user()->tokens()->delete();
+                auth()->user()->currentAccessToken()->delete();
                 $response = [
                     'message' => 'Logged out',
                 ];
