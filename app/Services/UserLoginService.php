@@ -11,18 +11,12 @@ use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 
-/**
- * Service for login users.
- */
 class UserLoginService
 {
     protected UserModel $user;
 
     protected UserRepository $repository;
 
-    /**
-     * UserLoginService constructor.
-     */
     public function __construct(UserModel $user)
     {
         $this->user = $user;
@@ -30,8 +24,6 @@ class UserLoginService
     }
 
     /**
-     * Login a user.
-     *
      * @throws UserNotSavedToDatabaseException
      */
     public function login(): UserModel

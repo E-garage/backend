@@ -12,8 +12,6 @@ use Illuminate\Validation\ValidationException;
 class ValidateLoginCredentials
 {
     /**
-     * Handle an incoming request.
-     *
      * @throws ValidationException
      */
     public function handle(Request $request, Closure $next): mixed

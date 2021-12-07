@@ -5,19 +5,13 @@ namespace App\Http\Controllers\User;
 use App\Factories\UserFactory;
 use App\Http\Controllers\Controller;
 use App\Services\UserLoginService;
-use http\Client\Curl\User;
-use http\Message;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     private UserFactory $userFactory;
 
-    /**
-     * UserController constructor.
-     */
     public function __construct()
     {
         $this->userFactory = new UserFactory();
@@ -47,12 +41,19 @@ class LoginController extends Controller
      *     @OA\Response(
      *         response="201",
      *         description="Loged in",
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
-     *                 ref="#/components/schemas/Login",
-     *             ),
-     *         ),
+     *         @OA\JsonContent(type="object",
+     *                  @OA\Property(property="email", type="string"),
+     *                  @OA\Property(property="accessToken", type="string"),
+     *                  example={"email": "cool@email.com", "accessToken": "tokenNr1", "tokenType": "Bearer"}
+     *          ),
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="User Not Found",
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="User Credential Invalid",
      *  ),
      * ),
      *     @OA\Component(
@@ -69,8 +70,7 @@ class LoginController extends Controller
      *         ),
      *         example={"email": "cool@email.com", "password": "12345678"}
      *   )
-     *
-     * Create the user.
+     * @throws \App\Exceptions\UserNotFoundException
      */
     public function login(Request $request): JsonResponse
     {
@@ -86,14 +86,9 @@ class LoginController extends Controller
             'accessToken' => $token,
             'token_type' => 'Bearer',
         ];
-
-        return new JsonResponse($response, 201);
+        return new JsonResponse($response, 200);
     }
 
-
-    /**
-     * Extract data from request.
-     */
     private function getDataFromRequest(Request $request): array
     {
         $data = [
