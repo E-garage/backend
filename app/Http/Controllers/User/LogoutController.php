@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
+use _PHPStan_76800bfb5\Nette\Neon\Exception;
 use App\Exceptions\TokenNotFoundException;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Concerns\InteractsWithInput;
@@ -48,8 +50,8 @@ class LogoutController extends Controller
                     'message' => 'Logged out',
                 ];
                 return new JsonResponse($response, 201);
-            }catch (TokenNotFoundException $e){
-
+            }catch (ModelNotFoundException $e){
+                throw new TokenNotFoundException;
             }
         } else {
             $response = [
