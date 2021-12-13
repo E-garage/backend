@@ -21,7 +21,7 @@ class ValidateUpdatePassword
             'password_confirmation' => 'min:8|max:50',
         ];
 
-        $validator = Validator::make($request->all, $rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
