@@ -5,6 +5,9 @@ declare(strict_types = 1);
 namespace App\Http;
 
 use App\Validators\ValidateRegisterCredentials;
+use App\Validators\ValidateUpdateEmail;
+use App\Validators\ValidateUpdateName;
+use App\Validators\ValidateUpdatePassword;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -68,5 +71,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'validate.register' => ValidateRegisterCredentials::class,
+        'validate.update.password' => ValidateUpdatePassword::class,
+        'validate.update.email' => ValidateUpdateEmail::class,
+        'validate.update.name' => ValidateUpdateName::class,
     ];
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\AccountManagementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\RegisterController;
@@ -33,4 +34,21 @@ Route::prefix('/v1/auth')->group(function ()
     Route::post('/signup', [RegisterController::class, 'create'])
         ->middleware('validate.register')
         ->name('register');
+});
+
+Route::prefix('/v1/account')
+->middleware('auth:sanctum')
+->group(function ()
+{
+    Route::prefix('/update')->group(function ()
+    {
+        Route::put('/update-password', [AccountManagementController::class, 'updatePassword'])->middleware('validate.update.password');
+        Route::put('/update-email', [AccountManagementController::class, 'updateEmail'])->middleware('validate.update.email');
+        Route::put('/update-name', [AccountManagementController::class, 'updateName'])->middleware('validate.update.name');
+    });
+
+    Route::put('/upload-avatar'
+    // [AccountManagementController::class, 'uploadAvatar']
+    // [AvatarController::class, 'upload']
+    );
 });
