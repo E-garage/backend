@@ -22,15 +22,15 @@ class RegistrationTest extends TestCase
         $response = $this->post('api/v1/auth/signup', $data);
 
         //we want to assert we get proper status
-        $response->assertStatus(201);
+        $response->assertCreated();
     }
 
     public function testUserRegistrationDataIsInvalid()
     {
         //we want to hit /signup route with empty data
-        $response = $this->post('api/v1/auth/signup');
+        $response = $this->postJson('api/v1/auth/signup');
 
         //we want to assert we get proper status
-        $response->assertStatus(302);
+        $response->assertUnprocessable();
     }
 }
