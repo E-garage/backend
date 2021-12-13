@@ -4,10 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\UserModel;
 use Hash;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotEquals;
 use function PHPUnit\Framework\assertTrue;
@@ -40,7 +37,6 @@ class UpdateAccountDetailsTest extends TestCase
         //we want to assert that name has been changed correctly
         assertEquals($data['name'], $this->user->name);
     }
-
 
     public function testEmailChangedSuccessfully()
     {
