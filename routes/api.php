@@ -42,9 +42,9 @@ Route::prefix('/v1/account')
 {
     Route::prefix('/update')->group(function ()
     {
-        Route::put('/update-password', [AccountManagementController::class, 'updatePassword'])->middleware('validate.update.password');
-        Route::put('/update-email', [AccountManagementController::class, 'updateEmail'])->middleware('validate.update.email');
-        Route::put('/update-name', [AccountManagementController::class, 'updateName'])->middleware('validate.update.name');
+        Route::put('/password', [AccountManagementController::class, 'updatePassword'])->middleware('validate.update.password');
+        Route::put('/email', [AccountManagementController::class, 'updateEmail'])->middleware('validate.update.email');
+        Route::put('/name', [AccountManagementController::class, 'updateName'])->middleware('validate.update.name');
     });
 
     Route::put('/upload-avatar'
