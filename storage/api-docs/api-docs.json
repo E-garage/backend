@@ -18,6 +18,108 @@
                 }
             }
         },
+        "/api/v1/account/update/password": {
+            "put": {
+                "tags": [
+                    "Account Management"
+                ],
+                "summary": "Update user's account password",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Data needed to perform action.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/UpdatePassword"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePassword"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/v1/account/update/name": {
+            "put": {
+                "tags": [
+                    "Account Management"
+                ],
+                "summary": "Update user's account name",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Data needed to perform action.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/UpdateName"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateName"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/v1/account/update/email": {
+            "put": {
+                "tags": [
+                    "Account Management"
+                ],
+                "summary": "Update user's account email",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Data needed to perform action.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/UpdateEmail"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateEmail"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/v1/auth/signup": {
             "post": {
                 "tags": [
@@ -63,6 +165,43 @@
     },
     "components": {
         "schemas": {
+            "UpdatePassword": {
+                "properties": {
+                    "password": {
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "password": "12345678",
+                    "password_confirmation": "12345678"
+                }
+            },
+            "UpdateEmail": {
+                "properties": {
+                    "email": {
+                        "type": "email|string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "email": "test@test.com"
+                }
+            },
+            "UpdateName": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "name": "JohnDoe"
+                }
+            },
             "User": {
                 "properties": {
                     "name": {
