@@ -13,11 +13,16 @@ class UpdateAccountDetailsTest extends TestCase
 {
     private UserModel $user;
 
-    public function testNameChangedSuccessfully()
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $this->user = new UserModel();
         $this->actingAs($this->user);
+    }
 
+    public function testNameChangedSuccessfully()
+    {
         $data = [
             'name' => 'TestTest',
         ];
@@ -40,9 +45,6 @@ class UpdateAccountDetailsTest extends TestCase
 
     public function testEmailChangedSuccessfully()
     {
-        $this->user = new UserModel();
-        $this->actingAs($this->user);
-
         $data = [
             'email' => 'test@test.com',
         ];
@@ -65,9 +67,6 @@ class UpdateAccountDetailsTest extends TestCase
 
     public function testPasswordChangedSuccessfully()
     {
-        $this->user = new UserModel();
-        $this->actingAs($this->user);
-
         $data = [
             'password' => 'Test1234',
             'password_confirmation' => 'Test1234',
@@ -91,9 +90,6 @@ class UpdateAccountDetailsTest extends TestCase
 
     public function testValidationExceptionsOccurs()
     {
-        $this->user = new UserModel();
-        $this->actingAs($this->user);
-
         $nameData = ['name' => 'te'];
         $emailData = ['email' => 'test'];
         $passwordData = ['password' => 'test', 'password_confirmation' => 'test'];
