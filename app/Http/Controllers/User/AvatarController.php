@@ -9,6 +9,28 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @OA\POST(
+ *     path="/api/v1/account/upload-avatar",
+ *     tags={"Avatar"},
+ *     summary="Upload user's avatar",
+ *     @OA\Parameter(
+ *         parameter="user_credentials_in_query_required",
+ *         name="body",
+ *         in="query",
+ *         required=true,
+ *         description="Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
+ *         @OA\Schema(ref="#/components/schemas/Avatar"),
+ *     ),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/Avatar"),
+ *         ),
+ *     ),
+ *     @OA\Response(response="200", description=""),
+ * ),
+ */
 class AvatarController extends Controller
 {
     protected UserModel $user;
@@ -20,6 +42,18 @@ class AvatarController extends Controller
         $this->service = new AvatarUploadService($this->user);
     }
 
+    /**
+     * @OA\Component(
+     *         @OA\Schema(
+     *             schema="Avatar",
+     *             type="object",
+     *         @OA\Property(
+     *             property="image",
+     *             type="file"
+     *         ),
+     *         example={"image": "file"}
+     * )
+     */
     public function upload(Request $request): JsonResponse
     {
         $avatar = $request['image'];
@@ -28,6 +62,6 @@ class AvatarController extends Controller
         $pathToAvatar = $this->service->uploadAvatar($avatar);
         $this->service->saveAvatarNameInDB($pathToAvatar);
 
-        return new JsonResponse(null, 201);
+        return new JsonResponse(null, 200);
     }
 }

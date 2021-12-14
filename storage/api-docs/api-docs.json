@@ -120,6 +120,40 @@
                 }
             }
         },
+        "/api/v1/account/upload-avatar": {
+            "post": {
+                "tags": [
+                    "Avatar"
+                ],
+                "summary": "Upload user's avatar",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Avatar"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Avatar"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/v1/auth/signup": {
             "post": {
                 "tags": [
@@ -200,6 +234,17 @@
                 "type": "object",
                 "example": {
                     "name": "JohnDoe"
+                }
+            },
+            "Avatar": {
+                "properties": {
+                    "image": {
+                        "type": "file"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "image": "file"
                 }
             },
             "User": {
