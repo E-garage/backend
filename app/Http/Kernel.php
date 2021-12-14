@@ -8,6 +8,7 @@ use App\Validators\ValidateRegisterCredentials;
 use App\Validators\ValidateUpdateEmail;
 use App\Validators\ValidateUpdateName;
 use App\Validators\ValidateUpdatePassword;
+use App\Validators\ValidateUploadAvatar;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -74,5 +75,6 @@ class Kernel extends HttpKernel
         'validate.update.password' => ValidateUpdatePassword::class,
         'validate.update.email' => ValidateUpdateEmail::class,
         'validate.update.name' => ValidateUpdateName::class,
+        'validate.upload.avatar' => ValidateUploadAvatar::class,
     ];
 }
