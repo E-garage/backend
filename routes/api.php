@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\AccountManagementController;
+use App\Http\Controllers\User\AvatarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\RegisterController;
@@ -47,8 +48,5 @@ Route::prefix('/v1/account')
         Route::put('/name', [AccountManagementController::class, 'updateName'])->middleware('validate.update.name');
     });
 
-    Route::put('/upload-avatar'
-    // [AccountManagementController::class, 'uploadAvatar']
-    // [AvatarController::class, 'upload']
-    );
+    Route::post('/upload-avatar', [AvatarController::class, 'upload'])->middleware('validate.upload.avatar');
 });
