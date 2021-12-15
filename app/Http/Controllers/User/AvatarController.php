@@ -57,7 +57,6 @@ class AvatarController extends Controller
     public function upload(Request $request): JsonResponse
     {
         $avatar = $request['image'];
-
         $this->service->deletePreviousAvatar();
         $pathToAvatar = $this->service->uploadAvatar($avatar);
         $this->service->saveAvatarNameInDB($pathToAvatar);

@@ -9,6 +9,7 @@ use App\Models\UserModel;
 use App\Repositories\UserRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 
 class AvatarUploadService
@@ -27,13 +28,14 @@ class AvatarUploadService
      */
     public function uploadAvatar(UploadedFile $avatar): string
     {
-        $path = $avatar->store('', 'user_avatars');
+        $filename = $avatar->store('', 'user_avatars');
+        $this->resizeImg($avatar, $filename);
 
-        if (!$path) {
+        if (!$filename) {
             throw new UploadException("Avatar wasn't uploaded.");
         }
 
-        return $path;
+        return $filename;
     }
 
     /**
@@ -61,5 +63,14 @@ class AvatarUploadService
         if (!$success) {
             throw new AvatarDeleteException();
         }
+    }
+
+    /**
+     * Resizes given image and overwrites it.
+     */
+    private function resizeImg(UploadedFile $avatar, string $filename): void
+    {
+        $path = Storage::disk('user_avatars')->path($filename);
+        Image::make($avatar)->resize(81, 81)->save($path);
     }
 }
