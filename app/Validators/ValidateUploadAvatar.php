@@ -17,7 +17,7 @@ class ValidateUploadAvatar
     public function handle(Request $request, Closure $next): mixed
     {
         $rules = [
-            'image' => 'image|mimes:jpeg,png|size:5024',
+            'image' => 'required|image|mimes:jpeg,png',
         ];
 
         $validator = Validator::make($request->only('image'), $rules);
