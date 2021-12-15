@@ -9,7 +9,6 @@ use App\Models\UserModel;
 use App\Repositories\UserRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Nette\Utils\Random;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 
 class AvatarUploadService
@@ -28,8 +27,7 @@ class AvatarUploadService
      */
     public function uploadAvatar(UploadedFile $avatar): string
     {
-        $avatarNewName = $this->getNewNameForAvatar($avatar);
-        $path = $avatar->storeAs('', $avatarNewName, 'user_avatars');
+        $path = $avatar->store('', 'user_avatars');
 
         if (!$path) {
             throw new UploadException("Avatar wasn't uploaded.");
@@ -63,15 +61,5 @@ class AvatarUploadService
         if (!$success) {
             throw new AvatarDeleteException();
         }
-    }
-
-    /**
-     * Renames avatar's filename.
-     */
-    private function getNewNameForAvatar(UploadedFile $avatar): string
-    {
-        $avatarName = time() . Random::generate(20) . '.' . $avatar->getClientOriginalExtension();
-
-        return $avatarName;
     }
 }
