@@ -18,19 +18,15 @@ class RegistrationTest extends TestCase
             'password_confirmation' => '12345678',
         ];
 
-        //we want to hit /signup route with data
         $response = $this->post('api/v1/auth/signup', $data);
 
-        //we want to assert we get proper status
         $response->assertCreated();
     }
 
     public function testUserRegistrationDataIsInvalid()
     {
-        //we want to hit /signup route with empty data
         $response = $this->postJson('api/v1/auth/signup');
 
-        //we want to assert we get proper status
         $response->assertUnprocessable();
     }
 }
