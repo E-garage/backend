@@ -48,5 +48,10 @@ Route::prefix('/v1/account')
         Route::put('/name', [AccountManagementController::class, 'updateName'])->middleware('validate.update.name');
     });
 
-    Route::post('/upload-avatar', [AvatarController::class, 'upload'])->middleware('validate.upload.avatar');
+    Route::prefix('/avatar')->group(function ()
+    {
+        Route::get('/', [AvatarController::class, 'get']);
+        Route::post('/upload', [AvatarController::class, 'upload'])->middleware('validate.upload.avatar');
+        Route::delete('/delete', [AvatarController::class, 'delete']);
+    });
 });
