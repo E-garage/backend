@@ -120,10 +120,10 @@
                 }
             }
         },
-        "/api/v1/account/upload-avatar": {
+        "/api/v1/account/avatar/upload": {
             "post": {
                 "tags": [
-                    "Avatar"
+                    "Avatar Management"
                 ],
                 "summary": "Upload user's avatar",
                 "parameters": [
@@ -147,6 +147,32 @@
                         }
                     }
                 },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/v1/account/avatar/": {
+            "get": {
+                "tags": [
+                    "Avatar Management"
+                ],
+                "summary": "Get user's avatar",
+                "responses": {
+                    "200": {
+                        "description": "Returns the user's avatar."
+                    }
+                }
+            }
+        },
+        "/api/v1/account/avatar/delete": {
+            "delete": {
+                "tags": [
+                    "Avatar Management"
+                ],
+                "summary": "Delete user's avatar",
                 "responses": {
                     "200": {
                         "description": ""
