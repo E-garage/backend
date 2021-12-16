@@ -11,8 +11,9 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class AvatarUploadService
+class AvatarManagementService
 {
     protected UserModel $user;
     protected UserRepository $repository;
@@ -21,6 +22,17 @@ class AvatarUploadService
     {
         $this->user = $user;
         $this->repository = new UserRepository($this->user);
+    }
+
+    /**
+     * Gets user's avatar and returns it.
+     */
+    public function getAvatar(): StreamedResponse
+    {
+        $filename = $this->user['avatar'] ?? 'default_avatar.jpg';
+        $avatar = Storage::disk('user_avatars')->download($filename);
+
+        return $avatar;
     }
 
     /**
@@ -41,16 +53,16 @@ class AvatarUploadService
     /**
      * Saves avatar's filename to database.
      */
-    public function saveAvatarNameInDB(string $pathToAvatar)
+    public function saveAvatarNameInDB(string $filename)
     {
-        $this->user['avatar'] = $pathToAvatar;
+        $this->user['avatar'] = $filename;
         $this->repository->update($this->user);
     }
 
     /**
      * Deletes previous avatar if exists.
      */
-    public function deletePreviousAvatar(): void
+    public function deleteAvatar(): void
     {
         $avatar = $this->user['avatar'];
 
@@ -59,6 +71,8 @@ class AvatarUploadService
         }
 
         $success = Storage::disk('user_avatars')->delete($avatar);
+        $this->user['avatar'] = null;
+        $this->repository->save();
 
         if (!$success) {
             throw new AvatarDeleteException();
