@@ -82,29 +82,45 @@ class AvatarManagementTest extends TestCase
         $this->assertNull($filename);
     }
 
-    public function testValidationExceptionHasOccured()
+    public function testEmptyRequestWasRejected()
     {
-        //empty request
         $response = $this->postJson('/api/v1/account/avatar/upload');
-        $response->assertUnprocessable();
 
-        //request with string
+        $response->assertUnprocessable();
+    }
+
+    public function testRequestWithStringWasRejected()
+    {
         $response = $this->postJson('/api/v1/account/avatar/upload', ['image' => 'text-instead-of-image']);
-        $response->assertUnprocessable();
 
-        //request with integer
+        $response->assertUnprocessable();
+        $response->assertInvalid(['image']);
+    }
+
+    public function testRequestWithIntegerWasRejected()
+    {
         $response = $this->postJson('/api/v1/account/avatar/upload', ['image' => 12345]);
-        $response->assertUnprocessable();
 
-        //request with pdf file
+        $response->assertUnprocessable();
+        $response->assertInvalid(['image']);
+    }
+
+    public function testRequestWithPdfFileWasRejected()
+    {
         $file = UploadedFile::fake()->create('fake', 0, 'pdf');
         $response = $this->postJson('/api/v1/account/avatar/upload', ['image' => $file]);
-        $response->assertUnprocessable();
 
-        //request with svg file
+        $response->assertUnprocessable();
+        $response->assertInvalid(['image']);
+    }
+
+    public function testRequestWithSvgFileWasRejected()
+    {
         $file = UploadedFile::fake()->create('fake', 0, 'svg');
         $response = $this->postJson('/api/v1/account/avatar/upload', ['image' => $file]);
+
         $response->assertUnprocessable();
+        $response->assertInvalid(['image']);
     }
 
     private function actAsUser()

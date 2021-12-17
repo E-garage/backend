@@ -21,7 +21,7 @@ class UpdateAccountDetailsTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testNameChangedSuccessfully()
+    public function testNameWasChangedSuccessfully()
     {
         $data = [
             'name' => 'TestTest',
@@ -43,7 +43,7 @@ class UpdateAccountDetailsTest extends TestCase
         assertEquals($data['name'], $this->user->name);
     }
 
-    public function testEmailChangedSuccessfully()
+    public function testEmailWasChangedSuccessfully()
     {
         $data = [
             'email' => 'test@test.com',
@@ -65,7 +65,7 @@ class UpdateAccountDetailsTest extends TestCase
         assertEquals($data['email'], $this->user->email);
     }
 
-    public function testPasswordChangedSuccessfully()
+    public function testPasswordWasChangedSuccessfully()
     {
         $data = [
             'password' => 'Test1234',
@@ -74,44 +74,38 @@ class UpdateAccountDetailsTest extends TestCase
 
         $passwordBeforeChange = $this->user->password;
 
-        //we want to hit /update/password with data
         $response = $this->putJson('/api/v1/account/update/password', $data);
-
-        //we want to assert that we've got correct status
         $response->assertOk();
 
-        //we want to assert that password has been changed
         $this->user->refresh();
         assertNotEquals($this->user->password, $passwordBeforeChange);
 
-        //we want to assert that password has been changed correctly
         assertTrue(Hash::check($data['password'], $this->user->password));
     }
 
-    public function testValidationExceptionsOccurs()
+    public function testRequestWithInvalidNameWasRejected()
     {
         $nameData = ['name' => 'te'];
-        $emailData = ['email' => 'test'];
-        $passwordData = ['password' => 'test', 'password_confirmation' => 'test'];
-
-        //we want to hit /update/name route with nameData
         $response = $this->putJson('/api/v1/account/update/name', $nameData);
 
-        //we want to assert that validation exception occured
         $response->assertUnprocessable();
         $response->assertInvalid(['name']);
+    }
 
-        //we want to hit /update/email route with emailData
+    public function testRequestWithInvalidEmailWasRejected()
+    {
+        $emailData = ['email' => 'test'];
         $response = $this->putJson('/api/v1/account/update/email', $emailData);
 
-        //we want to assert that validation exception occured
         $response->assertUnprocessable();
         $response->assertInvalid(['email']);
+    }
 
-        //we want to hit /update/password route with passwordData
+    public function testRequestWithInvalidPasswordWasRejected()
+    {
+        $passwordData = ['password' => 'test', 'password_confirmation' => 'test'];
         $response = $this->putJson('/api/v1/account/update/password', $passwordData);
 
-        //we want to assert that validation exception occured
         $response->assertUnprocessable();
         $response->assertInvalid(['password']);
     }
