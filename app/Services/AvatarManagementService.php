@@ -38,25 +38,16 @@ class AvatarManagementService
     /**
      * Uploads avatar to storage.
      */
-    public function uploadAvatar(UploadedFile $avatar): string
+    public function uploadAvatar(UploadedFile $avatar): void
     {
         $filename = $avatar->store('', 'user_avatars');
-        $this->resizeImg($avatar, $filename);
 
         if (!$filename) {
             throw new UploadException("Avatar wasn't uploaded.");
         }
 
-        return $filename;
-    }
-
-    /**
-     * Saves avatar's filename to database.
-     */
-    public function saveAvatarNameInDB(string $filename)
-    {
-        $this->user['avatar'] = $filename;
-        $this->repository->update($this->user);
+        $this->resizeImg($avatar, $filename);
+        $this->saveAvatarNameInDB($filename);
     }
 
     /**
@@ -71,12 +62,30 @@ class AvatarManagementService
         }
 
         $success = Storage::disk('user_avatars')->delete($avatar);
-        $this->user['avatar'] = null;
-        $this->repository->save();
 
         if (!$success) {
             throw new AvatarDeleteException();
         }
+
+        $this->deleteAvatarNameFromDB();
+    }
+
+    /**
+     * Saves avatar's filename to database.
+     */
+    private function saveAvatarNameInDB(string $filename): void
+    {
+        $this->user['avatar'] = $filename;
+        $this->repository->update($this->user);
+    }
+
+    /**
+     * Deletes avatar's filename from database.
+     */
+    private function deleteAvatarNameFromDB(): void
+    {
+        $this->user['avatar'] = null;
+        $this->repository->update($this->user);
     }
 
     /**

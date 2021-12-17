@@ -38,7 +38,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  *     summary="Get user's avatar",
  *     @OA\Response(
  *          response="200",
- *          description="Returns the user's avatar.",
+ *          description="",
+ *          @OA\MediaType(
+ *             mediaType="image",
+ *             @OA\Schema(
+ *                 ref="#/components/schemas/Avatar",
+ *             ),
+ *         ),
  *     ),
  * ),
  *
@@ -76,8 +82,7 @@ class AvatarController extends Controller
     {
         $avatar = $request['image'];
         $this->service->deleteAvatar();
-        $filename = $this->service->uploadAvatar($avatar);
-        $this->service->saveAvatarNameInDB($filename);
+        $this->service->uploadAvatar($avatar);
 
         return new JsonResponse();
     }
