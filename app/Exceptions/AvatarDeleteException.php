@@ -8,6 +8,6 @@ class AvatarDeleteException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Couldn\'t delete avatar.", 500);
+        parent::__construct("Couldn't delete avatar.", 500);
     }
 }
