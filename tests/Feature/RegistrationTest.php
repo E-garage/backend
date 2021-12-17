@@ -9,7 +9,7 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUserSuccessfullyRegistered()
+    public function testUserWasRegisteredSuccessfully()
     {
         $data = [
             'name' => 'JohnDoe',
@@ -23,7 +23,7 @@ class RegistrationTest extends TestCase
         $response->assertCreated();
     }
 
-    public function testUserRegistrationDataIsInvalid()
+    public function testEmptyRequestWasRejected()
     {
         $response = $this->postJson('api/v1/auth/signup');
 
