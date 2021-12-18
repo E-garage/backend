@@ -18,7 +18,7 @@ class AvatarManagementTest extends TestCase
     {
         parent::setUp();
 
-        Storage::fake('user_avatars'); // @phpstan-ignore-line
+        Storage::fake('user_avatars');
         $this->actAsUser();
     }
 
