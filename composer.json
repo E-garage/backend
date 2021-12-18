@@ -24,7 +24,9 @@
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpstan/phpstan": "^0.12.99",
-        "phpunit/phpunit": "^9.3.3"
+        "phpunit/phpunit": "^9.3.3",
+        "nunomaduro/larastan": "^v0.7.12",
+        "qossmic/deptrac-shim": "^0.15.2"
     },
     "autoload": {
         "psr-4": {
