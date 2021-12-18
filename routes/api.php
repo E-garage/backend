@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\User\AccountManagementController;
+use App\Http\Controllers\User\AvatarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\RegisterController;
@@ -33,4 +35,23 @@ Route::prefix('/v1/auth')->group(function ()
     Route::post('/signup', [RegisterController::class, 'create'])
         ->middleware('validate.register')
         ->name('register');
+});
+
+Route::prefix('/v1/account')
+->middleware('auth:sanctum')
+->group(function ()
+{
+    Route::prefix('/update')->group(function ()
+    {
+        Route::put('/password', [AccountManagementController::class, 'updatePassword'])->middleware('validate.update.password');
+        Route::put('/email', [AccountManagementController::class, 'updateEmail'])->middleware('validate.update.email');
+        Route::put('/name', [AccountManagementController::class, 'updateName'])->middleware('validate.update.name');
+    });
+
+    Route::prefix('/avatar')->group(function ()
+    {
+        Route::get('/', [AvatarController::class, 'get']);
+        Route::post('/upload', [AvatarController::class, 'upload'])->middleware('validate.upload.avatar');
+        Route::delete('/delete', [AvatarController::class, 'delete']);
+    });
 });
