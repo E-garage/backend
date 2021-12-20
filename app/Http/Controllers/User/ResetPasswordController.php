@@ -4,11 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Exceptions\PasswordNotResetedException;
 use App\Exceptions\ResetLinkNotSentException;
+use App\Http\Controllers\Controller;
+use App\Services\ResetPasswordService;
 use App\Services\SendResetPasswordLinkService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Services\ResetPasswordService;
 
 class ResetPasswordController extends Controller
 {
@@ -18,7 +18,7 @@ class ResetPasswordController extends Controller
         $service = new SendResetPasswordLinkService();
         $isSent = $service->sendLink($email);
 
-        if(!$isSent) {
+        if (!$isSent) {
             throw new ResetLinkNotSentException();
         }
 
@@ -28,11 +28,11 @@ class ResetPasswordController extends Controller
     public function resetPassword(Request $request): JsonResponse
     {
         $data = $this->getDataFromRequest($request);
-        $service = new ResetPasswordService($data);
+        $service = new ResetPasswordService();
 
         $isReseted = $service->reset($data);
 
-        if(!$isReseted) {
+        if (!$isReseted) {
             throw new PasswordNotResetedException();
         }
 
