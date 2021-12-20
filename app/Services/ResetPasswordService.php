@@ -16,8 +16,7 @@ class ResetPasswordService
     {
         $status = Password::reset(
             $data,
-            function ($user, $password)
-            {
+            function ($user, $password) {
                 $user['password'] = Hash::make($password);
                 $user->setRememberToken(Str::random(60));
 

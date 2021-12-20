@@ -5,12 +5,12 @@ declare(strict_types = 1);
 namespace App\Http;
 
 use App\Validators\ValidateRegisterCredentials;
+use App\Validators\ValidateResetPassword;
+use App\Validators\ValidateSendResetLink;
 use App\Validators\ValidateUpdateEmail;
 use App\Validators\ValidateUpdateName;
 use App\Validators\ValidateUpdatePassword;
 use App\Validators\ValidateUploadAvatar;
-use App\Validators\ValidateSendResetLink;
-use App\Validators\ValidateResetPassword;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 

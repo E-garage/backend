@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types = 1);
+
 namespace App\Validators;
 
 use Closure;
@@ -13,8 +14,8 @@ class ValidateSendResetLink
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     *
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next): mixed
@@ -25,7 +26,7 @@ class ValidateSendResetLink
 
         $validator = Validator::make($request->all(), $rules);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             throw new ValidationException($validator);
         }
 

@@ -10,8 +10,8 @@ class ValidateResetPassword
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     *
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
@@ -22,7 +22,6 @@ class ValidateResetPassword
             'password' => 'required|min:8|max:50|confirmed',
             'password_confirmation' => 'min:8|max:50',
         ];
-
 
         return $next($request);
     }
