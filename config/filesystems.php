@@ -30,6 +30,13 @@ return [
 
     'disks' => [
 
+        'user_avatars' => [
+            'driver' => 'local',
+            'root' => storage_path('app/user-avatars'),
+            'url' => env('APP_URL').'/storage/user-avatars',
+            'visibility' => 'public',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

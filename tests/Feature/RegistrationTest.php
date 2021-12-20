@@ -9,7 +9,7 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUserSuccessfullyRegistered()
+    public function testUserWasRegisteredSuccessfully()
     {
         $data = [
             'name' => 'JohnDoe',
@@ -18,19 +18,15 @@ class RegistrationTest extends TestCase
             'password_confirmation' => '12345678',
         ];
 
-        //we want to hit /signup route with data
         $response = $this->post('api/v1/auth/signup', $data);
 
-        //we want to assert we get proper status
-        $response->assertStatus(201);
+        $response->assertCreated();
     }
 
-    public function testUserRegistrationDataIsInvalid()
+    public function testEmptyRequestWasRejected()
     {
-        //we want to hit /signup route with empty data
-        $response = $this->post('api/v1/auth/signup');
+        $response = $this->postJson('api/v1/auth/signup');
 
-        //we want to assert we get proper status
-        $response->assertStatus(302);
+        $response->assertUnprocessable();
     }
 }
