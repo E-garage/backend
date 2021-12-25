@@ -19,13 +19,19 @@ class RolesTest extends TestCase
 
     public function testRegisteredUserHasCorrectRole()
     {
-        $user = UserModel::factory()->create();
-        $role = $user->role; //@phpstan-ignore-line
+        $data = [
+            'name' => 'JohnDoe',
+            'email' => 'cool@email.com',
+            'password' => '12345678',
+            'password_confirmation' => '12345678',
+        ];
 
-        $this->assertSame($user['role_id'], $role['id']);
-        $this->assertSame(2, $user['role_id']);
-        $this->assertSame(2, $role['id']);
-        $this->assertSame('user', $role['type']);
+        $this->postJson('api/v1/auth/signup', $data);
+
+        $user = UserModel::where('email', $data['email'])->first();
+
+        $this->assertSame($user['role'], UserModel::ROLES['user']);
+        $this->assertNotSame($user['role'], UserModel::ROLES['admin']);
     }
 
     public function testUserCanNotSpecifyRoleDuringRegistration()
@@ -35,13 +41,14 @@ class RolesTest extends TestCase
             'email' => 'cool@email.com',
             'password' => '12345678',
             'password_confirmation' => '12345678',
-            'role_id' => 1,
+            'role' => 1,
         ];
 
-        $response = $this->postJson('api/v1/auth/signup', $data);
-        $response->assertStatus(201);
+        $this->postJson('api/v1/auth/signup', $data);
 
         $user = UserModel::where('email', 'cool@email.com')->first();
-        $this->assertEquals(2, $user->role_id);
+
+        $this->assertNotEquals($user['role'], $data['role']);
+        $this->assertNotEquals($user['role'], 1);
     }
 }
