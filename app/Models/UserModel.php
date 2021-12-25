@@ -54,7 +54,7 @@ class UserModel extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use Uuids;
 
-    const ROLES = [
+    public const ROLES = [
         'admin' => 1,
         'user' => 2,
     ];
