@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Notifications\ResetPasswordNotification;
 use App\Traits\Uuids;
 use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -17,7 +18,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
-use App\Notifications\ResetPasswordNotification;
 
 /**
  * App\Models\UserModel.
