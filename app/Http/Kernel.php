@@ -79,6 +79,6 @@ class Kernel extends HttpKernel
         'validate.update.name' => ValidateUpdateName::class,
         'validate.upload.avatar' => ValidateUploadAvatar::class,
         'validate.send.reset.link' => ValidateSendResetLink::class,
-        'valdiate.reset.password' => ValidateResetPassword::class,
+        'validate.reset.password' => ValidateResetPassword::class,
     ];
 }
