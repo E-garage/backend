@@ -38,18 +38,16 @@ Route::prefix('/v1/auth')->group(function ()
         ->name('register');
 });
 
+Route::prefix('v1/reset-password')->group(function ()
+{
+    Route::put('/send-link', [ResetPasswordController::class, 'sendResetLink'])->middleware('validate.send.reset.link');
+    Route::put('/', [ResetPasswordController::class, 'resetPassword'])->middleware('validate.reset.password')->name('password.reset');
+});
+
 Route::prefix('/v1/account')
 ->middleware('auth:sanctum')
 ->group(function ()
 {
-    Route::prefix('/reset-password')
-    ->withoutMiddleware('auth:sanctum')
-    ->group(function ()
-    {
-        Route::put('/send-link', [ResetPasswordController::class, 'sendResetLink'])->middleware('validate.send.reset.link');
-        Route::put('/', [ResetPasswordController::class, 'resetPassword'])->middleware('validate.reset.password')->name('password.reset');
-    });
-
     Route::prefix('/update')->group(function ()
     {
         Route::put('/password', [AccountManagementController::class, 'updatePassword'])->middleware('validate.update.password');
