@@ -17,6 +17,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
+use App\Notifications\ResetPasswordNotification;
 
 /**
  * App\Models\UserModel.
@@ -85,4 +86,11 @@ class UserModel extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = 'https://adress.here/reset-password?token=' . $token;
+
+        $this->notify(new ResetPasswordNotification($url));
+    }
 }
