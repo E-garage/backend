@@ -22,7 +22,7 @@ class ResetPasswordTest extends TestCase
         parent::setUp();
 
         Notification::fake();
-        $this->user = UserModel::factory()->create();
+        $this->user = UserModel::factory()->create(); // @phpstan-ignore-line
     }
 
     public function testLinkForResettingPasswordHasBeenSent()
@@ -54,7 +54,7 @@ class ResetPasswordTest extends TestCase
         $response = $this->putJson('/api/v1/reset-password', $data);
         $response->assertOk();
 
-        $this->assertFalse(Hash::check( $newPassword, $this->user['password']));
+        $this->assertFalse(Hash::check($newPassword, $this->user['password']));
 
         $this->user->refresh();
 
