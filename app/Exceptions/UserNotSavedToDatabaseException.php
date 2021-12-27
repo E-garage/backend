@@ -8,6 +8,6 @@ class UserNotSavedToDatabaseException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Couldn\'t save the user.", 500);
+        parent::__construct("Couldn't save the user.", 500);
     }
 }
