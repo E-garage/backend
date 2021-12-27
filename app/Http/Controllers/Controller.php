@@ -23,7 +23,6 @@ use Illuminate\Routing\Controller as BaseController;
  *      bearerFormat="JWT",
  * ),
  * )
- *
  */
 
 /**

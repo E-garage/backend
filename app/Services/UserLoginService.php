@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Exceptions\UserCredentialsInvalidExecption;
-use App\Exceptions\UserNotSavedToDatabaseException;
 use App\Models\UserModel;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -24,7 +23,7 @@ class UserLoginService
     }
 
     /**
-     * @throws UserNotSavedToDatabaseException
+     * @throws UserCredentialsInvalidExecption
      */
     public function login(): UserModel
     {

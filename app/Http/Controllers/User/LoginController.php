@@ -39,7 +39,7 @@ class LoginController extends Controller
      *         ),
      *     ),
      *     @OA\Response(
-     *         response="201",
+     *         response="200",
      *         description="Loged in",
      *         @OA\JsonContent(type="object",
      *                  @OA\Property(property="email", type="string"),
@@ -70,15 +70,16 @@ class LoginController extends Controller
      *         ),
      *         example={"email": "cool@email.com", "password": "12345678"}
      *   )
+     *
      * @throws \App\Exceptions\UserNotFoundException
      */
     public function login(Request $request): JsonResponse
     {
         $data = $this->getDataFromRequest($request);
         $user = $this->userFactory->getUser($data);
-        $login = new UserLoginService($user);
+        $userLoginService = new UserLoginService($user);
 
-        $loggedUser = $login->login();
+        $loggedUser = $userLoginService->login();
 
         $token = $loggedUser->createToken('auth_token')->plainTextToken;
         $response = [
@@ -86,6 +87,7 @@ class LoginController extends Controller
             'accessToken' => $token,
             'token_type' => 'Bearer',
         ];
+
         return new JsonResponse($response, 200);
     }
 
@@ -97,9 +99,5 @@ class LoginController extends Controller
         ];
 
         return $data;
-    }
-
-    private function error(string $string, int $int)
-    {
     }
 }

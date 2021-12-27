@@ -9,6 +9,7 @@ use Tests\TestCase;
 class LoginTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -19,11 +20,11 @@ class LoginTest extends TestCase
         $this->json('GET', 'api/v1/auth/login')
             ->assertStatus(422)
             ->assertJson([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    'email' => ["The email field is required."],
-                    'password' => ["The password field is required."],
-                ]
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'email' => ['The email field is required.'],
+                    'password' => ['The password field is required.'],
+                ],
             ]);
     }
 
@@ -34,13 +35,12 @@ class LoginTest extends TestCase
             'password' => bcrypt('sample123'),
         ]);
 
-
         $loginData = ['email' => 'sample@test.com', 'password' => 'sample123'];
 
         $response = $this->json('GET', 'api/v1/auth/login', $loginData, ['Accept' => 'application/json'])
             ->assertStatus(200)
             ->assertJsonStructure([
-                "user" => [
+                'user' => [
                     'email',
                 ],
             ]);

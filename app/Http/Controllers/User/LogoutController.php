@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-
 use App\Exceptions\TokenNotFoundException;
 use App\Http\Controllers\Controller;
+use App\Services\UserLogoutService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
 {
+    private UserLogoutService $userLogoutService;
+
+    public function __construct()
+    {
+        $this->userLogoutService = new UserLogoutService();
+    }
+
     /**
      * @OA\Post (
      *     path="/api/v1/auth/logout",
@@ -38,27 +45,21 @@ class LogoutController extends Controller
      *         description="Unauthorized",
      *     ),
      *    ),
-     * @param Request $request
-     * @return JsonResponse
+     *
      * @throws TokenNotFoundException
      */
     public function logout(Request $request): JsonResponse
     {
-        if ( Auth::check() || !is_null($request->bearerToken()) ) {
-            try {
-                auth()->user()->currentAccessToken()->delete();
-                $response = [
-                    'message' => 'Logged out',
-                ];
-                return new JsonResponse($response, 201);
-            }catch (ModelNotFoundException $e){
-                throw new TokenNotFoundException;
-            }
-        } else {
+        try {
+            $user = $request->user();
+            $this->userLogoutService->logout($user);
             $response = [
-                'message' => 'Unauthorized',
+                'message' => 'Logged out',
             ];
-            return new JsonResponse($response, 500);
+
+            return new JsonResponse($response, 200);
+        } catch (ModelNotFoundException $e) {
+            throw new TokenNotFoundException();
         }
     }
 }
