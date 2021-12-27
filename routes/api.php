@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\User\LoginController;
+use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\User\AccountManagementController;
 use App\Http\Controllers\User\AvatarController;
 use Illuminate\Http\Request;
@@ -35,6 +37,14 @@ Route::prefix('/v1/auth')->group(function ()
     Route::post('/signup', [RegisterController::class, 'create'])
         ->middleware('validate.register')
         ->name('register');
+
+    Route::get('/login', [LoginController::class, 'login'])
+        ->middleware('validate.login')
+        ->name('login');
+
+    Route::post('/logout', [LogoutController::class, 'logout'])
+        ->middleware('auth:sanctum')
+        ->name('logout');
 });
 
 Route::prefix('/v1/account')

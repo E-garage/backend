@@ -28,6 +28,15 @@ class UserRepository
         return UserModel::all();
     }
 
+    public function findByEmail(string $email): ?UserModel
+    {
+        try {
+            return $this->userModel::Where('email', $email)->first();
+        } catch (ModelNotFoundException) {
+            return null;
+        }
+    }
+
     public function findById(string $id): ?UserModel
     {
         try {

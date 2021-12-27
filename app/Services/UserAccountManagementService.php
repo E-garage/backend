@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\UserNotUpdatedException;
 use App\Models\UserModel;
 use App\Repositories\UserRepository;
 use Hash;
@@ -34,6 +35,8 @@ class UserAccountManagementService
 
     /**
      * Updates user's account email.
+     *
+     * @throws UserNotUpdatedException
      */
     public function updateEmail(string $newEmail): void
     {
@@ -43,6 +46,8 @@ class UserAccountManagementService
 
     /**
      * Updates user's account name.
+     *
+     * @throws UserNotUpdatedException
      */
     public function updateName(string $newName): void
     {
