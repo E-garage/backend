@@ -47,7 +47,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Success"
                     }
                 }
             }
@@ -81,7 +81,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Success"
                     }
                 }
             }
@@ -120,41 +120,7 @@
                 }
             }
         },
-        "/api/v1/account/avatar/upload": {
-            "post": {
-                "tags": [
-                    "Avatar Management"
-                ],
-                "summary": "Upload user's avatar",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Avatar"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Avatar"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/v1/account/avatar/": {
+        "/api/v1/account/avatar": {
             "get": {
                 "tags": [
                     "Avatar Management"
@@ -162,7 +128,7 @@
                 "summary": "Get user's avatar",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "Success",
                         "content": {
                             "image": {
                                 "schema": {
@@ -170,19 +136,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            }
-        },
-        "/api/v1/account/avatar/delete": {
-            "delete": {
-                "tags": [
-                    "Avatar Management"
-                ],
-                "summary": "Delete user's avatar",
-                "responses": {
-                    "200": {
-                        "description": ""
                     }
                 }
             }
@@ -301,6 +254,25 @@
                     "email": "cool@email.com",
                     "password": "12345678",
                     "password_confirmation": "12345678"
+                }
+            }
+        },
+        "responses": {
+            "201": {
+                "description": "Success"
+            },
+            "200": {
+                "description": "Success"
+            }
+        },
+        "parameters": {
+            "user_credentials_in_query_required": {
+                "name": "body",
+                "in": "query",
+                "description": "Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
+                "required": true,
+                "schema": {
+                    "$ref": "#/components/schemas/Avatar"
                 }
             }
         }

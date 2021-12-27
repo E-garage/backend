@@ -35,3 +35,5 @@ ide-helper-meta:
 	docker-compose exec php php artisan ide-helper:meta
 ide-helper-models:
 	docker-compose exec php php artisan ide-helper:models --write
+fix-permissions:
+		docker-compose exec php usermod -u 1000 www-data

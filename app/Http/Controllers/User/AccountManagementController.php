@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Auth;
  *             @OA\Schema(ref="#/components/schemas/UpdatePassword"),
  *         ),
  *     ),
- *     @OA\Response(response="200", description=""),
+ *     @OA\Response(response="200", description="Success"),
  * ),
  *
  * @OA\Put(
@@ -51,7 +51,7 @@ use Illuminate\Support\Facades\Auth;
  *             @OA\Schema(ref="#/components/schemas/UpdateName"),
  *         ),
  *     ),
- *     @OA\Response(response="200", description=""),
+ *     @OA\Response(response="200", description="Success"),
  * ),
  *
  * @OA\Put(
