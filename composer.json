@@ -23,7 +23,6 @@
         "friendsofphp/php-cs-fixer": "^3.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpstan/phpstan": "^0.12.90",
         "phpunit/phpunit": "^9.3.3",
         "nunomaduro/larastan": "^v0.7.12"
     },
@@ -47,7 +46,7 @@
         "cs:check": "php-cs-fixer fix --dry-run --format=txt --verbose --diff  --config=.cs.php",
         "cs:fix": "php-cs-fixer fix --config=.cs.php",
         "phpstan": [
-            "php -d memory_limit=300M vendor/bin/phpstan analyse -l 5 -c phpstan.neon"
+            "php -d memory_limit=600M vendor/bin/phpstan analyse -l 5 -c phpstan.neon"
         ],
         "test": "phpunit",
 
