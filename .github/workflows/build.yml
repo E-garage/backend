@@ -16,6 +16,7 @@ jobs:
           echo "Build done."
       - name: Test
         run: |
+          docker-compose -f ./docker-compose_ci.yml exec -T php composer phpstan
           docker-compose -f ./docker-compose_ci.yml exec -T php composer cs:check --quiet
           docker-compose -f ./docker-compose_ci.yml exec -T php composer test
           echo "Testing and lintering successfully!"
