@@ -61,6 +61,9 @@ class UserModel extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use Uuids;
 
+    public const ADMIN = 'admin';
+    public const USER = 'user';
+
     protected $table = 'users';
 
     /**
