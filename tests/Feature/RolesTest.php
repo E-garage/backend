@@ -30,8 +30,8 @@ class RolesTest extends TestCase
 
         $user = UserModel::where('email', $data['email'])->first();
 
-        $this->assertSame($user['role'], UserModel::ROLES['user']);
-        $this->assertNotSame($user['role'], UserModel::ROLES['admin']);
+        $this->assertSame($user['role'], UserModel::USER);
+        $this->assertNotSame($user['role'], UserModel::ADMIN);
     }
 
     public function testUserCanNotSpecifyRoleDuringRegistration()
@@ -41,7 +41,7 @@ class RolesTest extends TestCase
             'email' => 'cool@email.com',
             'password' => '12345678',
             'password_confirmation' => '12345678',
-            'role' => 1,
+            'role' => UserModel::ADMIN,
         ];
 
         $this->postJson('api/v1/auth/signup', $data);

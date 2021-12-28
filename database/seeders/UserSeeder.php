@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
             'created_at' => now(),
             'updated_at' => now(),
-            'role' => UserModel::ROLES['admin'],
+            'role' => UserModel::ADMIN,
         ]);
     }
 }
