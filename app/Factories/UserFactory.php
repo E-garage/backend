@@ -35,4 +35,12 @@ class UserFactory
     {
         return Hash::make($password);
     }
+
+    public function getUser(array $data): UserModel
+    {
+        $this->user->email = $data['email'];
+        $this->user->password = $data['password'];
+
+        return $this->user;
+    }
 }

@@ -23,22 +23,16 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  *         description="Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
  *         @OA\Schema(ref="#/components/schemas/Avatar"),
  *     ),
- *     @OA\RequestBody(
- *         @OA\MediaType(
- *             mediaType="application/json",
- *             @OA\Schema(ref="#/components/schemas/Avatar"),
- *         ),
- *     ),
- *     @OA\Response(response="200", description=""),
+ *     @OA\Response(response="201", description="Success"),
  * ),
  *
  * @OA\GET(
- *     path="/api/v1/account/avatar/",
+ *     path="/api/v1/account/avatar",
  *     tags={"Avatar Management"},
  *     summary="Get user's avatar",
  *     @OA\Response(
  *          response="200",
- *          description="",
+ *          description="Success",
  *          @OA\MediaType(
  *             mediaType="image",
  *             @OA\Schema(
@@ -52,7 +46,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  *     path="/api/v1/account/avatar/delete",
  *     tags={"Avatar Management"},
  *     summary="Delete user's avatar",
- *     @OA\Response(response="200", description=""),
+ *     @OA\Response(response="200", description="Success"),
  * ),
  */
 class AvatarController extends Controller

@@ -33,13 +33,13 @@ class RegisterController extends Controller
      *         in="query",
      *         required=true,
      *         description="User object that needs to be added to the database.",
-     *         @OA\Schema(ref="#/components/schemas/User"),
+     *         @OA\Schema(ref="#/components/schemas/Register"),
      *     ),
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
-     *                 ref="#/components/schemas/User",
+     *                 ref="#/components/schemas/Register",
      *             ),
      *         ),
      *     ),
@@ -49,14 +49,14 @@ class RegisterController extends Controller
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
-     *                 ref="#/components/schemas/User",
+     *                 ref="#/components/schemas/Register",
      *             ),
      *         ),
      *  ),
      * ),
      * @OA\Component(
      *         @OA\Schema(
-     *             schema="User",
+     *             schema="Register",
      *             type="object",
      *         @OA\Property(
      *             property="name",
