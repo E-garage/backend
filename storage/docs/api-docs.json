@@ -47,7 +47,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Success"
                     }
                 }
             }
@@ -81,7 +81,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Success"
                     }
                 }
             }
@@ -120,41 +120,7 @@
                 }
             }
         },
-        "/api/v1/account/avatar/upload": {
-            "post": {
-                "tags": [
-                    "Avatar Management"
-                ],
-                "summary": "Upload user's avatar",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Avatar"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Avatar"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/v1/account/avatar/": {
+        "/api/v1/account/avatar": {
             "get": {
                 "tags": [
                     "Avatar Management"
@@ -162,7 +128,7 @@
                 "summary": "Get user's avatar",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "Success",
                         "content": {
                             "image": {
                                 "schema": {
@@ -174,15 +140,104 @@
                 }
             }
         },
-        "/api/v1/account/avatar/delete": {
-            "delete": {
+        "/api/v1/auth/login": {
+            "get": {
                 "tags": [
-                    "Avatar Management"
+                    "User"
                 ],
-                "summary": "Delete user's avatar",
+                "summary": "Operates about user",
+                "operationId": "d57f2a71cce3c867371f8c5e2aff0ed9",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "User object that needs to be log in.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Login"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "200": {
-                        "description": ""
+                    "201": {
+                        "description": "Loged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "accessToken": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "email": "cool@email.com",
+                                    "accessToken": "tokenNr1",
+                                    "tokenType": "Bearer"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User Not Found"
+                    },
+                    "401": {
+                        "description": "User Credential Invalid"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Operates about user",
+                "operationId": "4eee631b5540cc3b74d925dbe348f1fc",
+                "parameters": [
+                    {
+                        "parameter": "user_accessToken",
+                        "name": "Bearer",
+                        "in": "header",
+                        "description": "accessToken to log out",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "loged out"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unauthorized"
                     }
                 }
             }
@@ -202,7 +257,7 @@
                         "description": "User object that needs to be added to the database.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/components/schemas/User"
+                            "$ref": "#/components/schemas/Register"
                         }
                     }
                 ],
@@ -210,7 +265,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "$ref": "#/components/schemas/Register"
                             }
                         }
                     }
@@ -221,7 +276,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/Register"
                                 }
                             }
                         }
@@ -348,7 +403,22 @@
                     "image": "file"
                 }
             },
-            "User": {
+            "Login": {
+                "properties": {
+                    "email": {
+                        "type": "email|string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "email": "cool@email.com",
+                    "password": "12345678"
+                }
+            },
+            "Register": {
                 "properties": {
                     "name": {
                         "type": "string"
@@ -404,6 +474,34 @@
                     "password": "12345678",
                     "password_confirmation": "12345678"
                 }
+            }
+        },
+        "responses": {
+            "201": {
+                "description": "Success"
+            },
+            "200": {
+                "description": "Success"
+            }
+        },
+        "parameters": {
+            "user_credentials_in_query_required": {
+                "name": "body",
+                "in": "query",
+                "description": "Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
+                "required": true,
+                "schema": {
+                    "$ref": "#/components/schemas/Avatar"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },

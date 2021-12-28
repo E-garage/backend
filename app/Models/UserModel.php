@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -18,6 +19,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
+use Laravel\Sanctum\Sanctum;
 
 /**
  * App\Models\UserModel.
@@ -47,6 +49,11 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|UserModel whereRememberToken($value)
  * @method static Builder|UserModel whereUpdatedAt($value)
  * @mixin Eloquent
+ *
+ * @property string|null $avatar
+ *
+ * @method static \Database\Factories\UserModelFactory factory(...$parameters)
+ * @method static Builder|UserModel whereAvatar($value)
  */
 class UserModel extends Authenticatable implements MustVerifyEmail
 {
@@ -54,6 +61,9 @@ class UserModel extends Authenticatable implements MustVerifyEmail
     use HasFactory;
     use Notifiable;
     use Uuids;
+
+    public const ADMIN = 'admin';
+    public const USER = 'user';
 
     protected $table = 'users';
 
@@ -87,10 +97,16 @@ class UserModel extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function tokens(): MorphMany
+    {
+        return $this->morphMany(Sanctum::$personalAccessTokenModel, 'tokenable', 'tokenable_type', 'tokenable_uuid');
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $url = 'https://adress.here/reset-password?token=' . $token;
 
         $this->notify(new ResetPasswordNotification($url));
     }
+
 }

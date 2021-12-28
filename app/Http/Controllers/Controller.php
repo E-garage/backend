@@ -14,6 +14,15 @@ use Illuminate\Routing\Controller as BaseController;
  *    title="E-garage Api",
  *    version="0.0.1",
  * )
+ * @OA\SecurityScheme(
+ *      securityScheme="bearerAuth",
+ *      in="header",
+ *      name="bearerAuth",
+ *      type="http",
+ *      scheme="bearer",
+ *      bearerFormat="JWT",
+ * ),
+ * )
  */
 
 /**
