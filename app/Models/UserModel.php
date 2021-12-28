@@ -108,5 +108,4 @@ class UserModel extends Authenticatable implements MustVerifyEmail
 
         $this->notify(new ResetPasswordNotification($url));
     }
-
 }
