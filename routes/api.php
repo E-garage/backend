@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\ResetPasswordController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\User\AccountManagementController;
@@ -45,6 +46,12 @@ Route::prefix('/v1/auth')->group(function ()
     Route::post('/logout', [LogoutController::class, 'logout'])
         ->middleware('auth:sanctum')
         ->name('logout');
+});
+
+Route::prefix('v1/reset-password')->group(function ()
+{
+    Route::put('/send-link', [ResetPasswordController::class, 'sendResetLink'])->middleware('validate.send.reset.link');
+    Route::put('/', [ResetPasswordController::class, 'resetPassword'])->middleware('validate.reset.password')->name('password.reset');
 });
 
 Route::prefix('/v1/account')

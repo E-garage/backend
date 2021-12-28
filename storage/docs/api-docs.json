@@ -283,6 +283,74 @@
                     }
                 }
             }
+        },
+        "/api/v1/reset-password/send-link": {
+            "put": {
+                "tags": [
+                    "Reset Password"
+                ],
+                "summary": "Send link to user's mail via mail.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Email to which the link should be sent.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/SendResetPasswordLink"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendResetPasswordLink"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/v1/reset-password/": {
+            "put": {
+                "tags": [
+                    "Reset Password"
+                ],
+                "summary": "Resets password.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "User's email, unique token and new password.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/ResetPassword"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPassword"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -368,6 +436,40 @@
                 "type": "object",
                 "example": {
                     "name": "JohnDoe",
+                    "email": "cool@email.com",
+                    "password": "12345678",
+                    "password_confirmation": "12345678"
+                }
+            },
+            "SendResetPasswordLink": {
+                "properties": {
+                    "email": {
+                        "type": "email|string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "email": "cool@email.com"
+                }
+            },
+            "ResetPassword": {
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "email|string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "token": "cdacc0d252881102003fb486b419f2de52d8f7b1779585342e5b04c2003ce10d",
                     "email": "cool@email.com",
                     "password": "12345678",
                     "password_confirmation": "12345678"

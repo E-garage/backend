@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Notifications\ResetPasswordNotification;
 use App\Traits\Uuids;
 use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -99,5 +100,12 @@ class UserModel extends Authenticatable implements MustVerifyEmail
     public function tokens(): MorphMany
     {
         return $this->morphMany(Sanctum::$personalAccessTokenModel, 'tokenable', 'tokenable_type', 'tokenable_uuid');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = 'https://adress.here/reset-password?token=' . $token;
+
+        $this->notify(new ResetPasswordNotification($url));
     }
 }

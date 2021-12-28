@@ -6,6 +6,8 @@ namespace App\Http;
 
 use App\Validators\ValidateLoginCredentials;
 use App\Validators\ValidateRegisterCredentials;
+use App\Validators\ValidateResetPassword;
+use App\Validators\ValidateSendResetLink;
 use App\Validators\ValidateUpdateEmail;
 use App\Validators\ValidateUpdateName;
 use App\Validators\ValidateUpdatePassword;
@@ -78,5 +80,7 @@ class Kernel extends HttpKernel
         'validate.update.email' => ValidateUpdateEmail::class,
         'validate.update.name' => ValidateUpdateName::class,
         'validate.upload.avatar' => ValidateUploadAvatar::class,
+        'validate.send.reset.link' => ValidateSendResetLink::class,
+        'validate.reset.password' => ValidateResetPassword::class,
     ];
 }
