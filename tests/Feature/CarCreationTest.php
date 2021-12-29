@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\UserModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Storage;
 use Str;
@@ -16,7 +15,7 @@ class CarCreationTest extends TestCase
 
     protected UserModel $user;
 
-    protected function setUp():void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -29,7 +29,7 @@ class ValidateResetPassword
 
         $validator = Validator::make($request->all(), $rules);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             throw new ValidationException($validator);
         }
 

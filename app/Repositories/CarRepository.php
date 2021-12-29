@@ -34,7 +34,7 @@ class CarRepository
         try {
             $this->car->deleteOrFail();
         } catch (\Throwable) {
-           throw new CarNotDeletedFromDatabaseException();
+            throw new CarNotDeletedFromDatabaseException();
         }
     }
 }

@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\Models\Car;
 use App\Repositories\CarRepository;
-use Illuminate\Http\UploadedFile;
 
 class AddCarService
 {

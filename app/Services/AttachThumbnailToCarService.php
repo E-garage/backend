@@ -34,7 +34,7 @@ class AttachThumbnailToCarService
     {
         $filename = $this->thumbnail->store('', 'cars_thumbnails');
 
-        if(!$filename) {
+        if (!$filename) {
             throw new UploadException("Thumbnail wasn't uploaded");
         }
 

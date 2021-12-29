@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Factories\CarFactory;
 use App\Models\Car;
-use App\Models\UserModel;
 use App\Services\AddCarService;
 use App\Services\AttachThumbnailToCarService;
 use App\Services\DeleteCarService;
@@ -14,7 +13,6 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-
     public function create(Request $request): JsonResponse
     {
         $data = $this->getDataFormRequest($request);
@@ -23,7 +21,7 @@ class CarController extends Controller
         $factory = new CarFactory();
         $car = $factory->createFromRequest($data);
 
-        if($thumbnail) {
+        if ($thumbnail) {
             $service = new AttachThumbnailToCarService($car, $thumbnail);
             $car = $service->attachThumbnail();
         }
@@ -31,27 +29,27 @@ class CarController extends Controller
         $service = new AddCarService($car);
         $service->addCar();
 
-        return new JsonResponse(null ,201);
+        return new JsonResponse(null, 201);
     }
 
     public function index()
     {
-        # code...
+        // code...
     }
 
     public function show(Car $car)
     {
-        # retrieve car with details
+        // retrieve car with details
     }
 
     public function update(Car $car)
     {
-        # code...
+        // code...
     }
 
     public function delete(Car $car): JsonResponse
     {
-        if(Auth::user()->cannot('delete', $car)) {
+        if (Auth::user()->cannot('delete', $car)) {
             return new JsonResponse(null, 401);
         }
 

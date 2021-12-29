@@ -33,7 +33,7 @@ class DeleteCarService
         $filename = $this->car['thumbnail'];
         $isDeleted = Storage::disk('cars_thumbnails')->delete($filename);
 
-        if(!$isDeleted) {
+        if (!$isDeleted) {
             throw new CarsThumbnailNotRemovedFromStorage();
         }
 

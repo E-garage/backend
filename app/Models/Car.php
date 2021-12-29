@@ -11,7 +11,7 @@ class Car extends Model
     use HasFactory;
 
     protected $fillable = [
-        'owner_id'
+        'owner_id',
     ];
 
     public function owner(): BelongsTo
