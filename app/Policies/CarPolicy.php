@@ -11,30 +11,13 @@ class CarPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(UserModel $userModel)
-    {
-    }
-
-    /**
      * Determine whether the user can view the model.
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(UserModel $userModel, Car $car)
     {
-    }
-
-    /**
-     * Determine whether the user can create models.
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(UserModel $userModel)
-    {
+        return $userModel->id === $car->owner_id;
     }
 
     /**
@@ -44,6 +27,7 @@ class CarPolicy
      */
     public function update(UserModel $userModel, Car $car)
     {
+        return $userModel->id === $car->owner_id;
     }
 
     /**
@@ -54,23 +38,5 @@ class CarPolicy
     public function delete(UserModel $userModel, Car $car)
     {
         return $userModel->id === $car->owner_id;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(UserModel $userModel, Car $car)
-    {
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(UserModel $userModel, Car $car)
-    {
     }
 }
