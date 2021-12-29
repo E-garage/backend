@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\User\ResetPasswordController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\LogoutController;
@@ -71,4 +72,15 @@ Route::prefix('/v1/account')
         Route::post('/upload', [AvatarController::class, 'upload'])->middleware('validate.upload.avatar');
         Route::delete('/delete', [AvatarController::class, 'delete']);
     });
+});
+
+Route::prefix('/v1/cars')
+->middleware('auth:sanctum')
+->group(function ()
+{
+    Route::post('/add', [CarController::class, 'create']);
+    Route::get('/', [CarController::class, 'index']);
+    Route::get('/{car}', [CarController::class, 'show']);
+    Route::put('/update/{car}', [CarController::class, 'update']);
+    Route::delete('/delete/{car}', [CarController::class, 'delete']);
 });
