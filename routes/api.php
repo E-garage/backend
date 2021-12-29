@@ -78,7 +78,7 @@ Route::prefix('/v1/cars')
 ->middleware('auth:sanctum')
 ->group(function ()
 {
-    Route::post('/add', [CarController::class, 'create']);
+    Route::post('/add', [CarController::class, 'create'])->middleware('validate.create.car');
     Route::get('/', [CarController::class, 'index']);
     Route::get('/{car}', [CarController::class, 'show']);
     Route::put('/update/{car}', [CarController::class, 'update']);
