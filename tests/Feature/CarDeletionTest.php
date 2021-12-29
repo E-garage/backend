@@ -22,8 +22,8 @@ class CarDeletionTest extends TestCase
 
         Storage::fake('cars_thumbnails');
 
-        $this->user = UserModel::factory()->create();
-        $this->actingAs($this->user);
+        $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
+        $this->actingAs($this->user); //@phpstan-ignore-line
     }
 
     public function testCarHasBeenDeletedSuccessfully()
@@ -56,8 +56,8 @@ class CarDeletionTest extends TestCase
 
         $car = Car::where('owner_id', $this->user->id)->first();
 
-        $this->otherUser = UserModel::factory()->create();
-        $this->actingAs($this->otherUser);
+        $this->otherUser = UserModel::factory()->create(); //@phpstan-ignore-line
+        $this->actingAs($this->otherUser); //@phpstan-ignore-line
 
         $response = $this->deleteJson('/api/v1/cars/delete/' . $car->id);
         $response->assertUnauthorized();

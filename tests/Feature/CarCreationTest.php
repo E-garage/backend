@@ -19,8 +19,8 @@ class CarCreationTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = UserModel::factory()->create();
-        $this->actingAs($this->user);
+        $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
+        $this->actingAs($this->user); //@phpstan-ignore-line
 
         Storage::fake('cars_thumbnails');
     }

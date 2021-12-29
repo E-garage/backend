@@ -62,7 +62,7 @@ class CarController extends Controller
     private function getDataFormRequest(Request $request): array
     {
         $data = [
-            'owner_id' => Auth::user()->id,
+            'owner_id' => Auth::user()->id, //@phpstan-ignore-line
             'brand' => $request['brand'],
             'description' => $request['description'],
         ];
