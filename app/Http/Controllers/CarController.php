@@ -11,8 +11,55 @@ use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\POST(
+ *     path="/api/v1/cars/add",
+ *     tags={"Car Management"},
+ *     summary="Add car.",
+ *     @OA\Parameter(
+ *         parameter="user_credentials_in_query_required",
+ *         name="body",
+ *         in="query",
+ *         required=true,
+ *         description="Acceptable extensions for thumbnail: png, jpg, jpeg.",
+ *         @OA\Schema(ref="#/components/schemas/AddCar"),
+ *     ),
+ *     @OA\Response(response="201", description="Success"),
+ * ),
+ *
+ * @OA\DELETE(
+ *     path="/api/v1/cars/delete/{car_id}",
+ *     tags={"Car Management"},
+ *     summary="Delete car.",
+ *     @OA\Response(response="200", description="Success"),
+ * ),
+ */
 class CarController extends Controller
 {
+    /**
+     * @OA\Component(
+     *         @OA\Schema(
+     *             schema="AddCar",
+     *             type="object",
+     *         @OA\Property(
+     *             property="brand",
+     *             type="string|required"
+     *         ),
+     *         @OA\Property(
+     *             property="description",
+     *             type="string"
+     *         ),
+     *        @OA\Property(
+     *             property="image",
+     *             type="file"
+     *         ),
+     *         example={
+     *              "brand": "BMW X12",
+     *              "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+     *              "image": "file"
+     *         },
+     * )
+     */
     public function create(Request $request): JsonResponse
     {
         $data = $this->getDataFormRequest($request);
