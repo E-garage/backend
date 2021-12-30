@@ -18,7 +18,7 @@ class UserRepository
     /**
      * UserRepository constructor.
      */
-    public function __construct(UserModel $userModel)
+    public function __construct(UserModel $userModel = null)
     {
         $this->userModel = $userModel;
     }

@@ -19,13 +19,33 @@
                         "description": "Acceptable extensions for thumbnail: png, jpg, jpeg.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/components/schemas/AddCar"
+                            "$ref": "#/components/schemas/Car"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
                         "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/cars": {
+            "get": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Get all cars that logged user own.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarCollection"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -431,7 +451,7 @@
     },
     "components": {
         "schemas": {
-            "AddCar": {
+            "Car": {
                 "properties": {
                     "brand": {
                         "type": "string|required"
@@ -449,6 +469,26 @@
                     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
                     "image": "file"
                 }
+            },
+            "CarCollection": {
+                "properties": {
+                    "cars": {
+                        "type": "list"
+                    }
+                },
+                "type": "object",
+                "example": [
+                    {
+                        "brand": "BMW X12",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                        "image": "file"
+                    },
+                    {
+                        "brand": "BMW X12",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                        "image": "file"
+                    }
+                ]
             },
             "UpdatePassword": {
                 "properties": {

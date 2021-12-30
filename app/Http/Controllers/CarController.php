@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Services\AddCarService;
 use App\Services\AttachThumbnailToCarService;
 use App\Services\DeleteCarService;
+use App\Services\IndexCarsService;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,9 +23,25 @@ use Illuminate\Http\Request;
  *         in="query",
  *         required=true,
  *         description="Acceptable extensions for thumbnail: png, jpg, jpeg.",
- *         @OA\Schema(ref="#/components/schemas/AddCar"),
+ *         @OA\Schema(ref="#/components/schemas/Car"),
  *     ),
  *     @OA\Response(response="201", description="Success"),
+ * ),
+ *
+ * @OA\GET(
+ *     path="/api/v1/cars",
+ *     tags={"Car Management"},
+ *     summary="Get all cars that logged user own.",
+ *     @OA\Response(
+ *          response="200",
+ *          description="Success",
+ *          @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(
+ *                 ref="#/components/schemas/CarCollection",
+ *             ),
+ *         ),
+ *     ),
  * ),
  *
  * @OA\DELETE(
@@ -39,7 +56,7 @@ class CarController extends Controller
     /**
      * @OA\Component(
      *         @OA\Schema(
-     *             schema="AddCar",
+     *             schema="Car",
      *             type="object",
      *         @OA\Property(
      *             property="brand",
@@ -79,9 +96,35 @@ class CarController extends Controller
         return new JsonResponse(null, 201);
     }
 
-    public function index()
+    /**
+     * @OA\Component(
+     *         @OA\Schema(
+     *             schema="CarCollection",
+     *             type="object",
+     *         @OA\Property(
+     *             property="cars",
+     *             type="list",
+     *         ),
+     *         example={
+     *              {
+     *                  "brand": "BMW X12",
+     *                  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+     *                  "image": "file"
+     *              },
+     *              {
+     *                  "brand": "BMW X12",
+     *                  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+     *                  "image": "file"
+     *              }
+     *         },
+     * )
+     */
+    public function index(): JsonResponse
     {
-        // code...
+        $service = new IndexCarsService();
+        $cars = $service->index();
+
+        return new JsonResponse(['cars' => $cars]);
     }
 
     public function show(Car $car)
