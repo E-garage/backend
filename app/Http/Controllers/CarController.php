@@ -45,6 +45,21 @@ use Illuminate\Http\Request;
  *     ),
  * ),
  *
+ * @OA\PUT(
+ *     path="/api/v1/cars/update/{car_id}",
+ *     tags={"Car Management"},
+ *     summary="Update car's info or thumbnail.",
+ *     @OA\Parameter(
+ *         parameter="user_credentials_in_query_required",
+ *         name="body",
+ *         in="query",
+ *         required=true,
+ *         description="Acceptable extensions for thumbnail: png, jpg, jpeg.",
+ *         @OA\Schema(ref="#/components/schemas/CarUpdate"),
+ *     ),
+ *     @OA\Response(response="200", description="Success"),
+ * ),
+ *
  * @OA\DELETE(
  *     path="/api/v1/cars/delete/{car_id}",
  *     tags={"Car Management"},
@@ -133,6 +148,30 @@ class CarController extends Controller
         // retrieve car with details
     }
 
+    /**
+     * @OA\Component(
+     *         @OA\Schema(
+     *             schema="CarUpdate",
+     *             type="object",
+     *         @OA\Property(
+     *             property="brand",
+     *             type="string"
+     *         ),
+     *         @OA\Property(
+     *             property="description",
+     *             type="string"
+     *         ),
+     *        @OA\Property(
+     *             property="image",
+     *             type="file"
+     *         ),
+     *         example={
+     *              "brand": "BMW X12",
+     *              "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+     *              "image": "file"
+     *         },
+     * )
+     */
     public function update(Car $car, Request $request): JsonResponse
     {
         if (Auth::user()->cannot('update', $car)) {

@@ -50,6 +50,31 @@
                 }
             }
         },
+        "/api/v1/cars/update/{car_id}": {
+            "put": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Update car's info or thumbnail.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Acceptable extensions for thumbnail: png, jpg, jpeg.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/CarUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/api/v1/cars/delete/{car_id}": {
             "delete": {
                 "tags": [
@@ -489,6 +514,25 @@
                         "image": "file"
                     }
                 ]
+            },
+            "CarUpdate": {
+                "properties": {
+                    "brand": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "file"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "brand": "BMW X12",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                    "image": "file"
+                }
             },
             "UpdatePassword": {
                 "properties": {
