@@ -22,21 +22,28 @@ class DeleteCarService
 
     public function deleteCar(): void
     {
-        $this->removeThumbnailFromStorage();
         $this->repository->delete();
+        $this->removeThumbnailFromStorage();
 
         return;
     }
 
+    /**
+     * Removes car's thumbnail from storage if exists.
+     * @throws CarsThumbnailNotRemovedFromStorage
+     */
     private function removeThumbnailFromStorage(): void
     {
         $filename = $this->car['thumbnail'];
-        $isDeleted = Storage::disk('cars_thumbnails')->delete($filename);
 
-        if (!$isDeleted) {
-            throw new CarsThumbnailNotRemovedFromStorage();
+        if (!$filename) {
+            return;
         }
 
-        return;
+        $success = Storage::disk('cars_thumbnails')->delete($filename);
+
+        if (!$success) {
+            throw new CarsThumbnailNotRemovedFromStorage();
+        }
     }
 }
