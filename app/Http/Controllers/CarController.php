@@ -135,7 +135,7 @@ class CarController extends Controller
 
     public function update(Car $car, Request $request): JsonResponse
     {
-        if( Auth::user()->cannot('update', $car)) {
+        if (Auth::user()->cannot('update', $car)) {
             return new JsonResponse(null, 401);
         }
 
@@ -146,7 +146,7 @@ class CarController extends Controller
             $car = $service->attachThumbnail();
         }
 
-        $data = $request->only(['brand','description']);
+        $data = $request->only(['brand', 'description']);
 
         $service = new UpdateCarService($car, $data);
         $service->update();

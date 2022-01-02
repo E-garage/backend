@@ -46,7 +46,7 @@ class CarUpdatingTest extends TestCase
             'thumbnail' => $file,
         ];
 
-        $response = $this->putJson('/api/v1/cars/update/'. $car['id'], $data);
+        $response = $this->putJson('/api/v1/cars/update/' . $car['id'], $data);
         $response->assertOk();
 
         $carAfterUpdate = Car::find($car['id']);
@@ -73,7 +73,7 @@ class CarUpdatingTest extends TestCase
             'thumbnail' => $file,
         ];
 
-        $response = $this->putJson('/api/v1/cars/update/'. $car['id'], $data);
+        $response = $this->putJson('/api/v1/cars/update/' . $car['id'], $data);
         $response->assertUnauthorized();
     }
 
