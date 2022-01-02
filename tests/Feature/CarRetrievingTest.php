@@ -35,7 +35,7 @@ class CarRetrievingTest extends TestCase
         $this->addCars(4);
     }
 
-    public function testUserGetHisOwnCars()
+    public function testUserCanGetOnlyHisOwnCars()
     {
         $cars = $this->user->cars()->get();
         $cars = $this->getThumbnails($cars);
