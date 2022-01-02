@@ -58,10 +58,10 @@ class CarRepository
     /**
      * @throws CarNotUpdatedException
      */
-    public function update(Car $car): void
+    public function update(array $data): void
     {
         try {
-            $car->updateOrFail($car->toArray());
+            $this->car->updateOrFail($data);
         } catch (\Throwable) {
             throw new CarNotUpdatedException();
         }
