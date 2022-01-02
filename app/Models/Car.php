@@ -12,6 +12,8 @@ class Car extends Model
 
     protected $fillable = [
         'owner_id',
+        'brand',
+        'description',
     ];
 
     public function owner(): BelongsTo

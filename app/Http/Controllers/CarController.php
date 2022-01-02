@@ -8,6 +8,7 @@ use App\Services\AddCarService;
 use App\Services\AttachThumbnailToCarService;
 use App\Services\DeleteCarService;
 use App\Services\IndexCarsService;
+use App\Services\UpdateCarService;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -132,9 +133,25 @@ class CarController extends Controller
         // retrieve car with details
     }
 
-    public function update(Car $car)
+    public function update(Car $car, Request $request): JsonResponse
     {
-        // code...
+        if( Auth::user()->cannot('update', $car)) {
+            return new JsonResponse(null, 401);
+        }
+
+        $thumbnail = $request['thumbnail'];
+
+        if ($thumbnail) {
+            $service = new AttachThumbnailToCarService($car, $thumbnail);
+            $car = $service->attachThumbnail();
+        }
+
+        $data = $request->only(['brand','description']);
+
+        $service = new UpdateCarService($car, $data);
+        $service->update();
+
+        return new JsonResponse();
     }
 
     public function delete(Car $car): JsonResponse
