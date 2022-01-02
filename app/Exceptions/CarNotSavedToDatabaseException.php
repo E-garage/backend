@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class CarNotSaveToDatabaseException extends Exception
+class CarNotSavedToDatabaseException extends Exception
 {
     public function __construct()
     {
