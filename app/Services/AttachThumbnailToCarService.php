@@ -14,16 +14,22 @@ class AttachThumbnailToCarService
 {
     protected Car $car;
     protected UploadedFile $thumbnail;
+    protected CarThumbnailDeletionService $service;
 
     public function __construct(Car $car, UploadedFile $thumbnail)
     {
         $this->car = $car;
         $this->thumbnail = $thumbnail;
+        $this->service = new CarThumbnailDeletionService();
     }
 
     public function attachThumbnail(): Car
     {
+        $filename = $this->car['thumbnail'];
+        $this->service->deleteThumbnail($filename);
+
         $filename = $this->storeThumbnail();
+
         $this->resizeThumbnail($filename);
         $this->car['thumbnail'] = $filename;
 
