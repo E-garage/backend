@@ -6,7 +6,8 @@ namespace App\Repositories;
 
 use App\Exceptions\AuthorizedUserNotFoundException;
 use App\Exceptions\CarNotDeletedFromDatabaseException;
-use App\Exceptions\CarNotSaveToDatabaseException;
+use App\Exceptions\CarNotSavedToDatabaseException;
+use App\Exceptions\CarNotUpdatedException;
 use App\Models\Car;
 use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Collection;
@@ -43,14 +44,26 @@ class CarRepository
     }
 
     /**
-     * @throws CarNotSaveToDatabaseException
+     * @throws CarNotSavedToDatabaseException
      */
     public function save(): void
     {
         try {
             $this->car->saveOrFail();
         } catch (\Throwable) {
-            throw new CarNotSaveToDatabaseException();
+            throw new CarNotSavedToDatabaseException();
+        }
+    }
+
+    /**
+     * @throws CarNotUpdatedException
+     */
+    public function update(Car $car): void
+    {
+        try {
+            $car->updateOrFail($car->toArray());
+        } catch (\Throwable) {
+            throw new CarNotUpdatedException();
         }
     }
 
