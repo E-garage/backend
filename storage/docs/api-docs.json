@@ -215,7 +215,7 @@
                         "content": {
                             "image": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Avatar"
+                                    "$ref": "#/components/schemas/RetrievedAvatar"
                                 }
                             }
                         }
@@ -536,6 +536,18 @@
                 "type": "object",
                 "example": {
                     "image": "file"
+                }
+            },
+            "RetrievedAvatar": {
+                "properties": {
+                    "image": {
+                        "description": "Image is encoded in base64.",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "image": "iVBORw0KGgoAAAANSUhEUgAAAFEAAABRCAYAAACqj0o2AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAzElEQVR4nO3QgQkAIRDAsNP9d/4fwoIgyQSla2a+4ci+HfACEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMTAD2JSAaEhoH6NAAAAAElFTkSuQmCC"
                 }
             },
             "Login": {

@@ -8,7 +8,6 @@ use App\Services\AvatarManagementService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @OA\POST(
@@ -36,7 +35,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  *          @OA\MediaType(
  *             mediaType="image",
  *             @OA\Schema(
- *                 ref="#/components/schemas/Avatar",
+ *                 ref="#/components/schemas/RetrievedAvatar",
  *             ),
  *         ),
  *     ),
@@ -81,11 +80,24 @@ class AvatarController extends Controller
         return new JsonResponse();
     }
 
-    public function get(): StreamedResponse
+    /**
+     * @OA\Component(
+     *         @OA\Schema(
+     *             schema="RetrievedAvatar",
+     *             type="object",
+     *         @OA\Property(
+     *             property="image",
+     *             type="string",
+     *             description="Image is encoded in base64."
+     *         ),
+     *         example={"image": "iVBORw0KGgoAAAANSUhEUgAAAFEAAABRCAYAAACqj0o2AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAzElEQVR4nO3QgQkAIRDAsNP9d/4fwoIgyQSla2a+4ci+HfACEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMTAD2JSAaEhoH6NAAAAAElFTkSuQmCC"}
+     * )
+     */
+    public function get(): JsonResponse
     {
         $avatar = $this->service->getAvatar();
 
-        return $avatar;
+        return new JsonResponse(['image' => $avatar]);
     }
 
     public function delete(): JsonResponse

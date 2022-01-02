@@ -11,7 +11,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AvatarManagementService
 {
@@ -27,12 +26,12 @@ class AvatarManagementService
     /**
      * Gets user's avatar and returns it.
      */
-    public function getAvatar(): StreamedResponse
+    public function getAvatar(): string
     {
         $filename = $this->user['avatar'] ?? 'default_avatar.jpg';
-        $avatar = Storage::disk('user_avatars')->download($filename);
+        $avatar = Storage::disk('user_avatars')->get($filename);
 
-        return $avatar;
+        return base64_encode($avatar);
     }
 
     /**
