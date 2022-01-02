@@ -30,6 +30,7 @@ class DeleteCarService
 
     /**
      * Removes car's thumbnail from storage if exists.
+     *
      * @throws CarsThumbnailNotRemovedFromStorage
      */
     private function removeThumbnailFromStorage(): void
