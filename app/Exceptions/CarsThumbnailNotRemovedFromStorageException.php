@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class CarsThumbnailNotRemovedFromStorage extends Exception
+class CarsThumbnailNotRemovedFromStorageException extends Exception
 {
     public function __construct()
     {
