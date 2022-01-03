@@ -143,11 +143,6 @@ class CarController extends Controller
         return new JsonResponse(['cars' => $cars]);
     }
 
-    public function show(Car $car)
-    {
-        // retrieve car with details
-    }
-
     /**
      * @OA\Component(
      *         @OA\Schema(
