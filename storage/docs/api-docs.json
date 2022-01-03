@@ -5,6 +5,89 @@
         "version": "0.0.1"
     },
     "paths": {
+        "/api/v1/cars/add": {
+            "post": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Add car.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Acceptable extensions for thumbnail: png, jpg, jpeg.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Car"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/cars": {
+            "get": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Get all cars that logged user own.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/cars/update/{car_id}": {
+            "put": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Update car's info or thumbnail.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Acceptable extensions for thumbnail: png, jpg, jpeg.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/CarUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/cars/delete/{car_id}": {
+            "delete": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Delete car.",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/docs/v1": {
             "get": {
                 "tags": [
@@ -120,6 +203,31 @@
                 }
             }
         },
+        "/api/v1/account/avatar/upload": {
+            "post": {
+                "tags": [
+                    "Avatar Management"
+                ],
+                "summary": "Upload user's avatar",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Avatar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/api/v1/account/avatar": {
             "get": {
                 "tags": [
@@ -132,10 +240,23 @@
                         "content": {
                             "image": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Avatar"
+                                    "$ref": "#/components/schemas/RetrievedAvatar"
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/v1/account/avatar/delete": {
+            "delete": {
+                "tags": [
+                    "Avatar Management"
+                ],
+                "summary": "Delete user's avatar",
+                "responses": {
+                    "200": {
+                        "description": "Success"
                     }
                 }
             }
@@ -169,7 +290,7 @@
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Loged in",
                         "content": {
                             "application/json": {
@@ -355,6 +476,64 @@
     },
     "components": {
         "schemas": {
+            "Car": {
+                "properties": {
+                    "brand": {
+                        "type": "string|required"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "file"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "brand": "BMW X12",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                    "image": "file"
+                }
+            },
+            "CarCollection": {
+                "properties": {
+                    "cars": {
+                        "type": "list"
+                    }
+                },
+                "type": "object",
+                "example": [
+                    {
+                        "brand": "BMW X12",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                        "image": "file"
+                    },
+                    {
+                        "brand": "BMW X12",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                        "image": "file"
+                    }
+                ]
+            },
+            "CarUpdate": {
+                "properties": {
+                    "brand": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "file"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "brand": "BMW X12",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                    "image": "file"
+                }
+            },
             "UpdatePassword": {
                 "properties": {
                     "password": {
@@ -401,6 +580,18 @@
                 "type": "object",
                 "example": {
                     "image": "file"
+                }
+            },
+            "RetrievedAvatar": {
+                "properties": {
+                    "image": {
+                        "description": "Image is encoded in base64.",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "image": "iVBORw0KGgoAAAANSUhEUgAAAFEAAABRCAYAAACqj0o2AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAzElEQVR4nO3QgQkAIRDAsNP9d/4fwoIgyQSla2a+4ci+HfACEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMSAiQETAyYGTAyYGDAxYGLAxICJARMDJgZMDJgYMDFgYsDEgIkBEwMmBkwMmBgwMWBiwMTAD2JSAaEhoH6NAAAAAElFTkSuQmCC"
                 }
             },
             "Login": {
@@ -473,25 +664,6 @@
                     "email": "cool@email.com",
                     "password": "12345678",
                     "password_confirmation": "12345678"
-                }
-            }
-        },
-        "responses": {
-            "201": {
-                "description": "Success"
-            },
-            "200": {
-                "description": "Success"
-            }
-        },
-        "parameters": {
-            "user_credentials_in_query_required": {
-                "name": "body",
-                "in": "query",
-                "description": "Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
-                "required": true,
-                "schema": {
-                    "$ref": "#/components/schemas/Avatar"
                 }
             }
         },

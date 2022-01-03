@@ -56,10 +56,16 @@ class AvatarManagementTest extends TestCase
         $this->postJson('/api/v1/account/avatar/upload', ['image' => $file]);
 
         $filename = $this->user['avatar'];
-        $response = $this->getJson('/api/v1/account/avatar/');
+        $file = Storage::disk('user_avatars')->get($filename);
 
+        $response = $this->getJson('/api/v1/account/avatar/');
         $response->assertOk();
-        $response->assertDownload($filename);
+
+        $expectedJson = [
+            'image' => base64_encode($file),
+        ];
+
+        $response->assertJson($expectedJson);
     }
 
     public function testAvatarWasDeletedFromTheStorage()

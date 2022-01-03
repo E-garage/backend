@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Validator;
 
-class ValidateResetPassword
+class ValidateCreateCar
 {
     /**
      * Handle an incoming request.
@@ -21,10 +21,9 @@ class ValidateResetPassword
     public function handle(Request $request, Closure $next): mixed
     {
         $rules = [
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|max:50|confirmed',
-            'password_confirmation' => 'min:8|max:50',
+            'brand' => 'string|min:3|max:30|required',
+            'description' => 'string|max:50',
+            'thumbnail' => 'image|mimes:jpeg,png',
         ];
 
         $validator = Validator::make($request->all(), $rules);

@@ -37,6 +37,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'cars_thumbnails' => [
+            'driver' => 'local',
+            'root' => storage_path('app/cars-thumbnails'),
+            'url' => env('APP_URL').'/storage/cars-thumbnails',
+            'visibility' => 'public',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

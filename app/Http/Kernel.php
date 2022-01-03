@@ -4,10 +4,12 @@ declare(strict_types = 1);
 
 namespace App\Http;
 
+use App\Validators\ValidateCreateCar;
 use App\Validators\ValidateLoginCredentials;
 use App\Validators\ValidateRegisterCredentials;
 use App\Validators\ValidateResetPassword;
 use App\Validators\ValidateSendResetLink;
+use App\Validators\ValidateUpdateCar;
 use App\Validators\ValidateUpdateEmail;
 use App\Validators\ValidateUpdateName;
 use App\Validators\ValidateUpdatePassword;
@@ -82,5 +84,7 @@ class Kernel extends HttpKernel
         'validate.upload.avatar' => ValidateUploadAvatar::class,
         'validate.send.reset.link' => ValidateSendResetLink::class,
         'validate.reset.password' => ValidateResetPassword::class,
+        'validate.create.car' => ValidateCreateCar::class,
+        'validate.update.car' => ValidateUpdateCar::class,
     ];
 }
