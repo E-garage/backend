@@ -18,7 +18,7 @@ class RegistrationTest extends TestCase
             'password_confirmation' => '12345678',
         ];
 
-        $response = $this->post('api/v1/auth/signup', $data);
+        $response = $this->postJson('api/v1/auth/signup', $data);
 
         $response->assertCreated();
     }
