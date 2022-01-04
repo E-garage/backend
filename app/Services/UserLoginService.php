@@ -19,7 +19,7 @@ class UserLoginService
     public function __construct(UserModel $user)
     {
         $this->user = $user;
-        $this->repository = new UserRepository($this->user);
+        $this->repository = new UserRepository();
     }
 
     /**

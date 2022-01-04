@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Exceptions\AvatarDeleteException;
 use App\Models\UserModel;
 use App\Repositories\UserRepository;
+use Auth;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -14,13 +15,11 @@ use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 
 class AvatarManagementService
 {
-    protected UserModel $user;
     protected UserRepository $repository;
 
-    public function __construct(UserModel $user)
+    public function __construct()
     {
-        $this->user = $user;
-        $this->repository = new UserRepository($this->user);
+        $this->repository = new UserRepository();
     }
 
     /**
@@ -28,7 +27,8 @@ class AvatarManagementService
      */
     public function getAvatar(): string
     {
-        $filename = $this->user['avatar'] ?? 'default_avatar.jpg';
+        $user = Auth::user();
+        $filename = $user['avatar'] ?? 'default_avatar.jpg';
         $avatar = Storage::disk('user_avatars')->get($filename);
 
         return base64_encode($avatar);
@@ -39,6 +39,7 @@ class AvatarManagementService
      */
     public function uploadAvatar(UploadedFile $avatar): void
     {
+        $user = Auth::user();
         $filename = $avatar->store('', 'user_avatars');
 
         if (!$filename) {
@@ -46,7 +47,7 @@ class AvatarManagementService
         }
 
         $this->resizeImg($avatar, $filename);
-        $this->saveAvatarNameInDB($filename);
+        $this->saveAvatarNameInDB($user, $filename); //@phpstan-ignore-line
     }
 
     /**
@@ -54,7 +55,8 @@ class AvatarManagementService
      */
     public function deleteAvatar(): void
     {
-        $avatar = $this->user['avatar'];
+        $user = Auth::user();
+        $avatar = $user['avatar'];
 
         if (!$avatar) {
             return;
@@ -66,25 +68,25 @@ class AvatarManagementService
             throw new AvatarDeleteException();
         }
 
-        $this->deleteAvatarNameFromDB();
+        $this->deleteAvatarNameFromDB($user); //@phpstan-ignore-line
     }
 
     /**
      * Saves avatar's filename to database.
      */
-    private function saveAvatarNameInDB(string $filename): void
+    private function saveAvatarNameInDB(UserModel $user, string $filename): void
     {
-        $this->user['avatar'] = $filename;
-        $this->repository->update($this->user);
+        $user['avatar'] = $filename;
+        $this->repository->update($user);
     }
 
     /**
      * Deletes avatar's filename from database.
      */
-    private function deleteAvatarNameFromDB(): void
+    private function deleteAvatarNameFromDB(UserModel $user): void
     {
-        $this->user['avatar'] = null;
-        $this->repository->update($this->user);
+        $user['avatar'] = null;
+        $this->repository->update($user);
     }
 
     /**

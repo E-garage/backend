@@ -83,9 +83,9 @@ class RegisterController extends Controller
     {
         $data = $this->getDataFromRequest($request);
         $user = $this->userFactory->createFromRequest($data);
-        $register = new UserRegisterService($user);
+        $service = new UserRegisterService($user);
 
-        $register->register();
+        $service->register();
 
         return new JsonResponse($user, 201);
     }

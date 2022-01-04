@@ -20,7 +20,7 @@ class ResetPasswordService
                 $user['password'] = Hash::make($password);
                 $user->setRememberToken(Str::random(60));
 
-                $repository = new UserRepository($user);
+                $repository = new UserRepository();
                 $repository->update($user);
 
                 event(new PasswordReset($user));

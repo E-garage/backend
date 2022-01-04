@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserModel;
 use App\Services\AvatarManagementService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @OA\POST(
@@ -50,13 +48,11 @@ use Illuminate\Support\Facades\Auth;
  */
 class AvatarController extends Controller
 {
-    protected UserModel $user;
     protected AvatarManagementService $service;
 
     public function __construct()
     {
-        $this->user = Auth::user();
-        $this->service = new AvatarManagementService($this->user);
+        $this->service = new AvatarManagementService();
     }
 
     /**

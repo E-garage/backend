@@ -13,16 +13,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserRepository
 {
-    protected ?UserModel $userModel;
-
-    /**
-     * UserRepository constructor.
-     */
-    public function __construct(UserModel $userModel = null)
-    {
-        $this->userModel = $userModel;
-    }
-
     public function all(): Collection
     {
         return UserModel::all();
@@ -31,7 +21,7 @@ class UserRepository
     public function findByEmail(string $email): ?UserModel
     {
         try {
-            return $this->userModel::Where('email', $email)->first();
+            return UserModel::where('email', $email)->first();
         } catch (ModelNotFoundException) {
             return null;
         }
@@ -40,7 +30,7 @@ class UserRepository
     public function findById(string $id): ?UserModel
     {
         try {
-            return $this->userModel::where('id', $id)->first();
+            return UserModel::where('id', $id)->first();
         } catch (ModelNotFoundException) {
             return null;
         }
@@ -49,10 +39,10 @@ class UserRepository
     /**
      * @throws UserNotSavedToDatabaseException
      */
-    public function save(): void
+    public function save(UserModel $user): void
     {
         try {
-            $this->userModel->saveOrFail();
+            $user->saveOrFail();
         } catch (\Throwable) {
             throw new UserNotSavedToDatabaseException();
         }
@@ -61,10 +51,10 @@ class UserRepository
     /**
      * @throws UserNotUpdatedException
      */
-    public function update(UserModel $userModel): void
+    public function update(UserModel $user): void
     {
         try {
-            $userModel->updateOrFail($userModel->toArray());
+            $user->updateOrFail($user->toArray());
         } catch (\Throwable) {
             throw new UserNotUpdatedException();
         }

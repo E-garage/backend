@@ -5,11 +5,9 @@ declare(strict_types = 1);
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserModel;
 use App\Services\UserAccountManagementService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @OA\Put(
@@ -77,13 +75,11 @@ use Illuminate\Support\Facades\Auth;
  */
 class AccountManagementController extends Controller
 {
-    protected UserModel $user;
     protected UserAccountManagementService $service;
 
     public function __construct()
     {
-        $this->user = Auth::user();
-        $this->service = new UserAccountManagementService($this->user);
+        $this->service = new UserAccountManagementService();
     }
 
     /**
