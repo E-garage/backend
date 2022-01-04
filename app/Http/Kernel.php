@@ -9,6 +9,7 @@ use App\Validators\ValidateLoginCredentials;
 use App\Validators\ValidateRegisterCredentials;
 use App\Validators\ValidateResetPassword;
 use App\Validators\ValidateSendResetLink;
+use App\Validators\ValidateSetLastParkedLocation;
 use App\Validators\ValidateUpdateCar;
 use App\Validators\ValidateUpdateEmail;
 use App\Validators\ValidateUpdateName;
@@ -86,5 +87,6 @@ class Kernel extends HttpKernel
         'validate.reset.password' => ValidateResetPassword::class,
         'validate.create.car' => ValidateCreateCar::class,
         'validate.update.car' => ValidateUpdateCar::class,
+        'validate.set.location' => ValidateSetLastParkedLocation::class,
     ];
 }
