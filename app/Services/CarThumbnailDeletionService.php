@@ -10,8 +10,6 @@ use Storage;
 class CarThumbnailDeletionService
 {
     /**
-     * Removes car's thumbnail from storage if exists.
-     *
      * @throws CarsThumbnailNotRemovedFromStorageException
      */
     public function deleteThumbnail(?string $filename): void

@@ -14,9 +14,6 @@ class RegisterController extends Controller
 {
     private UserFactory $userFactory;
 
-    /**
-     * UserController constructor.
-     */
     public function __construct()
     {
         $this->userFactory = new UserFactory();
@@ -76,8 +73,6 @@ class RegisterController extends Controller
      *         ),
      *         example={"name": "JohnDoe", "email": "cool@email.com", "password": "12345678", "password_confirmation": "12345678"}
      *   )
-     *
-     * @throws \App\Exceptions\UserNotSavedToDatabaseException
      */
     public function create(Request $request): JsonResponse
     {
@@ -90,9 +85,6 @@ class RegisterController extends Controller
         return new JsonResponse($user, 201);
     }
 
-    /**
-     * Extract data from request.
-     */
     private function getDataFromRequest(Request $request): array
     {
         $data = [

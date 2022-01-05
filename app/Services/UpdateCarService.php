@@ -11,17 +11,20 @@ class UpdateCarService
 {
     protected Car $car;
     protected array $data;
-    protected CarRepository $respository;
+    protected CarRepository $repository;
 
     public function __construct(Car $car, array $data = [])
     {
         $this->car = $car;
         $this->data = $data;
-        $this->respository = new CarRepository($this->car);
+        $this->repository = new CarRepository($this->car);
     }
 
+    /**
+     * @throws \App\Exceptions\CarNotUpdatedException
+     */
     public function update(): void
     {
-        $this->respository->update($this->data);
+        $this->repository->update($this->data);
     }
 }

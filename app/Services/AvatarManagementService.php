@@ -23,7 +23,7 @@ class AvatarManagementService
     }
 
     /**
-     * Gets user's avatar and returns it.
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getAvatar(): string
     {
@@ -35,7 +35,8 @@ class AvatarManagementService
     }
 
     /**
-     * Uploads avatar to storage.
+     * @throws \App\Exceptions\UserNotUpdatedException
+     * @throws UploadException
      */
     public function uploadAvatar(UploadedFile $avatar): void
     {
@@ -51,7 +52,8 @@ class AvatarManagementService
     }
 
     /**
-     * Deletes previous avatar if exists.
+     * @throws AvatarDeleteException
+     * @throws \App\Exceptions\UserNotUpdatedException
      */
     public function deleteAvatar(): void
     {
@@ -72,7 +74,7 @@ class AvatarManagementService
     }
 
     /**
-     * Saves avatar's filename to database.
+     * @throws \App\Exceptions\UserNotUpdatedException
      */
     private function saveAvatarNameInDB(UserModel $user, string $filename): void
     {
@@ -81,7 +83,7 @@ class AvatarManagementService
     }
 
     /**
-     * Deletes avatar's filename from database.
+     * @throws \App\Exceptions\UserNotUpdatedException
      */
     private function deleteAvatarNameFromDB(UserModel $user): void
     {
@@ -89,9 +91,6 @@ class AvatarManagementService
         $this->repository->update($user);
     }
 
-    /**
-     * Resizes given image and overwrites it.
-     */
     private function resizeImg(UploadedFile $avatar, string $filename): void
     {
         $path = Storage::disk('user_avatars')->path($filename);

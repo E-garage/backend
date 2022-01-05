@@ -11,9 +11,8 @@ class SendResetPasswordLinkService
     public function sendLink(array $email): bool
     {
         $status = Password::sendResetLink($email);
-        $isSent = $this->isSent($status);
 
-        return $isSent;
+        return $this->isSent($status);
     }
 
     private function isSent(string $status): bool

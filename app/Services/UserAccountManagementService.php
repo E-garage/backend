@@ -9,9 +9,6 @@ use App\Repositories\UserRepository;
 use Auth;
 use Hash;
 
-/**
- * Service for managing user's account.
- */
 class UserAccountManagementService
 {
     protected UserRepository $repository;
@@ -22,7 +19,7 @@ class UserAccountManagementService
     }
 
     /**
-     * Updates user's account password.
+     * @throws UserNotUpdatedException
      */
     public function updatePassword(string $newPassword): void
     {
@@ -33,8 +30,6 @@ class UserAccountManagementService
     }
 
     /**
-     * Updates user's account email.
-     *
      * @throws UserNotUpdatedException
      */
     public function updateEmail(string $newEmail): void
@@ -45,8 +40,6 @@ class UserAccountManagementService
     }
 
     /**
-     * Updates user's account name.
-     *
      * @throws UserNotUpdatedException
      */
     public function updateName(string $newName): void

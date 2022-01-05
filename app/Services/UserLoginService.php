@@ -35,7 +35,7 @@ class UserLoginService
             } else {
                 throw new UserCredentialsInvalidExecption();
             }
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException) {
             throw new UserCredentialsInvalidExecption();
         }
     }

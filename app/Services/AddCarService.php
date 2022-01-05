@@ -10,16 +10,19 @@ use App\Repositories\CarRepository;
 class AddCarService
 {
     protected Car $car;
-    protected CarRepository $respository;
+    protected CarRepository $repository;
 
     public function __construct(Car $car)
     {
         $this->car = $car;
-        $this->respository = new CarRepository($this->car);
+        $this->repository = new CarRepository($this->car);
     }
 
+    /**
+     * @throws \App\Exceptions\CarNotSavedToDatabaseException
+     */
     public function addCar(): void
     {
-        $this->respository->save();
+        $this->repository->save();
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
-use App\Models\UserModel;
 use App\Repositories\CarRepository;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,21 +18,27 @@ class IndexCarsService
         $this->repository = new CarRepository();
     }
 
+    /**
+     * @throws \App\Exceptions\AuthorizedUserNotFoundException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function index(): Collection
     {
         $user = Auth::user();
-        $cars = $this->repository->index($user);
-        $cars = $this->getThumbnailsForCars($cars);
+        $cars = $this->repository->index($user); //@phpstan-ignore-line
 
-        return $cars;
+        return $this->getThumbnailsForCars($cars);
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     private function getThumbnailsForCars(Collection $cars): Collection
     {
         foreach ($cars as $car) {
             $filename = $car['thumbnail'];
 
-            if($filename) {
+            if ($filename) {
                 $file = Storage::disk('cars_thumbnails')->get($filename);
                 $car['thumbnail'] = base64_encode($file);
             }

@@ -20,6 +20,10 @@ class DeleteCarService
         $this->service = new CarThumbnailDeletionService();
     }
 
+    /**
+     * @throws \App\Exceptions\CarsThumbnailNotRemovedFromStorageException
+     * @throws \App\Exceptions\CarNotDeletedFromDatabaseException
+     */
     public function deleteCar(): void
     {
         $filename = $this->car['thumbnail'];
