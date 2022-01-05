@@ -12,18 +12,17 @@ use Storage;
 
 class IndexCarsService
 {
-    protected UserModel $user;
     protected CarRepository $repository;
 
     public function __construct()
     {
-        $this->user = Auth::user(); //@phpstan-ignore-line
         $this->repository = new CarRepository();
     }
 
     public function index(): Collection
     {
-        $cars = $this->repository->index($this->user);
+        $user = Auth::user();
+        $cars = $this->repository->index($user);
         $cars = $this->getThumbnailsForCars($cars);
 
         return $cars;
@@ -33,8 +32,11 @@ class IndexCarsService
     {
         foreach ($cars as $car) {
             $filename = $car['thumbnail'];
-            $file = Storage::disk('cars_thumbnails')->get($filename);
-            $car['thumbnail'] = base64_encode($file);
+
+            if($filename) {
+                $file = Storage::disk('cars_thumbnails')->get($filename);
+                $car['thumbnail'] = base64_encode($file);
+            }
         }
 
         return $cars;
