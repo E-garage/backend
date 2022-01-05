@@ -46,7 +46,7 @@ Route::prefix('/v1/auth')->group(function ()
         ->name('logout');
 });
 
-Route::prefix('v1/reset-password')->group(function ()
+Route::prefix('/v1/reset-password')->group(function ()
 {
     Route::put('/send-link', [ResetPasswordController::class, 'sendResetLink'])->middleware('validate.send.reset.link');
     Route::put('/', [ResetPasswordController::class, 'resetPassword'])->middleware('validate.reset.password')->name('password.reset');
