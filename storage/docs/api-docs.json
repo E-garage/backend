@@ -101,6 +101,64 @@
                 }
             }
         },
+        "/api/v1/last-parked-location/set": {
+            "post": {
+                "tags": [
+                    "Last parked location management"
+                ],
+                "summary": "Set coordinates.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Coordinates of last parked location.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Coordinates"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/last-parked-location/": {
+            "get": {
+                "tags": [
+                    "Last parked location management"
+                ],
+                "summary": "Get coordinates.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Coordinates"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/last-parked-location/delete": {
+            "delete": {
+                "tags": [
+                    "Last parked location management"
+                ],
+                "summary": "Delete coordinates.",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/api/v1/account/update/password": {
             "put": {
                 "tags": [
@@ -532,6 +590,21 @@
                     "brand": "BMW X12",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
                     "thumbnail": "file"
+                }
+            },
+            "Coordinates": {
+                "properties": {
+                    "longitude": {
+                        "type": "numeric|required"
+                    },
+                    "latitude": {
+                        "type": "numeric|required"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "longitude": "+50.235423",
+                    "latitude": "-15.152354"
                 }
             },
             "UpdatePassword": {
