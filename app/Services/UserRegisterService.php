@@ -8,22 +8,15 @@ use App\Exceptions\UserNotSavedToDatabaseException;
 use App\Models\UserModel;
 use App\Repositories\UserRepository;
 
-/**
- * Service for registering users.
- */
 class UserRegisterService
 {
     protected UserModel $user;
-
     protected UserRepository $repository;
 
-    /**
-     * UserRegisterService constructor.
-     */
     public function __construct(UserModel $user)
     {
         $this->user = $user;
-        $this->repository = new UserRepository($this->user);
+        $this->repository = new UserRepository();
     }
 
     /**
@@ -31,8 +24,8 @@ class UserRegisterService
      */
     public function register(): UserModel
     {
-        $this->repository->save();
+        $this->repository->save($this->user);
 
-        return $this->user;
+        return $this->user->refresh();
     }
 }

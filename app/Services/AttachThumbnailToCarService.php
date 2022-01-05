@@ -23,6 +23,9 @@ class AttachThumbnailToCarService
         $this->service = new CarThumbnailDeletionService();
     }
 
+    /**
+     * @throws \App\Exceptions\CarsThumbnailNotRemovedFromStorageException
+     */
     public function attachThumbnail(): Car
     {
         $filename = $this->car['thumbnail'];
@@ -36,6 +39,9 @@ class AttachThumbnailToCarService
         return $this->car;
     }
 
+    /**
+     * @throws UploadException
+     */
     private function storeThumbnail(): string
     {
         $filename = $this->thumbnail->store('', 'cars_thumbnails');

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -113,5 +114,10 @@ class UserModel extends Authenticatable implements MustVerifyEmail
     public function cars(): HasMany
     {
         return $this->hasMany(Car::class, 'owner_id');
+    }
+
+    public function location(): HasOne
+    {
+        return $this->hasOne(LastParkedLocation::class, 'user_id');
     }
 }

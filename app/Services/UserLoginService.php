@@ -19,7 +19,7 @@ class UserLoginService
     public function __construct(UserModel $user)
     {
         $this->user = $user;
-        $this->repository = new UserRepository($this->user);
+        $this->repository = new UserRepository();
     }
 
     /**
@@ -35,7 +35,7 @@ class UserLoginService
             } else {
                 throw new UserCredentialsInvalidExecption();
             }
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException) {
             throw new UserCredentialsInvalidExecption();
         }
     }

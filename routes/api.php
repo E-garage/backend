@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\LastParkedLocationController;
 use App\Http\Controllers\User\ResetPasswordController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\LogoutController;
@@ -21,10 +22,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-})->name('login');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -49,7 +46,7 @@ Route::prefix('/v1/auth')->group(function ()
         ->name('logout');
 });
 
-Route::prefix('v1/reset-password')->group(function ()
+Route::prefix('/v1/reset-password')->group(function ()
 {
     Route::put('/send-link', [ResetPasswordController::class, 'sendResetLink'])->middleware('validate.send.reset.link');
     Route::put('/', [ResetPasswordController::class, 'resetPassword'])->middleware('validate.reset.password')->name('password.reset');
@@ -82,4 +79,13 @@ Route::prefix('/v1/cars')
     Route::get('/', [CarController::class, 'index']);
     Route::put('/update/{car}', [CarController::class, 'update'])->middleware('validate.update.car');
     Route::delete('/delete/{car}', [CarController::class, 'delete']);
+});
+
+Route::prefix('/v1/last-parked-location')
+->middleware('auth:sanctum')
+->group(function ()
+{
+    Route::get('/', [LastParkedLocationController::class, 'get']);
+    Route::post('/set', [LastParkedLocationController::class, 'set'])->middleware('validate.set.location');
+    Route::delete('/delete', [LastParkedLocationController::class, 'delete']);
 });
