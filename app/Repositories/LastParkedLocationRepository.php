@@ -10,20 +10,26 @@ use App\Models\UserModel;
 
 class LastParkedLocationRepository
 {
+    /**
+     * @throws LastParkedLocationNotUpdatedException
+     */
     public function update(UserModel $user, array $coordinates): void
     {
         try {
-            $location = $user->location;
+            $location = $user->location()->first();
             $location->updateOrFail($coordinates);
         } catch (\Throwable) {
             throw new LastParkedLocationNotUpdatedException();
         }
     }
 
+    /**
+     * @throws LastParkedLocationNotRetrievedException
+     */
     public function get(UserModel $user): array
     {
         try {
-            $location = $user->location;
+            $location = $user->location()->first();
 
             return [
                 'longitude' => $location['longitude'],
