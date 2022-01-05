@@ -83,13 +83,13 @@ class CarController extends Controller
      *             type="string"
      *         ),
      *        @OA\Property(
-     *             property="image",
+     *             property="thumbnail",
      *             type="file"
      *         ),
      *         example={
      *              "brand": "BMW X12",
      *              "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
-     *              "image": "file"
+     *              "thumbnail": "file"
      *         },
      * )
      */
@@ -125,12 +125,12 @@ class CarController extends Controller
      *              {
      *                  "brand": "BMW X12",
      *                  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
-     *                  "image": "file"
+     *                  "thumbnail": "file"
      *              },
      *              {
      *                  "brand": "BMW X12",
      *                  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
-     *                  "image": "file"
+     *                  "thumbnail": "file"
      *              }
      *         },
      * )
@@ -157,13 +157,13 @@ class CarController extends Controller
      *             type="string"
      *         ),
      *        @OA\Property(
-     *             property="image",
+     *             property="thumbnail",
      *             type="file"
      *         ),
      *         example={
      *              "brand": "BMW X12",
      *              "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
-     *              "image": "file"
+     *              "thumbnail": "file"
      *         },
      * )
      */
