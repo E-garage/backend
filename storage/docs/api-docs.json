@@ -484,7 +484,7 @@
                     "description": {
                         "type": "string"
                     },
-                    "image": {
+                    "thumbnail": {
                         "type": "file"
                     }
                 },
@@ -492,7 +492,7 @@
                 "example": {
                     "brand": "BMW X12",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
-                    "image": "file"
+                    "thumbnail": "file"
                 }
             },
             "CarCollection": {
@@ -506,12 +506,12 @@
                     {
                         "brand": "BMW X12",
                         "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
-                        "image": "file"
+                        "thumbnail": "file"
                     },
                     {
                         "brand": "BMW X12",
                         "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
-                        "image": "file"
+                        "thumbnail": "file"
                     }
                 ]
             },
@@ -523,7 +523,7 @@
                     "description": {
                         "type": "string"
                     },
-                    "image": {
+                    "thumbnail": {
                         "type": "file"
                     }
                 },
@@ -531,7 +531,7 @@
                 "example": {
                     "brand": "BMW X12",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
-                    "image": "file"
+                    "thumbnail": "file"
                 }
             },
             "UpdatePassword": {
