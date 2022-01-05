@@ -87,4 +87,5 @@ Route::prefix('/v1/last-parked-location')
 {
     Route::get('/', [LastParkedLocationController::class, 'get']);
     Route::post('/set', [LastParkedLocationController::class, 'set'])->middleware('validate.set.location');
+    Route::delete('/delete', [LastParkedLocationController::class, 'delete']);
 });
