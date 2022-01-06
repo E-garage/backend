@@ -27,12 +27,14 @@ jobs:
           docker build . -f ./.docker/php/Dockerfile -t ${{ secrets.ACR }}/${{ secrets.APPLICATION }}:latest
           docker push ${{ secrets.ACR }}/${{ secrets.APPLICATION }}:latest
           echo "Deploy successfully!"
-      - name: auth
+      - id: auth
         uses: google-github-actions/auth@v0
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
+
+      - name: Update cluster
         run: |-
             gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} --zone ${{ secrets.GKE_ZONE }} --project ${{ secrets.GKE_PROJECT }}
             kubectl describe nodes
