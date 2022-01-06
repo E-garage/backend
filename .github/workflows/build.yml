@@ -20,7 +20,7 @@ jobs:
           docker-compose -f ./docker-compose_ci.yml exec -T php composer cs:check --quiet
           docker-compose -f ./docker-compose_ci.yml exec -T php composer test
           echo "Testing and lintering successfully!"
-      - name: build_push-image
+      - name: Build_push-image
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: |
           docker login -u ${{ secrets.LOGIN }} -p ${{ secrets.PASS }}
@@ -39,7 +39,4 @@ jobs:
       - name: Update cluster
         run: |-
             gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} --zone ${{ secrets.GKE_ZONE }} --project ${{ secrets.GKE_PROJECT }}
-            kubectl describe nodes
-#      - name: Update cluster
-#        run: |-
-#          kubectl rollout status deployment/$DEPLOYMENT_NAME
+            kubectl get pods -n default --no-headers=true | awk '/backend-app/{print $1}'| xargs  kubectl delete -n default pod
