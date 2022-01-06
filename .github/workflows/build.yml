@@ -20,13 +20,9 @@ jobs:
           docker-compose -f ./docker-compose_ci.yml exec -T php composer cs:check --quiet
           docker-compose -f ./docker-compose_ci.yml exec -T php composer test
           echo "Testing and lintering successfully!"
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
       - name: build_push-image
         run: |
           docker login -u ${{ secrets.LOGIN }} -p ${{ secrets.PASS }}
-          docker build . -f ./docker/php/Dockerfile -t ${{ secrets.ACR }}/${{ secrets.APPLICATION }}:latest
+          docker build . -f ./.docker/php/Dockerfile -t ${{ secrets.ACR }}/${{ secrets.APPLICATION }}:latest
           docker push ${{ secrets.ACR }}/${{ secrets.APPLICATION }}:latest
           echo "Deploy successfully!"
