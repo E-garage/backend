@@ -8,6 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Build
+        run: |
+          cp .env.example .env
+          docker-compose -f docker-compose_ci.yml up -d
+          docker-compose -f ./docker-compose_ci.yml exec -T php php artisan key:generate
+          echo "Build done."
       - name: Test
         run: |
           docker-compose -f ./docker-compose_ci.yml exec -T php composer phpstan
