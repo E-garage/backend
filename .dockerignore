@@ -6,4 +6,3 @@ docker-compose_ci.yml
 .idea
 !docker/php/docker.ini
 !docker/php/docker-fpm.conf
-.env
