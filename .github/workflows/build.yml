@@ -29,14 +29,17 @@ jobs:
           echo "Deploy successfully!"
       - id: auth
         name: Auth GCP
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         uses: google-github-actions/auth@v0
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Set up Cloud SDK
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         uses: google-github-actions/setup-gcloud@v0
 
       - name: Update cluster
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: |-
             gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} --zone ${{ secrets.GKE_ZONE }} --project ${{ secrets.GKE_PROJECT }}
             kubectl get pods -n default --no-headers=true | awk '/backend-app/{print $1}'| xargs  kubectl delete -n default pod
