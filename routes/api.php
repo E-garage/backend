@@ -76,7 +76,7 @@ Route::prefix('/v1/cars')
 ->group(function ()
 {
     Route::post('/add', [CarController::class, 'create'])->middleware('validate.create.car');
-    Route::get('/', [CarController::class, 'index']);
+    Route::get('/', [CarController::class, 'get']);
     Route::put('/update/{car}', [CarController::class, 'update'])->middleware('validate.update.car');
     Route::delete('/delete/{car}', [CarController::class, 'delete']);
 });
