@@ -14,12 +14,6 @@ jobs:
           docker-compose -f docker-compose_ci.yml up -d
           docker-compose -f ./docker-compose_ci.yml exec -T php php artisan key:generate
           echo "Build done."
-      - name: Test
-        run: |
-          docker-compose -f ./docker-compose_ci.yml exec -T php composer phpstan
-          docker-compose -f ./docker-compose_ci.yml exec -T php composer cs:check --quiet
-          docker-compose -f ./docker-compose_ci.yml exec -T php composer test
-          echo "Testing and lintering successfully!"
       - name: Build_push-image
         run: |
           docker login -u ${{ secrets.LOGIN }} -p ${{ secrets.PASS }}
