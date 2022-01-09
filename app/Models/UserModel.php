@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -119,5 +120,15 @@ class UserModel extends Authenticatable implements MustVerifyEmail
     public function location(): HasOne
     {
         return $this->hasOne(LastParkedLocation::class, 'user_id');
+    }
+
+    public function createdFamilies(): HasMany
+    {
+        return $this->hasMany(Family::class, 'owner_id');
+    }
+
+    public function families(): BelongsToMany
+    {
+        return $this->belongsToMany(Family::class, 'family_user');
     }
 }

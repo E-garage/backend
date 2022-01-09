@@ -20,4 +20,9 @@ class Car extends Model
     {
         return $this->belongsTo(UserModel::class);
     }
+
+    public function family(): BelongsTo
+    {
+        return $this->belongsTo(Family::class);
+    }
 }
