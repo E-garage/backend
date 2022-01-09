@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\FamilyNotSavedToDatabaseException;
 use App\Models\Family;
 use App\Repositories\FamilyRepository;
 
