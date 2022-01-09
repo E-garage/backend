@@ -43,16 +43,13 @@ class FamilyController extends Controller
 
     public function updateDetails(Request $request, Family $family)
     {
-        //
     }
 
     public function updateMembers(Request $request, Family $family)
     {
-        //
     }
 
     public function delete(Family $family)
     {
-        //
     }
 }
