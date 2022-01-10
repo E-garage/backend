@@ -39,4 +39,3 @@ class UpdateFamilyService
         return $this->family->refresh();
     }
 }
-

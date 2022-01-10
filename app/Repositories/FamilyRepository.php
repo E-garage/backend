@@ -7,7 +7,6 @@ namespace App\Repositories;
 use App\Exceptions\AuthorizedUserNotFoundException;
 use App\Exceptions\CarNotAttachedToFamilyException;
 use App\Exceptions\FamilyDetailsNotFoundException;
-use App\Exceptions\FamilyNotAttachedToCarException;
 use App\Exceptions\FamilyNotDeletedException;
 use App\Exceptions\FamilyNotSavedToDatabaseException;
 use App\Exceptions\FamilyNotUpdatedException;
@@ -80,13 +79,12 @@ class FamilyRepository
         try {
             $repository = new UserRepository();
 
-            foreach($data as $nameOrEmail)
-            {
-               $user = $repository->findByNameOrEmail($nameOrEmail);
+            foreach ($data as $nameOrEmail) {
+                $user = $repository->findByNameOrEmail($nameOrEmail);
 
-               if($user) {
+                if ($user) {
                     $this->family->members()->toggle($user->id);
-               }
+                }
             }
         } catch (\Throwable) {
             throw new FamilyNotUpdatedException();
@@ -101,10 +99,10 @@ class FamilyRepository
         try {
             $repository = new CarRepository();
 
-            foreach($data as $carId) {
+            foreach ($data as $carId) {
                 $car = $repository->findById($carId);
 
-                if($car) {
+                if ($car) {
                     $car->family_id = $this->family->id;
                     $car->save();
                 }

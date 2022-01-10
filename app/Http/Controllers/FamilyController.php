@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Factories\FamilyFactory;
 use App\Models\Family;
-use App\Services\AttachFamilyToCarsService;
 use App\Services\CreateFamilyService;
 use App\Services\DeleteFamilyService;
 use App\Services\IndexFamiliesService;
@@ -12,7 +11,6 @@ use App\Services\ShowFamilyService;
 use App\Services\UpdateFamilyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use PhpCsFixer\Console\Report\FixReport\JsonReporter;
 
 class FamilyController extends Controller
 {
