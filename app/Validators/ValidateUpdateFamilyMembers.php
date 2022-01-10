@@ -21,10 +21,10 @@ class ValidateUpdateFamilyMembers
     public function handle(Request $request, Closure $next): mixed
     {
         $rules = [
-            'names' => 'array|min:1|required_without:emails',
-            'names.*' => 'string|distinct|min:3|max:50|required_with:names',
-            'emails' => 'array||required_without:names',
-            'emails.*' => 'email|distinct|required_with:emails',
+            'names' => 'prohibits:emails|array|min:1|required_without:emails',
+            'names.*' => 'string|distinct|min:3|max:50',
+            'emails' => 'prohibits:names|array|min:1|required_without:names',
+            'emails.*' => 'email|distinct',
         ];
 
         $validator = Validator::make($request->all(), $rules);
