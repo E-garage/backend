@@ -26,6 +26,19 @@ use Illuminate\Routing\Controller as BaseController;
  */
 
 /**
+ * @OA\Server(
+ *      url="https://egarage.store/backend",
+ *      description="Dev server online",
+ * )
+ */
+/**
+ * @OA\Server(
+ *      url="http://localhost",
+ *      description="Dev server offline",
+ * )
+ */
+
+/**
  * @OA\Get(
  *     path="/docs/v1",
  *     tags={"documentation"},
