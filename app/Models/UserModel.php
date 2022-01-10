@@ -129,6 +129,6 @@ class UserModel extends Authenticatable implements MustVerifyEmail
 
     public function families(): BelongsToMany
     {
-        return $this->belongsToMany(Family::class, 'family_user');
+        return $this->belongsToMany(Family::class, 'family_user', 'user_id', 'family_id');
     }
 }

@@ -14,6 +14,11 @@ class Family extends Model
 
     protected $table = 'families';
 
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(UserModel::class);
@@ -21,7 +26,7 @@ class Family extends Model
 
     public function members(): BelongsToMany
     {
-        return $this->belongsToMany(UserModel::class, 'family_user');
+        return $this->belongsToMany(UserModel::class, 'family_user', 'family_id', 'user_id');
     }
 
     public function cars(): HasMany
