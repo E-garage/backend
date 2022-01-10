@@ -14,6 +14,7 @@ use App\Validators\ValidateSetLastParkedLocation;
 use App\Validators\ValidateUpdateCar;
 use App\Validators\ValidateUpdateEmail;
 use App\Validators\ValidateUpdateFamily;
+use App\Validators\ValidateUpdateFamilyCars;
 use App\Validators\ValidateUpdateFamilyMembers;
 use App\Validators\ValidateUpdateName;
 use App\Validators\ValidateUpdatePassword;
@@ -94,5 +95,6 @@ class Kernel extends HttpKernel
         'validate.create.family' => ValidateCreateFamily::class,
         'validate.update.family' => ValidateUpdateFamily::class,
         'validate.update.family.members' => ValidateUpdateFamilyMembers::class,
+        'validate.update.family.cars' => ValidateUpdateFamilyCars::class,
     ];
 }
