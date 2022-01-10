@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Factories\FamilyFactory;
 use App\Models\Family;
+use App\Services\AttachFamilyToCarsService;
 use App\Services\CreateFamilyService;
+use App\Services\DeleteFamilyService;
 use App\Services\IndexFamiliesService;
 use App\Services\ShowFamilyService;
+use App\Services\UpdateFamilyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use PhpCsFixer\Console\Report\FixReport\JsonReporter;
 
 class FamilyController extends Controller
 {
@@ -17,7 +21,7 @@ class FamilyController extends Controller
         $service = new IndexFamiliesService();
         $families = $service->index();
 
-        return new JsonResponse(['families' => $families]);
+        return new JsonResponse($families);
     }
 
     public function create(Request $request): JsonResponse
@@ -41,15 +45,41 @@ class FamilyController extends Controller
         return new JsonResponse(['family' => $family]);
     }
 
-    public function updateDetails(Request $request, Family $family)
+    public function updateDetails(Request $request, Family $family): JsonResponse
     {
+        $data = $request->only(['name', 'description']);
+
+        $service = new UpdateFamilyService($family);
+        $family = $service->updateDetails($data);
+
+        return new JsonResponse($family);
     }
 
-    public function updateMembers(Request $request, Family $family)
+    public function updateMembers(Request $request, Family $family): JsonResponse
     {
+        $data = $request->get('names') ?? $request->get('emails');
+
+        $service = new UpdateFamilyService($family);
+        $family = $service->updateMembers($data);
+
+        return new JsonResponse($family);
     }
 
-    public function delete(Family $family)
+    public function updateCars(Request $request, Family $family): JsonResponse
     {
+        $data = $request->get('cars');
+
+        $service = new UpdateFamilyService($family);
+        $service->updateCars($data);
+
+        return new JsonResponse();
+    }
+
+    public function delete(Family $family): JsonResponse
+    {
+        $service = new DeleteFamilyService($family);
+        $service->delete();
+
+        return new JsonResponse();
     }
 }
