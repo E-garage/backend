@@ -101,5 +101,6 @@ Route::prefix('/v1/family-sharing')
     Route::put('/update/{family}', [FamilyController::class, 'updateDetails'])->middleware('validate.update.family');
     Route::put('/update/{family}/members', [FamilyController::class, 'updateMembers'])->middleware('validate.update.family.members');
     Route::put('/update/{family}/cars', [FamilyController::class, 'updateCars'])->middleware('validate.update.family.cars');
+    Route::put('/update/{family}/{car}/detach', [FamilyController::class, 'detachCar']);
     Route::delete('/delete/{family}', [FamilyController::class, 'delete']);
 });

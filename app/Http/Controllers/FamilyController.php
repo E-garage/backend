@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Factories\FamilyFactory;
+use App\Models\Car;
 use App\Models\Family;
 use App\Services\CreateFamilyService;
 use App\Services\DeleteFamilyService;
@@ -69,6 +70,14 @@ class FamilyController extends Controller
 
         $service = new UpdateFamilyService($family);
         $service->updateCars($data);
+
+        return new JsonResponse();
+    }
+
+    public function detachCar(Family $family, Car $car): JsonResponse
+    {
+        $service = new UpdateFamilyService($family);
+        $service->detachCar($car);
 
         return new JsonResponse();
     }
