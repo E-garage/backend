@@ -6,12 +6,10 @@ namespace App\Repositories;
 
 use App\Exceptions\AuthorizedUserNotFoundException;
 use App\Exceptions\CarNotAttachedToFamilyException;
-use App\Exceptions\CarNotDetachedFromFamilyException;
 use App\Exceptions\FamilyDetailsNotFoundException;
 use App\Exceptions\FamilyNotDeletedException;
 use App\Exceptions\FamilyNotSavedToDatabaseException;
 use App\Exceptions\FamilyNotUpdatedException;
-use App\Models\Car;
 use App\Models\Family;
 use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Collection;

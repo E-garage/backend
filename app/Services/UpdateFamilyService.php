@@ -44,7 +44,7 @@ class UpdateFamilyService
     public function detachCar(Car $car): Family
     {
         $car->family_id = null;
-        
+
         $repository = new CarRepository($car);
         $repository->save();
 

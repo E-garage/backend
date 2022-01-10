@@ -6,7 +6,6 @@ namespace App\Repositories;
 
 use App\Exceptions\AuthorizedUserNotFoundException;
 use App\Exceptions\CarNotDeletedFromDatabaseException;
-use App\Exceptions\CarNotDetachedFromFamilyException;
 use App\Exceptions\CarNotSavedToDatabaseException;
 use App\Exceptions\CarNotUpdatedException;
 use App\Models\Car;
