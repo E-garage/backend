@@ -1,0 +1,8 @@
+.docker
+.gitignore
+.git
+docker-compose.yml
+docker-compose_ci.yml
+.idea
+!docker/php/docker.ini
+!docker/php/docker-fpm.conf
