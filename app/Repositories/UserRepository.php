@@ -41,11 +41,7 @@ class UserRepository
      */
     public function save(UserModel $user): void
     {
-        try {
-            $user->saveOrFail();
-        } catch (\Throwable) {
-            throw new UserNotSavedToDatabaseException();
-        }
+        $user->saveOrFail();
     }
 
     /**
