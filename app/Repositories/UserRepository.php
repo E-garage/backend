@@ -18,6 +18,15 @@ class UserRepository
         return UserModel::all();
     }
 
+    public function findByNameOrEmail(string $nameOrEmail): ?UserModel
+    {
+        try {
+            return UserModel::where('name', $nameOrEmail)->orWhere('email', $nameOrEmail)->first();
+        } catch (ModelNotFoundException) {
+            return null;
+        }
+    }
+
     public function findByEmail(string $email): ?UserModel
     {
         try {
