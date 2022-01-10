@@ -34,10 +34,10 @@ class CarRepository
         }
     }
 
-    public function findById(string $id): Collection|Car|null
+    public function findById(string $id): ?Car
     {
         try {
-            return Car::where('id', $id)->get();
+            return Car::where('id', $id)->first();
         } catch (ModelNotFoundException) {
             return null;
         }
