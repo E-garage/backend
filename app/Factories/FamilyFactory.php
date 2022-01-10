@@ -18,7 +18,7 @@ class FamilyFactory
 
     public function createFormRequest(array $data): Family
     {
-        $this->family->owner_id = Auth::user();
+        $this->family->owner_id = Auth::user()->id;
         $this->family->name = $data['name'];
         $this->family->description = $data['description'];
 
