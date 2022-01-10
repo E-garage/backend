@@ -14,7 +14,7 @@ class AddFamilyIdColumnToCarsTable extends Migration
     public function up()
     {
         Schema::table('cars', function (Blueprint $table) {
-            $table->foreignId('family_id')->nullable();
+            $table->foreignId('family_id')->nullable()->constrained()->nullOnDelete();
         });
     }
 
