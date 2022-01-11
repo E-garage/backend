@@ -34,7 +34,7 @@ class CarRepository
         }
     }
 
-    public function findById(string $id): ?Car
+    public function findById(string|int $id): ?Car
     {
         try {
             return Car::where('id', $id)->first();
