@@ -29,6 +29,21 @@ use Illuminate\Http\Request;
  *     @OA\Response(response="201", description="Success"),
  * ),
  *
+ * @OA\POST(
+ *     path="/api/v1/cars/status/{cars}",
+ *     tags={"Car Management"},
+ *     summary="Change availability status of car's.",
+ *     @OA\Response(
+ *          response="200",
+ *          description="Success",
+ *          @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(
+ *                 ref="#/components/schemas/CarStatusUpdate",
+ *             ),
+ *         ),
+ *     ),
+ * ),
  * @OA\GET(
  *     path="/api/v1/cars",
  *     tags={"Car Management"},
@@ -40,22 +55,6 @@ use Illuminate\Http\Request;
  *             mediaType="application/json",
  *             @OA\Schema(
  *                 ref="#/components/schemas/CarCollection",
- *             ),
- *         ),
- *     ),
- * ),
- *
- * * @OA\GET(
- *     path="/api/v1/cars/status/{cars}",
- *     tags={"Car Management"},
- *     summary="Change availability status of car's.",
- *     @OA\Response(
- *          response="200",
- *          description="Success",
- *          @OA\MediaType(
- *             mediaType="application/json",
- *             @OA\Schema(
- *                 ref="#/components/schemas/CarStatusUpdate",
  *             ),
  *         ),
  *     ),

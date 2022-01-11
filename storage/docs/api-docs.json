@@ -30,6 +30,26 @@
                 }
             }
         },
+        "/api/v1/cars/status/{cars}": {
+            "post": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Change availability status of car's.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarStatusUpdate"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/cars": {
             "get": {
                 "tags": [
@@ -43,26 +63,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/CarCollection"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/cars/status/{cars}": {
-            "get": {
-                "tags": [
-                    "Car Management"
-                ],
-                "summary": "Change availability status of car's.",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CarStatusUpdate"
                                 }
                             }
                         }
