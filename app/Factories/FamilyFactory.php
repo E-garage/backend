@@ -20,7 +20,7 @@ class FamilyFactory
     {
         $this->family->owner_id = Auth::user()->id; //@phpstan-ignore-line
         $this->family->name = $data['name'];
-        $this->family->description = $data['description'];
+        $this->family->description = $data['description'] ?? null;
 
         return $this->family;
     }
