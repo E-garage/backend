@@ -78,10 +78,9 @@ Route::prefix('/v1/cars')
     Route::post('/add', [CarController::class, 'create'])->middleware('validate.create.car');
     Route::get('/', [CarController::class, 'index']);
     Route::put('/update/{car}', [CarController::class, 'update'])->middleware('validate.update.car');
+    Route::post('/status/{car}', [CarController::class, 'status']);
     Route::delete('/delete/{car}', [CarController::class, 'delete']);
-    Route::get('/status/{car}', [CarController::class, 'status']);
 });
-
 
 Route::prefix('/v1/last-parked-location')
 ->middleware('auth:sanctum')

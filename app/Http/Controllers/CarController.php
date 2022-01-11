@@ -203,6 +203,7 @@ class CarController extends Controller
 
         return new JsonResponse();
     }
+
     /**
      * @OA\Component(
      *         @OA\Schema(
@@ -238,6 +239,9 @@ class CarController extends Controller
             return new JsonResponse(null, 401);
         }
         $car->changeStatus();
+
+        $service = new UpdateCarService($car, ['availability']);
+        $service->update();
 
         return new JsonResponse();
     }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Repositories\CarRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,14 +23,14 @@ class Car extends Model
     {
         return $this->belongsTo(UserModel::class);
     }
-    public function changeStatus()
+
+    public function changeStatus(): void
     {
         $status = $this->getAttribute('availability');
-        if ($status=="available"){
-            $this->setAttribute('availability',Car::INACTIVE)->saveOrFail();
-        }
-        else{
-            $this->setAttribute('availability',Car::AVAILABLE)->saveOrFail();
+        if ($status == 'available') {
+            $this->setAttribute('availability', self::INACTIVE);
+        } else {
+            $this->setAttribute('availability', self::AVAILABLE);
         }
     }
 }
