@@ -10,6 +10,7 @@ use App\Services\DeleteFamilyService;
 use App\Services\IndexFamiliesService;
 use App\Services\ShowFamilyService;
 use App\Services\UpdateFamilyService;
+use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class FamilyController extends Controller
         $service = new IndexFamiliesService();
         $families = $service->index();
 
-        return new JsonResponse($families);
+        return new JsonResponse(['families' => $families->flatten()]);
     }
 
     public function create(Request $request): JsonResponse
@@ -38,6 +39,10 @@ class FamilyController extends Controller
 
     public function show(Family $family): JsonResponse
     {
+        if(Auth::user()->cannot('view', $family)) {
+            return new JsonResponse(null, 401);
+        }
+
         $service = new ShowFamilyService($family);
         $family = $service->show();
 
@@ -46,26 +51,38 @@ class FamilyController extends Controller
 
     public function updateDetails(Request $request, Family $family): JsonResponse
     {
+        if(Auth::user()->cannot('update', $family)) {
+            return new JsonResponse(null, 401);
+        }
+
         $data = $request->only(['name', 'description']);
 
         $service = new UpdateFamilyService($family);
         $family = $service->updateDetails($data);
 
-        return new JsonResponse($family);
+        return new JsonResponse(['family' => $family]);
     }
 
     public function updateMembers(Request $request, Family $family): JsonResponse
     {
+        if(Auth::user()->cannot('update', $family)) {
+            return new JsonResponse(null, 401);
+        }
+
         $data = $request->get('names') ?? $request->get('emails');
 
         $service = new UpdateFamilyService($family);
         $family = $service->updateMembers($data);
 
-        return new JsonResponse($family);
+        return new JsonResponse(['family' => $family]);
     }
 
     public function updateCars(Request $request, Family $family): JsonResponse
     {
+        if(Auth::user()->cannot('update', $family)) {
+            return new JsonResponse(null, 401);
+        }
+
         $data = $request->get('cars');
 
         $service = new UpdateFamilyService($family);
@@ -76,6 +93,10 @@ class FamilyController extends Controller
 
     public function detachCar(Family $family, Car $car): JsonResponse
     {
+        if(Auth::user()->cannot('update', $family)) {
+            return new JsonResponse(null, 401);
+        }
+
         $service = new UpdateFamilyService($family);
         $service->detachCar($car);
 
@@ -84,6 +105,10 @@ class FamilyController extends Controller
 
     public function delete(Family $family): JsonResponse
     {
+        if(Auth::user()->cannot('delete', $family)) {
+            return new JsonResponse(null, 401);
+        }
+
         $service = new DeleteFamilyService($family);
         $service->delete();
 
