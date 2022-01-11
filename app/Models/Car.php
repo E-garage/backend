@@ -10,6 +10,9 @@ class Car extends Model
 {
     use HasFactory;
 
+    public const AVAILABLE = 'available';
+    public const INACTIVE = 'inactive';
+
     protected $fillable = [
         'owner_id',
         'brand',
@@ -19,5 +22,15 @@ class Car extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(UserModel::class);
+    }
+
+    public function changeStatus(): void
+    {
+        $status = $this->getAttribute('availability');
+        if ($status == 'available') {
+            $this->setAttribute('availability', self::INACTIVE);
+        } else {
+            $this->setAttribute('availability', self::AVAILABLE);
+        }
     }
 }
