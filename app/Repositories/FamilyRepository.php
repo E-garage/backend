@@ -41,10 +41,10 @@ class FamilyRepository
     /**
      * @throws FamilyDetailsNotFoundException
      */
-    public function show(): Collection
+    public function show(): Family
     {
         try {
-            return $this->family->with('members', 'cars')->get();
+            return $this->family->load('members', 'cars');
         } catch (\Throwable) {
             throw new FamilyDetailsNotFoundException();
         }

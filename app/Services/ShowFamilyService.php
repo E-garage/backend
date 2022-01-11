@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\Models\Family;
 use App\Repositories\FamilyRepository;
-use Illuminate\Database\Eloquent\Collection;
 
 class ShowFamilyService
 {
@@ -19,7 +18,7 @@ class ShowFamilyService
         $this->repository = new FamilyRepository($this->family);
     }
 
-    public function show(): Collection
+    public function show(): Family
     {
         return $this->repository->show();
     }
