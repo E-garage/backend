@@ -27,7 +27,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Server(
- *      url="https://egarage.store/backend",
+ *      url="https://backend.egarage.store",
  *      description="Dev server online",
  * )
  */
