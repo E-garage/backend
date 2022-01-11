@@ -45,6 +45,22 @@ use Illuminate\Http\Request;
  *     ),
  * ),
  *
+ * * @OA\GET(
+ *     path="/api/v1/cars/status/{cars}",
+ *     tags={"Car Management"},
+ *     summary="Change availability status of car's.",
+ *     @OA\Response(
+ *          response="200",
+ *          description="Success",
+ *          @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(
+ *                 ref="#/components/schemas/CarStatusUpdate",
+ *             ),
+ *         ),
+ *     ),
+ * ),
+ *
  * @OA\PUT(
  *     path="/api/v1/cars/update/{car_id}",
  *     tags={"Car Management"},
@@ -184,6 +200,44 @@ class CarController extends Controller
 
         $service = new UpdateCarService($car, $data);
         $service->update();
+
+        return new JsonResponse();
+    }
+    /**
+     * @OA\Component(
+     *         @OA\Schema(
+     *             schema="CarStatusUpdate",
+     *             type="object",
+     *         @OA\Property(
+     *             property="brand",
+     *             type="string"
+     *         ),
+     *         @OA\Property(
+     *             property="description",
+     *             type="string"
+     *         ),
+     *        @OA\Property(
+     *             property="thumbnail",
+     *             type="file"
+     *         ),
+     *       @OA\Property(
+     *             property="availability",
+     *             type="string"
+     *         ),
+     *         example={
+     *              "brand": "BMW X12",
+     *              "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+     *              "thumbnail": "file",
+     *              "availability": "available"
+     *         },
+     * )
+     */
+    public function status(Car $car): JsonResponse
+    {
+        if (Auth::user()->cannot('status', $car)) {
+            return new JsonResponse(null, 401);
+        }
+        $car->changeStatus();
 
         return new JsonResponse();
     }
