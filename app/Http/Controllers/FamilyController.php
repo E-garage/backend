@@ -39,7 +39,7 @@ class FamilyController extends Controller
 
     public function show(Family $family): JsonResponse
     {
-        if(Auth::user()->cannot('view', $family)) {
+        if (Auth::user()->cannot('view', $family)) {
             return new JsonResponse(null, 401);
         }
 
@@ -51,7 +51,7 @@ class FamilyController extends Controller
 
     public function updateDetails(Request $request, Family $family): JsonResponse
     {
-        if(Auth::user()->cannot('update', $family)) {
+        if (Auth::user()->cannot('update', $family)) {
             return new JsonResponse(null, 401);
         }
 
@@ -65,7 +65,7 @@ class FamilyController extends Controller
 
     public function updateMembers(Request $request, Family $family): JsonResponse
     {
-        if(Auth::user()->cannot('update', $family)) {
+        if (Auth::user()->cannot('update', $family)) {
             return new JsonResponse(null, 401);
         }
 
@@ -79,7 +79,7 @@ class FamilyController extends Controller
 
     public function updateCars(Request $request, Family $family): JsonResponse
     {
-        if(Auth::user()->cannot('update', $family)) {
+        if (Auth::user()->cannot('update', $family)) {
             return new JsonResponse(null, 401);
         }
 
@@ -93,7 +93,7 @@ class FamilyController extends Controller
 
     public function detachCar(Family $family, Car $car): JsonResponse
     {
-        if(Auth::user()->cannot('update', $family)) {
+        if (Auth::user()->cannot('update', $family)) {
             return new JsonResponse(null, 401);
         }
 
@@ -105,7 +105,7 @@ class FamilyController extends Controller
 
     public function delete(Family $family): JsonResponse
     {
-        if(Auth::user()->cannot('delete', $family)) {
+        if (Auth::user()->cannot('delete', $family)) {
             return new JsonResponse(null, 401);
         }
 
