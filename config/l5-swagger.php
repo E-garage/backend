@@ -99,7 +99,7 @@ return [
             /*
              * Edit to include full URL in ui for assets
             */
-            'use_absolute_path' => env('L5_SWAGGER_USE_ABSOLUTE_PATH', false),
+            'use_absolute_path' => env('L5_SWAGGER_USE_ABSOLUTE_PATH', true),
 
             /*
              * Absolute path to directories that should be exclude from scanning
