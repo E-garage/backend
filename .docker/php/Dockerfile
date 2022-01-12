@@ -11,6 +11,7 @@ RUN apt-get update -y && apt-get upgrade -y \
      vim libjpeg62-turbo-dev libfreetype6-dev libonig-dev \
      libpq-dev libxpm-dev libvpx-dev libbz2-dev zlib1g-dev libzip-dev gnumeric \
     && curl -sS https://getcomposer.org/installer | php -- --version="${COMPOSER_VERSION}" --install-dir=/usr/local/bin --filename=composer \
+    && docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install intl bcmath mbstring bz2 gd zip pgsql pdo_pgsql opcache \
     && docker-php-ext-enable intl
 
