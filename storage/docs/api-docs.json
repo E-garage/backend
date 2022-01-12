@@ -4,6 +4,16 @@
         "title": "E-garage Api",
         "version": "0.0.1"
     },
+    "servers": [
+        {
+            "url": "https://backend.egarage.store",
+            "description": "Dev server online"
+        },
+        {
+            "url": "http://localhost",
+            "description": "Dev server offline"
+        }
+    ],
     "paths": {
         "/api/v1/cars/add": {
             "post": {
