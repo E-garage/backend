@@ -4,6 +4,16 @@
         "title": "E-garage Api",
         "version": "0.0.1"
     },
+    "servers": [
+        {
+            "url": "https://backend.egarage.store",
+            "description": "Dev server online"
+        },
+        {
+            "url": "http://localhost",
+            "description": "Dev server offline"
+        }
+    ],
     "paths": {
         "/api/v1/cars/add": {
             "post": {
@@ -26,6 +36,26 @@
                 "responses": {
                     "201": {
                         "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/cars/status/{cars}": {
+            "post": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Change availability status of car's.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CarStatusUpdate"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -792,6 +822,29 @@
                     "brand": "BMW X12",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
                     "thumbnail": "file"
+                }
+            },
+            "CarStatusUpdate": {
+                "properties": {
+                    "brand": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "thumbnail": {
+                        "type": "file"
+                    },
+                    "availability": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "brand": "BMW X12",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                    "thumbnail": "file",
+                    "availability": "available"
                 }
             },
             "FamilyCollection": {
