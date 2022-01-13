@@ -350,12 +350,12 @@
             }
         },
         "/api/v1/auth/login": {
-            "get": {
+            "post": {
                 "tags": [
                     "User"
                 ],
                 "summary": "Operates about user",
-                "operationId": "d57f2a71cce3c867371f8c5e2aff0ed9",
+                "operationId": "f4347aab4a8989ce73fc533505b58e23",
                 "parameters": [
                     {
                         "parameter": "user_credentials_in_query_required",

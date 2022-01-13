@@ -18,7 +18,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @OA\GET(
+     * @OA\POST(
      *     path="/api/v1/auth/login",
      *     tags={"User"},
      *     summary="Operates about user",

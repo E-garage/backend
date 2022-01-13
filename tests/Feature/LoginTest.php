@@ -17,7 +17,7 @@ class LoginTest extends TestCase
      */
     public function testMustEnterEmailAndPassword()
     {
-        $this->json('GET', 'api/v1/auth/login')
+        $this->json('POST', 'api/v1/auth/login')
             ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
@@ -37,7 +37,7 @@ class LoginTest extends TestCase
 
         $loginData = ['email' => 'sample@test.com', 'password' => 'sample123'];
 
-        $response = $this->json('GET', 'api/v1/auth/login', $loginData, ['Accept' => 'application/json'])
+        $response = $this->json('POST', 'api/v1/auth/login', $loginData, ['Accept' => 'application/json'])
             ->assertStatus(200)
             ->assertJsonStructure([
                 'user' => [
@@ -50,7 +50,7 @@ class LoginTest extends TestCase
 
     public function testUserLoginDataIsInvalid()
     {
-        $response = $this->get('api/v1/auth/login');
+        $response = $this->post('api/v1/auth/login');
 
         $response->assertStatus(302);
     }
