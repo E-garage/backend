@@ -30,7 +30,7 @@ use Illuminate\Http\Request;
  * ),
  *
  * @OA\POST(
- *     path="/api/v1/cars/status/{cars}",
+ *     path="/api/v1/cars/status/{car_id}",
  *     tags={"Car Management"},
  *     summary="Change availability status of car's.",
  *     @OA\Response(
@@ -71,6 +71,20 @@ use Illuminate\Http\Request;
  *         required=true,
  *         description="Acceptable extensions for thumbnail: png, jpg, jpeg.",
  *         @OA\Schema(ref="#/components/schemas/CarUpdate"),
+ *     ),
+ *     @OA\Response(response="200", description="Success"),
+ * ),
+ *
+ * @OA\PUT(
+ *     path="/api/v1/cars/update/details/{car_id}",
+ *     tags={"Car Management"},
+ *     summary="Update car's details.",
+ *     @OA\Parameter(
+ *         parameter="user_credentials_in_query_required",
+ *         name="body",
+ *         in="query",
+ *         required=true,
+ *         @OA\Schema(ref="#/components/schemas/CarDetailsUpdate"),
  *     ),
  *     @OA\Response(response="200", description="Success"),
  * ),
@@ -196,7 +210,73 @@ class CarController extends Controller
         }
 
         $data = $request->only(['brand', 'description']);
+        $service = new UpdateCarService($car, $data);
+        $service->update();
 
+        return new JsonResponse();
+    }
+
+    /**
+     * @OA\Component(
+     *         @OA\Schema(
+     *             schema="CarDetailsUpdate",
+     *             type="object",
+     *         @OA\Property(
+     *             property="engine_capacity",
+     *             type="string"
+     *         ),
+     *         @OA\Property(
+     *             property="horsePower",
+     *             type="string"
+     *         ),
+     *        @OA\Property(
+     *             property="sits",
+     *             type="string"
+     *         ),
+     *       @OA\Property(
+     *             property="doors",
+     *             type="string"
+     *         ),
+     *     @OA\Property(
+     *             property="color",
+     *             type="string"
+     *         ),
+     *     @OA\Property(
+     *             property="drivetrain",
+     *             type="string"
+     *         ),
+     *     @OA\Property(
+     *             property="body",
+     *             type="string"
+     *         ),
+     *     @OA\Property(
+     *             property="Fuel_Type",
+     *             type="string"
+     *         ),
+     *     @OA\Property(
+     *             property="mileage",
+     *             type="string"
+     *         ),
+     *         example={
+     *              "engine_capacity":"2.0l",
+     *              "horse_power":"200hp",
+     *              "sits":"5",
+     *              "doors":"5",
+     *              "color":"silver",
+     *              "drivetrain":"FWD",
+     *              "body":"suv",
+     *              "Feul_Type":"petrol",
+     *              "mileage":"150000km"
+     *         },
+     * )
+     */
+    public function updateDetails(Car $car, Request $request): JsonResponse
+    {
+        if (Auth::user()->cannot('update', $car)) {
+            return new JsonResponse(null, 401);
+        }
+
+        $data['details'] = $request->all();
         $service = new UpdateCarService($car, $data);
         $service->update();
 
@@ -234,7 +314,7 @@ class CarController extends Controller
      */
     public function status(Car $car): JsonResponse
     {
-        if (Auth::user()->cannot('status', $car)) {
+        if (Auth::user()->cannot('update', $car)) {
             return new JsonResponse(null, 401);
         }
         $car->changeStatus();

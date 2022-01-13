@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Car;
 use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
@@ -19,6 +20,15 @@ class CarFactory extends Factory
             'owner_id' => UserModel::factory()->create()->id,
             'brand' => $this->faker->company(),
             'description' => $this->faker->text(50),
+//            'availability' => Car::AVAILABLE,
         ];
+    }
+    public function unverified()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'details' => null,
+            ];
+        });
     }
 }
