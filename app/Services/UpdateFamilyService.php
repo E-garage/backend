@@ -13,6 +13,7 @@ use App\Repositories\FamilyRepository;
 class UpdateFamilyService
 {
     protected Family $family;
+    protected FamilyDTO $dto;
     protected FamilyRepository $repository;
 
     public function __construct(Family $family)
