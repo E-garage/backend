@@ -101,7 +101,7 @@ class UserModel extends Authenticatable implements MustVerifyEmail
 
     public function sendPasswordResetNotification($token)
     {
-        $url = 'https://adress.here/reset-password?token=' . $token;
+        $url = 'https://egarage.store/reset-password?token=' . $token;
 
         $this->notify(new ResetPasswordNotification($url));
     }
