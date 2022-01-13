@@ -62,7 +62,6 @@ class LogoutController extends Controller
     public function logout(Request $request): JsonResponse
     {
         try {
-            dd($request->header());
             $user = $request->user();
             $this->userLogoutService->logout($user);
             $response = [
