@@ -420,10 +420,13 @@
                 "parameters": [
                     {
                         "parameter": "user_accessToken",
-                        "name": "Bearer",
+                        "name": "authorization",
                         "in": "header",
                         "description": "accessToken to log out",
-                        "required": true
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Logout"
+                        }
                     }
                 ],
                 "responses": {
@@ -734,6 +737,15 @@
                     "email": "cool@email.com",
                     "password": "12345678"
                 }
+            },
+            "Logout": {
+                "properties": {
+                    "Bearer NumerToken": {
+                        "type": "string"
+                    }
+                },
+                "type": "string",
+                "example": "Bearer TokenNr1"
             },
             "Register": {
                 "properties": {
