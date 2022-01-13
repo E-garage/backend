@@ -20,7 +20,7 @@ class UpdateFamilyService
     {
         $this->family = $family;
         $this->dto = new FamilyDTO();
-        $this->repository = new FamilyRepository();
+        $this->repository = new FamilyRepository($this->family);
     }
 
     public function updateDetails(array $data): Family
