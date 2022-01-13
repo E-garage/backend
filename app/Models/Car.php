@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Casts\CarDetailsCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,7 +21,7 @@ class Car extends Model
     ];
 
     protected $casts = [
-        'details' => CarDetailsCast::class,
+        'details' => 'json',
     ];
 
     public function owner(): BelongsTo

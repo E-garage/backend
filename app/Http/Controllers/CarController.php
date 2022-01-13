@@ -275,8 +275,12 @@ class CarController extends Controller
         if (Auth::user()->cannot('update', $car)) {
             return new JsonResponse(null, 401);
         }
+        if (count($request->all()) > 0) {
+            $data['details'] = $request->all();
+        } else {
+            $data['details'] = null;
+        }
 
-        $data['details'] = $request->all();
         $service = new UpdateCarService($car, $data);
         $service->update();
 

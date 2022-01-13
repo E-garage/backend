@@ -7,9 +7,7 @@ use App\Models\UserModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
-use Storage;
 use Tests\TestCase;
-use function MongoDB\BSON\toJSON;
 
 class CarDetailsUpdatingTest extends TestCase
 {
@@ -22,7 +20,6 @@ class CarDetailsUpdatingTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
 
         $this->secondUser = UserModel::factory()->create(); //@phpstan-ignore-line
         $this->actingAs($this->secondUser); //@phpstan-ignore-line
@@ -40,9 +37,9 @@ class CarDetailsUpdatingTest extends TestCase
         $car = $this->user->cars()->first();
 
         $data = [
-            'engine_capacity'=>'3.0l',
+            'engine_capacity' => '3.0l',
             'sits' => '4',
-            'horse_power'=>'250',
+            'horse_power' => '250',
         ];
 
         $response = $this->putJson('/api/v1/cars/update/details/' . $car['id'], $data);
@@ -53,22 +50,21 @@ class CarDetailsUpdatingTest extends TestCase
         $this->assertNotEquals($car['details'], $carAfterUpdate['details']);
         $this->assertEquals($data, $carAfterUpdate['details']);
         $this->assertEquals($car['brand'], $carAfterUpdate['brand']);
-
     }
+
     public function testUserCannotUpdateCarsHisNotOwn()
     {
         $car = $this->secondUser->cars()->first();
 
         $data = [
-            'engine_capacity'=>'2,5l',
+            'engine_capacity' => '2,5l',
             'sits' => '5',
-            'horse_power'=>'300',
+            'horse_power' => '300',
         ];
 
         $response = $this->putJson('/api/v1/cars/update/details/' . $car['id'], $data);
         $response->assertUnauthorized();
     }
-
 
     private function addCars(int $numberOfCars = 1): void
     {
