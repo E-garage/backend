@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+
 use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Http\UploadedFile;
+
 
 class CarFactory extends Factory
 {
@@ -20,5 +21,13 @@ class CarFactory extends Factory
             'brand' => $this->faker->company(),
             'description' => $this->faker->text(50),
         ];
+    }
+    public function unverified()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'details' => null,
+            ];
+        });
     }
 }

@@ -40,7 +40,7 @@
                 }
             }
         },
-        "/api/v1/cars/status/{cars}": {
+        "/api/v1/cars/status/{car_id}": {
             "post": {
                 "tags": [
                     "Car Management"
@@ -95,6 +95,30 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/components/schemas/CarUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/cars/update/details/{car_id}": {
+            "put": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Update car's details.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/CarDetailsUpdate"
                         }
                     }
                 ],
@@ -623,6 +647,49 @@
                     "brand": "BMW X12",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
                     "thumbnail": "file"
+                }
+            },
+            "CarDetailsUpdate": {
+                "properties": {
+                    "engine_capacity": {
+                        "type": "string"
+                    },
+                    "horsePower": {
+                        "type": "string"
+                    },
+                    "sits": {
+                        "type": "string"
+                    },
+                    "doors": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "drivetrain": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "Fuel_Type": {
+                        "type": "string"
+                    },
+                    "mileage": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "engine_capacity": "2.0l",
+                    "horse_power": "200hp",
+                    "sits": "5",
+                    "doors": "5",
+                    "color": "silver",
+                    "drivetrain": "FWD",
+                    "body": "suv",
+                    "Feul_Type": "petrol",
+                    "mileage": "150000km"
                 }
             },
             "CarStatusUpdate": {

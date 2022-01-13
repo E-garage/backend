@@ -17,6 +17,11 @@ class Car extends Model
         'owner_id',
         'brand',
         'description',
+        'details',
+    ];
+
+    protected $casts = [
+        'details' => 'json',
     ];
 
     public function owner(): BelongsTo
