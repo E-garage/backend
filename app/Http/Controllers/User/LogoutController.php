@@ -26,10 +26,11 @@ class LogoutController extends Controller
      *     summary="Operates about user",
      *     @OA\Parameter(
      *         parameter="user_accessToken",
-     *         name="Bearer",
+     *         name="authorization",
      *         in="header",
      *         required=true,
      *         description="accessToken to log out",
+     *          @OA\Schema(ref="#/components/schemas/Logout"),
      *     ),
      *
      *     @OA\Response(
@@ -45,6 +46,16 @@ class LogoutController extends Controller
      *         description="Unauthorized",
      *     ),
      *    ),
+     *  @OA\Component(
+     *         @OA\Schema(
+     *             schema="Logout",
+     *             type="string",
+     *         @OA\Property(
+     *             property="Bearer NumerToken",
+     *             type="string"
+     *         ),
+     *         example="Bearer TokenNr1"
+     *   )
      *
      * @throws TokenNotFoundException
      */

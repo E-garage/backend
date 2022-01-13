@@ -17,8 +17,8 @@ class UpdateAccountDetailsTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = new UserModel();
-        $this->actingAs($this->user);
+        $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
+        $this->actingAs($this->user); //@phpstan-ignore-line
     }
 
     public function testNameWasChangedSuccessfully()
