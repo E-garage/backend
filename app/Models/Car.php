@@ -16,6 +16,11 @@ class Car extends Model
     protected $fillable = [
         'brand',
         'description',
+        'details',
+    ];
+
+    protected $casts = [
+        'details' => 'json',
     ];
 
     public function owner(): BelongsTo

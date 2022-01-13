@@ -40,7 +40,7 @@
                 }
             }
         },
-        "/api/v1/cars/status/{cars}": {
+        "/api/v1/cars/status/{car_id}": {
             "post": {
                 "tags": [
                     "Car Management"
@@ -95,6 +95,30 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/components/schemas/CarUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/cars/update/details/{car_id}": {
+            "put": {
+                "tags": [
+                    "Car Management"
+                ],
+                "summary": "Update car's details.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/CarDetailsUpdate"
                         }
                     }
                 ],
@@ -552,12 +576,12 @@
             }
         },
         "/api/v1/auth/login": {
-            "get": {
+            "post": {
                 "tags": [
                     "User"
                 ],
                 "summary": "Operates about user",
-                "operationId": "d57f2a71cce3c867371f8c5e2aff0ed9",
+                "operationId": "f4347aab4a8989ce73fc533505b58e23",
                 "parameters": [
                     {
                         "parameter": "user_credentials_in_query_required",
@@ -622,10 +646,13 @@
                 "parameters": [
                     {
                         "parameter": "user_accessToken",
-                        "name": "Bearer",
+                        "name": "authorization",
                         "in": "header",
                         "description": "accessToken to log out",
-                        "required": true
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Logout"
+                        }
                     }
                 ],
                 "responses": {
@@ -822,6 +849,49 @@
                     "brand": "BMW X12",
                     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
                     "thumbnail": "file"
+                }
+            },
+            "CarDetailsUpdate": {
+                "properties": {
+                    "engine_capacity": {
+                        "type": "string"
+                    },
+                    "horsePower": {
+                        "type": "string"
+                    },
+                    "sits": {
+                        "type": "string"
+                    },
+                    "doors": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "drivetrain": {
+                        "type": "string"
+                    },
+                    "body": {
+                        "type": "string"
+                    },
+                    "Fuel_Type": {
+                        "type": "string"
+                    },
+                    "mileage": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "engine_capacity": "2.0l",
+                    "horse_power": "200hp",
+                    "sits": "5",
+                    "doors": "5",
+                    "color": "silver",
+                    "drivetrain": "FWD",
+                    "body": "suv",
+                    "Feul_Type": "petrol",
+                    "mileage": "150000km"
                 }
             },
             "CarStatusUpdate": {
@@ -1085,6 +1155,15 @@
                     "email": "cool@email.com",
                     "password": "12345678"
                 }
+            },
+            "Logout": {
+                "properties": {
+                    "Bearer NumerToken": {
+                        "type": "string"
+                    }
+                },
+                "type": "string",
+                "example": "Bearer TokenNr1"
             },
             "Register": {
                 "properties": {
