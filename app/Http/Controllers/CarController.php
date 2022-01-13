@@ -164,7 +164,7 @@ class CarController extends Controller
      *         },
      * )
      */
-    public function index(): JsonResponse
+    public function get(): JsonResponse
     {
         $service = new IndexCarsService();
         $cars = $service->index();

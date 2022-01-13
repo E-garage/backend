@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $this->createAdmin();
+        $this->createVerifiedUsers(2);
     }
 
     private function createAdmin()
@@ -28,5 +29,20 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             'role' => UserModel::ADMIN,
         ]);
+    }
+
+    private function createVerifiedUsers(int $amount = 0)
+    {
+        for($i = 0; $i < $amount; $i++) {
+            UserModel::factory()->create([
+                'name' => 'User' . $i,
+                'email' => 'user' . $i . '@egarage.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('password' . $i),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'role' => UserModel::USER,
+            ]);
+        }
     }
 }

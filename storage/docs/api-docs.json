@@ -155,6 +155,208 @@
                 }
             }
         },
+        "/api/v1/family-sharing/create": {
+            "post": {
+                "tags": [
+                    "Family Sharing Management"
+                ],
+                "summary": "Add family.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Name and/or description of family.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FamilyCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/family-sharing": {
+            "get": {
+                "tags": [
+                    "Family Sharing Management"
+                ],
+                "summary": "Get all families that current user is part of (member or creator).",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FamilyCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/family-sharing/{family_id}": {
+            "get": {
+                "tags": [
+                    "Family Sharing Management"
+                ],
+                "summary": "Get chosen family with details. Restricted for members and owners of chosen family.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FamilyWithDetails"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/family-sharing/update/{family_id}": {
+            "put": {
+                "tags": [
+                    "Family Sharing Management"
+                ],
+                "summary": "Update family's name or description. Restricted for owners.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Name or/and description of family to put.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FamilyUpdateDetails"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Family"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/family-sharing/update/{family_id}/members": {
+            "put": {
+                "tags": [
+                    "Family Sharing Management"
+                ],
+                "summary": "Add or remove members. Restricted for owners.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Array of users' names or array of users' emails. Request will be rejected if both exists in it.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FamilyUpdateMembers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Family"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/family-sharing/update/{family_id}/cars": {
+            "put": {
+                "tags": [
+                    "Family Sharing Management"
+                ],
+                "summary": "Add cars to family. Restricted for owners.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Array of cars' ids.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FamilyUpdateCars"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Family"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/family-sharing/update/{family_id}/{car_id}/detach": {
+            "put": {
+                "tags": [
+                    "Family Sharing Management"
+                ],
+                "summary": "Remove car from family. Restricted for owners.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Family"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/family-sharing/delete/{family_id}": {
+            "delete": {
+                "tags": [
+                    "Family Sharing Management"
+                ],
+                "summary": "Delete family. Restricted for owners.",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/api/v1/last-parked-location/set": {
             "post": {
                 "tags": [
@@ -713,6 +915,155 @@
                     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
                     "thumbnail": "file",
                     "availability": "available"
+                }
+            },
+            "FamilyCollection": {
+                "properties": {
+                    "families": {
+                        "type": "list"
+                    }
+                },
+                "type": "object",
+                "example": [
+                    {
+                        "id": 62,
+                        "owner_id": "dd7dd0cc-4444-48ee-5555-2de4df555555",
+                        "name": "HolyCoffee Company",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                        "created_at": "2022-01-12T08:42:38.000000Z",
+                        "updated_at": "2022-01-12T08:42:38.000000Z"
+                    },
+                    {
+                        "id": 62,
+                        "owner_id": "dd7dd0cc-4444-48ee-5555-2de4df555555",
+                        "name": "The Smiths",
+                        "description": null,
+                        "created_at": "2022-01-12T08:42:38.000000Z",
+                        "updated_at": "2022-01-12T08:42:38.000000Z"
+                    }
+                ]
+            },
+            "FamilyCreate": {
+                "properties": {
+                    "name": {
+                        "type": "string|min:5|max:30|required"
+                    },
+                    "description": {
+                        "type": "string|max:50"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "name": "Family's Car",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi."
+                }
+            },
+            "FamilyWithDetails": {
+                "type": "object",
+                "example": {
+                    "family": {
+                        "id": 64,
+                        "owner_id": "dd7f80c9-4ab6-48ec-be00-2de4df5b9157",
+                        "name": "testt family",
+                        "description": "lorem ipsum",
+                        "created_at": "2022-01-12T08:42:29.000000Z",
+                        "updated_at": "2022-01-12T08:42:29.000000Z",
+                        "members": {
+                            "id": "0e6375d5-703a-476a-8ad5-fbe713de8e6a",
+                            "name": "Greg",
+                            "email": "cooles22222temail@ivseen.com",
+                            "email_verified_at": null,
+                            "created_at": "2022-01-12T09:08:10.000000Z",
+                            "updated_at": "2022-01-12T09:08:10.000000Z",
+                            "avatar": null,
+                            "role": "user",
+                            "pivot": {
+                                "family_id": 64,
+                                "user_id": "0e6375d5-703a-476a-8ad5-fbe713de8e6a"
+                            }
+                        },
+                        "cars": {
+                            "id": 27,
+                            "owner_id": "dd7f80c9-4ab6-48ec-be00-2de4df5b9157",
+                            "brand": "AAA123",
+                            "description": "Lorem Ipsum",
+                            "thumbnail": null,
+                            "created_at": "2022-01-12T09:07:26.000000Z",
+                            "updated_at": "2022-01-12T09:07:58.000000Z",
+                            "family_id": 64
+                        }
+                    }
+                }
+            },
+            "FamilyUpdateDetails": {
+                "properties": {
+                    "name": {
+                        "type": "string|min:5|max:30"
+                    },
+                    "description": {
+                        "type": "string|max:50"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "name": "Family's Car",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi."
+                }
+            },
+            "Family": {
+                "type": "object",
+                "example": {
+                    "id": 62,
+                    "owner_id": "dd7dd0cc-4444-48ee-5555-2de4df555555",
+                    "name": "HolyCoffee Company",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi.",
+                    "created_at": "2022-01-12T08:42:38.000000Z",
+                    "updated_at": "2022-01-12T08:42:38.000000Z"
+                }
+            },
+            "FamilyUpdateMembers": {
+                "properties": {
+                    "names": {
+                        "type": "prohibits:emails|array|min:1|required_without:emails"
+                    },
+                    "name": {
+                        "type": "string|distinct|min:3|max:50"
+                    },
+                    "emails": {
+                        "type": "prohibits:names|array|min:1|required_without:names"
+                    },
+                    "email": {
+                        "type": "email|distinct"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "emails": [
+                        "email@email.com",
+                        "another@email.com"
+                    ],
+                    "names": [
+                        "Greg",
+                        "Bob"
+                    ]
+                }
+            },
+            "FamilyUpdateCars": {
+                "properties": {
+                    "cars": {
+                        "type": "list"
+                    },
+                    "car_id": {
+                        "type": "int"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "cars": [
+                        2,
+                        3,
+                        26
+                    ]
                 }
             },
             "Coordinates": {

@@ -14,7 +14,6 @@ class Car extends Model
     public const INACTIVE = 'inactive';
 
     protected $fillable = [
-        'owner_id',
         'brand',
         'description',
         'details',
@@ -27,6 +26,11 @@ class Car extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(UserModel::class);
+    }
+
+    public function family(): BelongsTo
+    {
+        return $this->belongsTo(Family::class);
     }
 
     public function changeStatus(): void

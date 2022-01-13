@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\LastParkedLocationController;
 use App\Http\Controllers\User\ResetPasswordController;
 use App\Http\Controllers\User\LoginController;
@@ -80,7 +81,7 @@ Route::prefix('/v1/cars')
 ->group(function ()
 {
     Route::post('/add', [CarController::class, 'create'])->middleware('validate.create.car');
-    Route::get('/', [CarController::class, 'index']);
+    Route::get('/', [CarController::class, 'get']);
     Route::put('/update/{car}', [CarController::class, 'update'])->middleware('validate.update.car');
     Route::put('/update/details/{car}', [CarController::class, 'updateDetails'])->middleware('validate.update.car.details');
     Route::post('/status/{car}', [CarController::class, 'status']);
@@ -94,4 +95,18 @@ Route::prefix('/v1/last-parked-location')
     Route::get('/', [LastParkedLocationController::class, 'get']);
     Route::post('/set', [LastParkedLocationController::class, 'set'])->middleware('validate.set.location');
     Route::delete('/delete', [LastParkedLocationController::class, 'delete']);
+});
+
+Route::prefix('/v1/family-sharing')
+->middleware('auth:sanctum')
+->group(function ()
+{
+    Route::get('/', [FamilyController::class, 'get']);
+    Route::get('/{family}', [FamilyController::class, 'show']);
+    Route::post('/create', [FamilyController::class, 'create'])->middleware('validate.create.family');
+    Route::put('/update/{family}', [FamilyController::class, 'updateDetails'])->middleware('validate.update.family');
+    Route::put('/update/{family}/members', [FamilyController::class, 'updateMembers'])->middleware('validate.update.family.members');
+    Route::put('/update/{family}/cars', [FamilyController::class, 'updateCars'])->middleware('validate.update.family.cars');
+    Route::put('/update/{family}/{car}/detach', [FamilyController::class, 'detachCar']);
+    Route::delete('/delete/{family}', [FamilyController::class, 'delete']);
 });

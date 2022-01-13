@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Http;
 
 use App\Validators\ValidateCreateCar;
+use App\Validators\ValidateCreateFamily;
 use App\Validators\ValidateLoginCredentials;
 use App\Validators\ValidateRegisterCredentials;
 use App\Validators\ValidateResetPassword;
@@ -13,6 +14,9 @@ use App\Validators\ValidateSetLastParkedLocation;
 use App\Validators\ValidateUpdateCar;
 use App\Validators\ValidateUpdateCarDetails;
 use App\Validators\ValidateUpdateEmail;
+use App\Validators\ValidateUpdateFamily;
+use App\Validators\ValidateUpdateFamilyCars;
+use App\Validators\ValidateUpdateFamilyMembers;
 use App\Validators\ValidateUpdateName;
 use App\Validators\ValidateUpdatePassword;
 use App\Validators\ValidateUploadAvatar;
@@ -90,6 +94,10 @@ class Kernel extends HttpKernel
         'validate.create.car' => ValidateCreateCar::class,
         'validate.update.car' => ValidateUpdateCar::class,
         'validate.set.location' => ValidateSetLastParkedLocation::class,
+        'validate.create.family' => ValidateCreateFamily::class,
+        'validate.update.family' => ValidateUpdateFamily::class,
+        'validate.update.family.members' => ValidateUpdateFamilyMembers::class,
+        'validate.update.family.cars' => ValidateUpdateFamilyCars::class,
         'validate.update.car.details' => ValidateUpdateCarDetails::class,
     ];
 }
