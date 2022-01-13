@@ -53,7 +53,7 @@ Route::prefix('/v1/reset-password')->group(function ()
 });
 
 Route::prefix('/v1/account')
-->middleware('auth:sanctum')
+->middleware(['auth:sanctum', 'verified:login'])
 ->group(function ()
 {
     Route::prefix('/update')->group(function ()
@@ -72,7 +72,7 @@ Route::prefix('/v1/account')
 });
 
 Route::prefix('/v1/cars')
-->middleware('auth:sanctum')
+->middleware(['auth:sanctum', 'verified:login'])
 ->group(function ()
 {
     Route::post('/add', [CarController::class, 'create'])->middleware('validate.create.car');
@@ -83,7 +83,7 @@ Route::prefix('/v1/cars')
 });
 
 Route::prefix('/v1/last-parked-location')
-->middleware('auth:sanctum')
+->middleware(['auth:sanctum', 'verified:login'])
 ->group(function ()
 {
     Route::get('/', [LastParkedLocationController::class, 'get']);
