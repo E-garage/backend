@@ -24,6 +24,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
+Route::get('/verified-notice', function () {
+    return redirect('https://egarage.store/login');
+})->name('loginPage');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -38,7 +42,7 @@ Route::prefix('/v1/auth')->group(function ()
         ->middleware('validate.register')
         ->name('register');
 
-    Route::get('/login', [LoginController::class, 'login'])
+    Route::post('/login', [LoginController::class, 'login'])
         ->middleware('validate.login')
         ->name('login');
 
@@ -54,7 +58,7 @@ Route::prefix('/v1/reset-password')->group(function ()
 });
 
 Route::prefix('/v1/account')
-->middleware('auth:sanctum')
+->middleware(['auth:sanctum', 'verified:loginPage'])
 ->group(function ()
 {
     Route::prefix('/update')->group(function ()
@@ -73,18 +77,19 @@ Route::prefix('/v1/account')
 });
 
 Route::prefix('/v1/cars')
-->middleware('auth:sanctum')
+->middleware(['auth:sanctum', 'verified:loginPage'])
 ->group(function ()
 {
     Route::post('/add', [CarController::class, 'create'])->middleware('validate.create.car');
     Route::get('/', [CarController::class, 'get']);
     Route::put('/update/{car}', [CarController::class, 'update'])->middleware('validate.update.car');
+    Route::put('/update/details/{car}', [CarController::class, 'updateDetails'])->middleware('validate.update.car.details');
     Route::post('/status/{car}', [CarController::class, 'status']);
     Route::delete('/delete/{car}', [CarController::class, 'delete']);
 });
 
 Route::prefix('/v1/last-parked-location')
-->middleware('auth:sanctum')
+->middleware(['auth:sanctum', 'verified:loginPage'])
 ->group(function ()
 {
     Route::get('/', [LastParkedLocationController::class, 'get']);
