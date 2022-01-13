@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Dto\FamilyDTO;
 use App\Models\Car;
 use App\Models\Family;
 use App\Repositories\CarRepository;
@@ -17,12 +18,14 @@ class UpdateFamilyService
     public function __construct(Family $family)
     {
         $this->family = $family;
-        $this->repository = new FamilyRepository($this->family);
+        $this->dto = new FamilyDTO();
+        $this->repository = new FamilyRepository();
     }
 
     public function updateDetails(array $data): Family
     {
-        $this->repository->updateDetails($data);
+        $this->family = $this->dto->mapDataToObject($data, $this->family);
+        $this->repository->updateDetails($this->family);
 
         return $this->family->refresh();
     }

@@ -62,10 +62,10 @@ class FamilyRepository
         }
     }
 
-    public function updateDetails(array $data): void
+    public function updateDetails(Family $family): void
     {
         try {
-            $this->family->updateOrFail($data);
+            $family->updateOrFail();
         } catch (\Throwable) {
             throw new FamilyNotUpdatedException();
         }
