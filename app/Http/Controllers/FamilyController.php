@@ -50,6 +50,12 @@ use Illuminate\Http\Request;
  *     path="/api/v1/family-sharing/{family_id}",
  *     tags={"Family Sharing Management"},
  *     summary="Get chosen family with details. Restricted for members and owners of chosen family.",
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Response(
  *          response="200",
  *          description="Success",
@@ -73,6 +79,12 @@ use Illuminate\Http\Request;
  *         required=true,
  *         description="Name or/and description of family to put.",
  *         @OA\Schema(ref="#/components/schemas/FamilyUpdateDetails"),
+ *     ),
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
  *     ),
  *     @OA\Response(
  *          response="200",
@@ -98,6 +110,12 @@ use Illuminate\Http\Request;
  *         description="Array of users' names or array of users' emails. Request will be rejected if both exists in it.",
  *         @OA\Schema(ref="#/components/schemas/FamilyUpdateMembers"),
  *     ),
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Response(
  *          response="200",
  *          description="Success",
@@ -122,6 +140,12 @@ use Illuminate\Http\Request;
  *         description="Array of cars' ids.",
  *         @OA\Schema(ref="#/components/schemas/FamilyUpdateCars"),
  *     ),
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Response(
  *          response="200",
  *          description="Success",
@@ -144,6 +168,12 @@ use Illuminate\Http\Request;
  *         in="query",
  *         required=true
  *     ),
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Response(
  *           response="200",
  *           description="Success",
@@ -159,6 +189,12 @@ use Illuminate\Http\Request;
  * @OA\DELETE(
  *     path="/api/v1/family-sharing/delete/{family_id}",
  *     tags={"Family Sharing Management"},
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     summary="Delete family. Restricted for owners.",
  *     @OA\Response(response="200", description="Success"),
  * ),

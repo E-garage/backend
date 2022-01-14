@@ -12,6 +12,9 @@
         {
             "url": "http://localhost",
             "description": "Dev server offline"
+        },
+        {
+            "url": ""
         }
     ],
     "paths": {
@@ -46,6 +49,16 @@
                     "Car Management"
                 ],
                 "summary": "Change availability status of car's.",
+                "parameters": [
+                    {
+                        "name": "car_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -88,6 +101,14 @@
                 "summary": "Update car's info or thumbnail.",
                 "parameters": [
                     {
+                        "name": "car_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "parameter": "user_credentials_in_query_required",
                         "name": "body",
                         "in": "query",
@@ -113,6 +134,14 @@
                 "summary": "Update car's details.",
                 "parameters": [
                     {
+                        "name": "car_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "parameter": "user_credentials_in_query_required",
                         "name": "body",
                         "in": "query",
@@ -135,6 +164,16 @@
                     "Car Management"
                 ],
                 "summary": "Delete car.",
+                "parameters": [
+                    {
+                        "name": "car_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success"
@@ -206,6 +245,16 @@
                     "Family Sharing Management"
                 ],
                 "summary": "Get chosen family with details. Restricted for members and owners of chosen family.",
+                "parameters": [
+                    {
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -235,6 +284,14 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/components/schemas/FamilyUpdateDetails"
+                        }
+                    },
+                    {
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -268,6 +325,14 @@
                         "schema": {
                             "$ref": "#/components/schemas/FamilyUpdateMembers"
                         }
+                    },
+                    {
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -300,6 +365,14 @@
                         "schema": {
                             "$ref": "#/components/schemas/FamilyUpdateCars"
                         }
+                    },
+                    {
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -328,6 +401,14 @@
                         "name": "body",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -350,6 +431,16 @@
                     "Family Sharing Management"
                 ],
                 "summary": "Delete family. Restricted for owners.",
+                "parameters": [
+                    {
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success"

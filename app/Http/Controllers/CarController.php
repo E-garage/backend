@@ -33,6 +33,12 @@ use Illuminate\Http\Request;
  *     path="/api/v1/cars/status/{car_id}",
  *     tags={"Car Management"},
  *     summary="Change availability status of car's.",
+ *     @OA\Parameter(
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Response(
  *          response="200",
  *          description="Success",
@@ -65,6 +71,12 @@ use Illuminate\Http\Request;
  *     tags={"Car Management"},
  *     summary="Update car's info or thumbnail.",
  *     @OA\Parameter(
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
  *         name="body",
  *         in="query",
@@ -80,6 +92,12 @@ use Illuminate\Http\Request;
  *     tags={"Car Management"},
  *     summary="Update car's details.",
  *     @OA\Parameter(
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
  *         name="body",
  *         in="query",
@@ -93,6 +111,12 @@ use Illuminate\Http\Request;
  *     path="/api/v1/cars/delete/{car_id}",
  *     tags={"Car Management"},
  *     summary="Delete car.",
+ *     @OA\Parameter(
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Response(response="200", description="Success"),
  * ),
  */
