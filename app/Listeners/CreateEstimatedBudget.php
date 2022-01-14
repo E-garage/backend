@@ -17,7 +17,7 @@ class CreateEstimatedBudget
      */
     public function handle(CarCreated $event)
     {
-        if(!$event->car->budget) { //@phpstan-ignore-line
+        if(!$event->car->budget) {
             EstimatedBudget::create([
                 'car_id' => $event->car['id'],
             ]);

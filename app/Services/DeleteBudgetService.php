@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\BudgetNotDeletedException;
 use App\Models\Car;
 use App\Models\EstimatedBudget;
 use App\Repositories\BudgetRepository;

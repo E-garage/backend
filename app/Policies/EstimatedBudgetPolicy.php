@@ -50,7 +50,6 @@ class EstimatedBudgetPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\UserModel  $userModel
-     * @param  \App\Models\EstimatedBudget  $estimatedBudget
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(UserModel $userModel, Car $car)

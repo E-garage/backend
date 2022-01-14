@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Dto\EstimatedBudgetDTO;
+use App\Exceptions\BudgetNotUpdatedException;
 use App\Models\Car;
 use App\Repositories\BudgetRepository;
 
