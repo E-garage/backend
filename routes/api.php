@@ -94,7 +94,9 @@ Route::prefix('/v1/car-budget/{car}')
 ->group(function ()
 {
     Route::get('/', [BudgetController::class, 'get']);
-    Route::put('/update', [BudgetController::class, 'update']);
+    Route::put('/update/original-budget', [BudgetController::class, 'updateOriginalBudget'])->middleware('validate.update.original.budget');
+    Route::put('/update/last-payment', [BudgetController::class, 'updateLastPayment'])->middleware('validate.update.last.payment');
+    Route::delete('/delete', [BudgetController::class, 'delete']);
 });
 
 Route::prefix('/v1/last-parked-location')
