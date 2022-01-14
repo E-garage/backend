@@ -14,7 +14,7 @@ class CreateEstimatedBudget
      */
     public function handle(CarCreated $event)
     {
-        if (!$event->car->budget) {
+        if (!$event->car->budget()->exists()) {
             EstimatedBudget::create([
                 'car_id' => $event->car['id'],
             ]);
