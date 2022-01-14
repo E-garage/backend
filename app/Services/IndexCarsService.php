@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Models\Car;
 use App\Repositories\CarRepository;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,9 +14,9 @@ class IndexCarsService
 {
     protected CarRepository $repository;
 
-    public function __construct()
+    public function __construct(Car $car = null)
     {
-        $this->repository = new CarRepository();
+        $this->repository = new CarRepository($car);
     }
 
     /**
