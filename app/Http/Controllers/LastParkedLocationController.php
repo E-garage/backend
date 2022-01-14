@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\LastParkedLocationNotRetrievedException;
+use App\Exceptions\LastParkedLocationNotUpdatedException;
 use App\Services\LastParkedLocationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,6 +14,7 @@ use Illuminate\Http\Request;
  * @OA\POST(
  *     path="/api/v1/last-parked-location/set",
  *     tags={"Last parked location management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Set coordinates.",
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
@@ -27,6 +30,7 @@ use Illuminate\Http\Request;
  * @OA\GET(
  *     path="/api/v1/last-parked-location/",
  *     tags={"Last parked location management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Get coordinates.",
  *     @OA\Response(
  *          response="200",
@@ -41,6 +45,7 @@ use Illuminate\Http\Request;
  * @OA\DELETE(
  *     path="/api/v1/last-parked-location/delete",
  *     tags={"Last parked location management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Delete coordinates.",
  *     @OA\Response(response="200", description="Success"),
  * ),
@@ -73,6 +78,9 @@ class LastParkedLocationController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws LastParkedLocationNotUpdatedException
+     */
     public function set(Request $request): JsonResponse
     {
         $data = $request->only(['longitude', 'latitude']);
@@ -81,6 +89,9 @@ class LastParkedLocationController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @throws LastParkedLocationNotRetrievedException
+     */
     public function get(): JsonResponse
     {
         $coordinates = $this->service->getLocation();
@@ -88,6 +99,9 @@ class LastParkedLocationController extends Controller
         return new JsonResponse($coordinates);
     }
 
+    /**
+     * @throws LastParkedLocationNotUpdatedException
+     */
     public function delete(): JsonResponse
     {
         $this->service->deleteLocation();

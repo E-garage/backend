@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CarNotDeletedFromDatabaseException;
+use App\Exceptions\CarNotUpdatedException;
+use App\Exceptions\CarsThumbnailNotRemovedFromStorageException;
 use App\Factories\CarFactory;
 use App\Models\Car;
 use App\Services\AddCarService;
@@ -17,6 +20,7 @@ use Illuminate\Http\Request;
  * @OA\POST(
  *     path="/api/v1/cars/add",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Add car.",
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
@@ -32,6 +36,7 @@ use Illuminate\Http\Request;
  * @OA\POST(
  *     path="/api/v1/cars/status/{car_id}",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Change availability status of car's.",
  *     @OA\Parameter(
  *          name="car_id",
@@ -53,6 +58,7 @@ use Illuminate\Http\Request;
  * @OA\GET(
  *     path="/api/v1/cars",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Get all cars that logged user own.",
  *     @OA\Response(
  *          response="200",
@@ -69,6 +75,7 @@ use Illuminate\Http\Request;
  * @OA\PUT(
  *     path="/api/v1/cars/update/{car_id}",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update car's info or thumbnail.",
  *     @OA\Parameter(
  *          name="car_id",
@@ -90,6 +97,7 @@ use Illuminate\Http\Request;
  * @OA\PUT(
  *     path="/api/v1/cars/update/details/{car_id}",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update car's details.",
  *     @OA\Parameter(
  *          name="car_id",
@@ -110,6 +118,7 @@ use Illuminate\Http\Request;
  * @OA\DELETE(
  *     path="/api/v1/cars/delete/{car_id}",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Delete car.",
  *     @OA\Parameter(
  *          name="car_id",
@@ -145,6 +154,10 @@ class CarController extends Controller
      *              "thumbnail": "file"
      *         },
      * )
+     */
+    /**
+     * @throws \App\Exceptions\CarNotSavedToDatabaseException
+     * @throws CarsThumbnailNotRemovedFromStorageException
      */
     public function create(Request $request): JsonResponse
     {
@@ -188,6 +201,10 @@ class CarController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws \App\Exceptions\AuthorizedUserNotFoundException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function get(): JsonResponse
     {
         $service = new IndexCarsService();
@@ -219,6 +236,10 @@ class CarController extends Controller
      *              "thumbnail": "file"
      *         },
      * )
+     */
+    /**
+     * @throws CarNotUpdatedException
+     * @throws CarsThumbnailNotRemovedFromStorageException
      */
     public function update(Car $car, Request $request): JsonResponse
     {
@@ -294,6 +315,9 @@ class CarController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws CarNotUpdatedException
+     */
     public function updateDetails(Car $car, Request $request): JsonResponse
     {
         if (Auth::user()->cannot('update', $car)) {
@@ -340,6 +364,9 @@ class CarController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws CarNotUpdatedException
+     */
     public function status(Car $car): JsonResponse
     {
         if (Auth::user()->cannot('update', $car)) {
@@ -353,6 +380,10 @@ class CarController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @throws CarNotDeletedFromDatabaseException
+     * @throws CarsThumbnailNotRemovedFromStorageException
+     */
     public function delete(Car $car): JsonResponse
     {
         if (Auth::user()->cannot('delete', $car)) {

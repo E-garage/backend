@@ -24,15 +24,7 @@ class LogoutController extends Controller
      *     path="/api/v1/auth/logout",
      *     tags={"User"},
      *     summary="Operates about user",
-     *     @OA\Parameter(
-     *         parameter="user_accessToken",
-     *         name="authorization",
-     *         in="header",
-     *         required=true,
-     *         description="accessToken to log out",
-     *          @OA\Schema(ref="#/components/schemas/Logout"),
-     *     ),
-     *
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response="201",
      *         description="Logged out",
@@ -57,6 +49,9 @@ class LogoutController extends Controller
      *         example="Bearer TokenNr1"
      *   )
      *
+     * @throws TokenNotFoundException
+     */
+    /**
      * @throws TokenNotFoundException
      */
     public function logout(Request $request): JsonResponse

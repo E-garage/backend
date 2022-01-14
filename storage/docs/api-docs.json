@@ -40,7 +40,12 @@
                     "201": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/cars/status/{car_id}": {
@@ -70,7 +75,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/cars": {
@@ -90,7 +100,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/cars/update/{car_id}": {
@@ -123,7 +138,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/cars/update/details/{car_id}": {
@@ -155,7 +175,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/cars/delete/{car_id}": {
@@ -178,7 +203,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/docs/v1": {
@@ -216,7 +246,12 @@
                     "201": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/family-sharing": {
@@ -236,7 +271,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/family-sharing/{family_id}": {
@@ -266,7 +306,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/family-sharing/update/{family_id}": {
@@ -306,7 +351,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/family-sharing/update/{family_id}/members": {
@@ -317,6 +367,14 @@
                 "summary": "Add or remove members. Restricted for owners.",
                 "parameters": [
                     {
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "parameter": "user_credentials_in_query_required",
                         "name": "body",
                         "in": "query",
@@ -324,14 +382,6 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/components/schemas/FamilyUpdateMembers"
-                        }
-                    },
-                    {
-                        "name": "family_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
                         }
                     }
                 ],
@@ -346,7 +396,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/family-sharing/update/{family_id}/cars": {
@@ -357,6 +412,14 @@
                 "summary": "Add cars to family. Restricted for owners.",
                 "parameters": [
                     {
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "parameter": "user_credentials_in_query_required",
                         "name": "body",
                         "in": "query",
@@ -364,14 +427,6 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/components/schemas/FamilyUpdateCars"
-                        }
-                    },
-                    {
-                        "name": "family_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
                         }
                     }
                 ],
@@ -386,7 +441,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/family-sharing/update/{family_id}/{car_id}/detach": {
@@ -397,13 +457,15 @@
                 "summary": "Remove car from family. Restricted for owners.",
                 "parameters": [
                     {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "required": true
+                        "name": "family_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     },
                     {
-                        "name": "family_id",
+                        "name": "car_id",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -422,7 +484,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/family-sharing/delete/{family_id}": {
@@ -445,7 +512,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/last-parked-location/set": {
@@ -470,7 +542,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/last-parked-location/": {
@@ -490,7 +567,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/last-parked-location/delete": {
@@ -503,7 +585,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/account/update/password": {
@@ -512,18 +599,6 @@
                     "Account Management"
                 ],
                 "summary": "Update user's account password",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Data needed to perform action.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/UpdatePassword"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -537,7 +612,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/account/update/name": {
@@ -546,18 +626,6 @@
                     "Account Management"
                 ],
                 "summary": "Update user's account name",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Data needed to perform action.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/UpdateName"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -571,7 +639,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/account/update/email": {
@@ -580,18 +653,6 @@
                     "Account Management"
                 ],
                 "summary": "Update user's account email",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Data needed to perform action.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/UpdateEmail"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -605,7 +666,12 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/account/avatar/upload": {
@@ -630,7 +696,12 @@
                     "201": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/account/avatar": {
@@ -650,7 +721,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/account/avatar/delete": {
@@ -663,7 +739,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/auth/login": {
@@ -672,19 +753,6 @@
                     "User"
                 ],
                 "summary": "Operates about user",
-                "operationId": "f4347aab4a8989ce73fc533505b58e23",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "User object that needs to be log in.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Login"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -733,19 +801,6 @@
                     "User"
                 ],
                 "summary": "Operates about user",
-                "operationId": "4eee631b5540cc3b74d925dbe348f1fc",
-                "parameters": [
-                    {
-                        "parameter": "user_accessToken",
-                        "name": "authorization",
-                        "in": "header",
-                        "description": "accessToken to log out",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Logout"
-                        }
-                    }
-                ],
                 "responses": {
                     "201": {
                         "description": "Logged out",
@@ -768,7 +823,12 @@
                     "500": {
                         "description": "Unauthorized"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/auth/signup": {
@@ -777,19 +837,6 @@
                     "User"
                 ],
                 "summary": "Operates about user",
-                "operationId": "1d6e8dd4740d98dd9a11a5f5addf5c72",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "User object that needs to be added to the database.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Register"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -819,18 +866,6 @@
                     "Reset Password"
                 ],
                 "summary": "Send link to user's mail via mail.",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Email to which the link should be sent.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/SendResetPasswordLink"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -853,18 +888,6 @@
                     "Reset Password"
                 ],
                 "summary": "Resets password.",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "User's email, unique token and new password.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/ResetPassword"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers\User;
 
+use App\Exceptions\UserNotUpdatedException;
 use App\Http\Controllers\Controller;
 use App\Services\UserAccountManagementService;
 use Illuminate\Http\JsonResponse;
@@ -13,15 +14,8 @@ use Illuminate\Http\Request;
  * @OA\Put(
  *     path="/api/v1/account/update/password",
  *     tags={"Account Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update user's account password",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Data needed to perform action.",
- *         @OA\Schema(ref="#/components/schemas/UpdatePassword"),
- *     ),
  *     @OA\RequestBody(
  *         @OA\MediaType(
  *             mediaType="application/json",
@@ -34,15 +28,8 @@ use Illuminate\Http\Request;
  * @OA\Put(
  *     path="/api/v1/account/update/name",
  *     tags={"Account Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update user's account name",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Data needed to perform action.",
- *         @OA\Schema(ref="#/components/schemas/UpdateName"),
- *     ),
  *     @OA\RequestBody(
  *         @OA\MediaType(
  *             mediaType="application/json",
@@ -55,15 +42,8 @@ use Illuminate\Http\Request;
  * @OA\Put(
  *     path="/api/v1/account/update/email",
  *     tags={"Account Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update user's account email",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Data needed to perform action.",
- *         @OA\Schema(ref="#/components/schemas/UpdateEmail"),
- *     ),
  *     @OA\RequestBody(
  *         @OA\MediaType(
  *             mediaType="application/json",
@@ -98,6 +78,9 @@ class AccountManagementController extends Controller
      *         example={"password": "12345678", "password_confirmation": "12345678"}
      * )
      */
+    /**
+     * @throws UserNotUpdatedException
+     */
     public function updatePassword(Request $request): JsonResponse
     {
         $newPassword = (string)$request['password'];
@@ -118,6 +101,9 @@ class AccountManagementController extends Controller
      *         example={"email": "test@test.com"}
      * )
      */
+    /**
+     * @throws UserNotUpdatedException
+     */
     public function updateEmail(Request $request): JsonResponse
     {
         $newEmail = (string)$request['email'];
@@ -137,6 +123,9 @@ class AccountManagementController extends Controller
      *         ),
      *         example={"name": "JohnDoe"}
      * )
+     */
+    /**
+     * @throws UserNotUpdatedException
      */
     public function updateName(Request $request): JsonResponse
     {

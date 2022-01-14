@@ -15,14 +15,6 @@ use Illuminate\Http\Request;
  *     path="/api/v1/reset-password/send-link",
  *     tags={"Reset Password"},
  *     summary="Send link to user's mail via mail.",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Email to which the link should be sent.",
- *         @OA\Schema(ref="#/components/schemas/SendResetPasswordLink"),
- *     ),
  *     @OA\RequestBody(
  *         @OA\MediaType(
  *             mediaType="application/json",
@@ -36,14 +28,6 @@ use Illuminate\Http\Request;
  *     path="/api/v1/reset-password/",
  *     tags={"Reset Password"},
  *     summary="Resets password.",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="User's email, unique token and new password.",
- *         @OA\Schema(ref="#/components/schemas/ResetPassword"),
- *     ),
  *     @OA\RequestBody(
  *         @OA\MediaType(
  *             mediaType="application/json",
@@ -66,6 +50,9 @@ class ResetPasswordController extends Controller
      *         ),
      *         example={"email": "cool@email.com"}),
      * )
+     */
+    /**
+     * @throws ResetLinkNotSentException
      */
     public function sendResetLink(Request $request): JsonResponse
     {
@@ -108,6 +95,9 @@ class ResetPasswordController extends Controller
      *             "password_confirmation": "12345678",
      *         }),
      * )
+     */
+    /**
+     * @throws PasswordNotResetedException
      */
     public function resetPassword(Request $request): JsonResponse
     {

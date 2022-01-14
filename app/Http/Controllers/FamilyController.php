@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\AuthorizedUserNotFoundException;
+use App\Exceptions\FamilyNotSavedToDatabaseException;
 use App\Factories\FamilyFactory;
 use App\Models\Car;
 use App\Models\Family;
@@ -18,6 +20,7 @@ use Illuminate\Http\Request;
  * @OA\POST(
  *     path="/api/v1/family-sharing/create",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Add family.",
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
@@ -33,6 +36,7 @@ use Illuminate\Http\Request;
  * @OA\GET(
  *     path="/api/v1/family-sharing",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Get all families that current user is part of (member or creator).",
  *     @OA\Response(
  *          response="200",
@@ -49,6 +53,7 @@ use Illuminate\Http\Request;
  * @OA\GET(
  *     path="/api/v1/family-sharing/{family_id}",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Get chosen family with details. Restricted for members and owners of chosen family.",
  *     @OA\Parameter(
  *          name="family_id",
@@ -71,6 +76,7 @@ use Illuminate\Http\Request;
  * @OA\PUT(
  *     path="/api/v1/family-sharing/update/{family_id}",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update family's name or description. Restricted for owners.",
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
@@ -101,7 +107,14 @@ use Illuminate\Http\Request;
  * @OA\PUT(
  *     path="/api/v1/family-sharing/update/{family_id}/members",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Add or remove members. Restricted for owners.",
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
  *         name="body",
@@ -109,12 +122,6 @@ use Illuminate\Http\Request;
  *         required=true,
  *         description="Array of users' names or array of users' emails. Request will be rejected if both exists in it.",
  *         @OA\Schema(ref="#/components/schemas/FamilyUpdateMembers"),
- *     ),
- *     @OA\Parameter(
- *          name="family_id",
- *          required=true,
- *          in="path",
- *          @OA\Schema(type="integer")
  *     ),
  *     @OA\Response(
  *          response="200",
@@ -131,7 +138,14 @@ use Illuminate\Http\Request;
  * @OA\PUT(
  *     path="/api/v1/family-sharing/update/{family_id}/cars",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Add cars to family. Restricted for owners.",
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
  *         name="body",
@@ -139,12 +153,6 @@ use Illuminate\Http\Request;
  *         required=true,
  *         description="Array of cars' ids.",
  *         @OA\Schema(ref="#/components/schemas/FamilyUpdateCars"),
- *     ),
- *     @OA\Parameter(
- *          name="family_id",
- *          required=true,
- *          in="path",
- *          @OA\Schema(type="integer")
  *     ),
  *     @OA\Response(
  *          response="200",
@@ -161,15 +169,16 @@ use Illuminate\Http\Request;
  * @OA\PUT(
  *     path="/api/v1/family-sharing/update/{family_id}/{car_id}/detach",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Remove car from family. Restricted for owners.",
  *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
  *     ),
  *     @OA\Parameter(
- *          name="family_id",
+ *          name="car_id",
  *          required=true,
  *          in="path",
  *          @OA\Schema(type="integer")
@@ -189,6 +198,7 @@ use Illuminate\Http\Request;
  * @OA\DELETE(
  *     path="/api/v1/family-sharing/delete/{family_id}",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     @OA\Parameter(
  *          name="family_id",
  *          required=true,
@@ -230,6 +240,9 @@ class FamilyController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws AuthorizedUserNotFoundException
+     */
     public function get(): JsonResponse
     {
         $service = new IndexFamiliesService();
@@ -256,6 +269,9 @@ class FamilyController extends Controller
      *              "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi."
      *         },
      * )
+     */
+    /**
+     * @throws FamilyNotSavedToDatabaseException
      */
     public function create(Request $request): JsonResponse
     {

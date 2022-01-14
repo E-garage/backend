@@ -30,11 +30,11 @@ class UserLoginService
         try {
             $user = $this->repository->findByEmail($this->user->email);
 
-            if (Hash::check($this->user->password, $user->password)) {
-                return $user;
-            } else {
+            if (!Hash::check($this->user->password, $user->password)) {
                 throw new UserCredentialsInvalidExecption();
             }
+
+            return $user;
         } catch (ModelNotFoundException) {
             throw new UserCredentialsInvalidExecption();
         }

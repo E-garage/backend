@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers\User;
 
+use App\Exceptions\UserNotSavedToDatabaseException;
 use App\Factories\UserFactory;
 use App\Http\Controllers\Controller;
 use App\Services\UserRegisterService;
@@ -24,14 +25,6 @@ class RegisterController extends Controller
      *     path="/api/v1/auth/signup",
      *     tags={"User"},
      *     summary="Operates about user",
-     *     @OA\Parameter(
-     *         parameter="user_credentials_in_query_required",
-     *         name="body",
-     *         in="query",
-     *         required=true,
-     *         description="User object that needs to be added to the database.",
-     *         @OA\Schema(ref="#/components/schemas/Register"),
-     *     ),
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -73,6 +66,9 @@ class RegisterController extends Controller
      *         ),
      *         example={"name": "JohnDoe", "email": "cool@email.com", "password": "12345678", "password_confirmation": "12345678"}
      *   )
+     */
+    /**
+     * @throws UserNotSavedToDatabaseException
      */
     public function create(Request $request): JsonResponse
     {
