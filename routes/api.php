@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\LastParkedLocationController;
@@ -86,6 +87,14 @@ Route::prefix('/v1/cars')
     Route::put('/update/details/{car}', [CarController::class, 'updateDetails'])->middleware('validate.update.car.details');
     Route::post('/status/{car}', [CarController::class, 'status']);
     Route::delete('/delete/{car}', [CarController::class, 'delete']);
+});
+
+Route::prefix('/v1/car-budget/{car}')
+->middleware(['auth:sanctum', 'verified:loginPage'])
+->group(function ()
+{
+    Route::get('/', [BudgetController::class, 'get']);
+    Route::put('/update', [BudgetController::class, 'update']);
 });
 
 Route::prefix('/v1/last-parked-location')
