@@ -12,8 +12,7 @@ class EstimatedBudgetDTO
     public function mapDataToObject(array $data, EstimatedBudget $budget): EstimatedBudget
     {
         try {
-            foreach($data as $key => $value)
-            {
+            foreach ($data as $key => $value) {
                 $budget[$key] = $data[$key];
             }
 

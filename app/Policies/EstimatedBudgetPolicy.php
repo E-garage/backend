@@ -19,13 +19,13 @@ class EstimatedBudgetPolicy
     {
         $isCarOwner = $userModel->id === $car->owner_id;
 
-        if(!$isCarOwner) {
+        if (!$isCarOwner) {
             $family = $car->family;
             $isFamilyOwner = $family->members()->where('id', $userModel->id)->exists();
             $isFamilyMember = $family->owner->id === $userModel->id;
         }
 
-        return ($isCarOwner || $isFamilyOwner || $isFamilyMember);
+        return $isCarOwner || $isFamilyOwner || $isFamilyMember;
     }
 
     /**
@@ -37,19 +37,18 @@ class EstimatedBudgetPolicy
     {
         $isCarOwner = $userModel->id === $car->owner_id;
 
-        if(!$isCarOwner) {
+        if (!$isCarOwner) {
             $family = $car->family;
             $isFamilyOwner = $family->members()->where('id', $userModel->id)->exists();
             $isFamilyMember = $family->owner->id === $userModel->id;
         }
 
-        return ($isCarOwner || $isFamilyOwner || $isFamilyMember);
+        return $isCarOwner || $isFamilyOwner || $isFamilyMember;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\UserModel  $userModel
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(UserModel $userModel, Car $car)

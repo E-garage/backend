@@ -14,7 +14,7 @@ class BudgetController extends Controller
 {
     public function updateOriginalBudget(Request $request, Car $car): JsonResponse
     {
-        if(Auth::user()->cannot('update', $car)) {
+        if (Auth::user()->cannot('update', $car)) {
             return new JsonResponse(null, 401);
         }
 
@@ -28,7 +28,7 @@ class BudgetController extends Controller
 
     public function updateLastPayment(Request $request, Car $car): JsonResponse
     {
-        if(Auth::user()->cannot('update', $car)) {
+        if (Auth::user()->cannot('update', $car)) {
             return new JsonResponse(null, 401);
         }
 
@@ -42,7 +42,7 @@ class BudgetController extends Controller
 
     public function get(Car $car): JsonResponse
     {
-        if(Auth::user()->cannot('view', $car)) {
+        if (Auth::user()->cannot('view', $car)) {
             return new JsonResponse(null, 401);
         }
 
@@ -54,7 +54,7 @@ class BudgetController extends Controller
 
     public function delete(Car $car): JsonResponse
     {
-        if(Auth::user()->cannot('delete', $car)) {
+        if (Auth::user()->cannot('delete', $car)) {
             return new JsonResponse(null, 401);
         }
 
