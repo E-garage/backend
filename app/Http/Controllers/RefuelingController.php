@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\CarNotFoundException;
+use App\Factories\RefuelingFactory;
 use App\Models\Refueling;
 use App\Services\AddRefuelingService;
-use App\Factories\RefuelingFactory;
 use App\Services\AttachReceiptToRefuelingService;
 use App\Services\DeleteRefuelingService;
 use App\Services\IndexCarsService;
@@ -62,7 +62,6 @@ use Illuminate\Support\Facades\Auth;
  *     @OA\Response(response="200", description="Success"),
  * ),
  *
- *
  * @OA\DELETE(
  *     path="/api/v1/refueling/delete/{refueling_id}",
  *     tags={"Refueling Management"},
@@ -70,7 +69,6 @@ use Illuminate\Support\Facades\Auth;
  *     @OA\Response(response="200", description="Success"),
  * ),
  */
-
 class RefuelingController extends Controller
 {
     /**
@@ -117,7 +115,7 @@ class RefuelingController extends Controller
         }
 
         $receipt = $request['receipt'];
-        $data['date'] = \Date::createFromFormat('m/d/Y',$data['date'])->format('Y-m-d');
+        $data['date'] = \Date::createFromFormat('m/d/Y', $data['date'])->format('Y-m-d');
 
         $factory = new RefuelingFactory();
         $refueling = $factory->createFromRequest($data);
@@ -153,7 +151,6 @@ class RefuelingController extends Controller
      *         },
      * )
      */
-
     public function get(): JsonResponse
     {
         $service = new IndexRefuelingService();
@@ -197,8 +194,7 @@ class RefuelingController extends Controller
      *         },
      * )
      */
-
-    public function update(Refueling $refueling, Request $request):JsonResponse
+    public function update(Refueling $refueling, Request $request): JsonResponse
     {
         if (Auth::user()->cannot('update', $refueling)) {
             return new JsonResponse(null, 401);
@@ -229,8 +225,7 @@ class RefuelingController extends Controller
         return new JsonResponse();
     }
 
-
-    private function getDataFormRequest(Request $request) :array
+    private function getDataFormRequest(Request $request): array
     {
         $data = [
             'owner_id' => Auth::user()->id, //@phpstan-ignore-line
@@ -240,6 +235,7 @@ class RefuelingController extends Controller
             'TotalPrice' => $request['TotalPrice'],
             'date' => $request['date'],
         ];
+
         return $data;
     }
 }

@@ -26,5 +26,5 @@ class RefuelingFactory extends Factory
             'TotalPrice' => $this->faker->randomNumber(4),
         ];
     }
-    
+
 }

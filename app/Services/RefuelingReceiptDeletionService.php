@@ -1,15 +1,12 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Exceptions\RefuelingReceiptNotRemovedFromStorageException;
 use Storage;
 
 class RefuelingReceiptDeletionService
 {
-
     /**
      * RefuelingReceiptDeletionService constructor.
      */

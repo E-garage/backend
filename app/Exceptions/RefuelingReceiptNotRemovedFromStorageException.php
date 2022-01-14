@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Exceptions;
 
 use Exception;
-
 
 class RefuelingReceiptNotRemovedFromStorageException extends Exception
 {

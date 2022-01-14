@@ -13,7 +13,6 @@ use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
 class RefuelingRepository
 {
     protected ?Refueling $refueling;
@@ -29,7 +28,7 @@ class RefuelingRepository
     public function index(UserModel $user): Collection
     {
         try {
-            return $user->refueling()->get(['id','car_id','date','FuelType','TotalPrice','amount']);
+            return $user->refueling()->get(['id', 'car_id', 'date', 'FuelType', 'TotalPrice', 'amount']);
         } catch (\Throwable) {
             throw new AuthorizedUserNotFoundException();
         }

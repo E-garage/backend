@@ -20,6 +20,7 @@ class Refueling extends Model
     {
         return $this->belongsTo(UserModel::class);
     }
+
     public function car(): BelongsTo
     {
         return $this->belongsTo(Car::class);

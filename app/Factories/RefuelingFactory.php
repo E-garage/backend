@@ -24,7 +24,6 @@ class RefuelingFactory
         $this->refueling->TotalPrice = $data['TotalPrice'];
         $this->refueling->amount = $data['amount'];
 
-
         return $this->refueling;
     }
 }
