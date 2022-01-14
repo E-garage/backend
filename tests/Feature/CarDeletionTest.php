@@ -38,9 +38,16 @@ class CarDeletionTest extends TestCase
         $response->assertCreated();
 
         $car = Car::where('owner_id', $this->user->id)->first();
+        $this->assertDatabaseHas('cars', $car->toArray());
+
+        $budget = $car->budget()->get();
+        $this->assertDatabaseHas('estimated_budget', $budget[0]->toArray());
 
         $response = $this->deleteJson('/api/v1/cars/delete/' . $car->id);
         $response->assertOk();
+
+        $this->assertDatabaseMissing('cars', $car->toArray());
+        $this->assertDatabaseMissing('estimated_budget', $budget[0]->toArray());
     }
 
     public function testOnlyOwnerCanDeleteHisCar()
