@@ -34,7 +34,7 @@ class RefuelingRepository
         }
     }
 
-    public function findById(string $id): Collection
+    public function findById(string $id): ?Collection
     {
         try {
             return Refueling::where('id', $id)->get();

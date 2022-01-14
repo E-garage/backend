@@ -11,9 +11,9 @@ use App\Services\DeleteRefuelingService;
 use App\Services\IndexCarsService;
 use App\Services\IndexRefuelingService;
 use App\Services\UpdateRefuelingService;
+use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @OA\POST(
