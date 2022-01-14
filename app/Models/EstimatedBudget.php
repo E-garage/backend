@@ -15,6 +15,7 @@ class EstimatedBudget extends Model
     protected $table = 'estimated_budget';
 
     protected $fillable = [
+        'car_id',
         'original_budget',
         'budget_left',
         'last_payment_amount',
