@@ -16,9 +16,9 @@ class CreateEstimatedBudgetTable extends Migration
         Schema::create('estimated_budget', function (Blueprint $table) {
             $table->id();
             $table->foreignId('car_id')->constrained()->cascadeOnDelete();
-            $table->integer('original_budget')->default(0);
-            $table->integer('budget_left')->default(0);
-            $table->integer('last_payment_amount')->nullable();
+            $table->double('original_budget')->default(0);
+            $table->double('budget_left')->default(0);
+            $table->double('last_payment_amount')->nullable();
             $table->timestamps();
         });
     }
