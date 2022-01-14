@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Models\Car;
 use App\Repositories\CarRepository;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
@@ -28,6 +29,16 @@ class IndexCarsService
         $cars = $this->repository->index($user); //@phpstan-ignore-line
 
         return $this->getThumbnailsForCars($cars);
+    }
+
+    /**
+     * @throws \App\Exceptions\CarNotFoundException
+     */
+    public function findByID(string|int $id): ?Car
+    {
+        $car = $this->repository->findById($id);
+
+        return $car;
     }
 
     /**

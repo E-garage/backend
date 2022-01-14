@@ -116,6 +116,10 @@ class UserModel extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Car::class, 'owner_id');
     }
+    public function refueling(): HasMany
+    {
+        return $this->hasMany(Refueling::class, 'owner_id');
+    }
 
     public function location(): HasOne
     {

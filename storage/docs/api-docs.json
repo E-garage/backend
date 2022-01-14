@@ -415,6 +415,89 @@
                 }
             }
         },
+        "/api/v1/refueling/add": {
+            "post": {
+                "tags": [
+                    "Refueling Management"
+                ],
+                "summary": "Add refueling.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Acceptable extensions for receipt: png, jpg, jpeg.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Refueling"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/refueling": {
+            "get": {
+                "tags": [
+                    "Refueling Management"
+                ],
+                "summary": "Get all refueling that logged user own.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RefuelingCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/refueling/update/{refueling_id}": {
+            "put": {
+                "tags": [
+                    "Refueling Management"
+                ],
+                "summary": "Update refueling's info or receipt.",
+                "parameters": [
+                    {
+                        "parameter": "user_credentials_in_query_required",
+                        "name": "body",
+                        "in": "query",
+                        "description": "Acceptable extensions for receipt: png, jpg, jpeg.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/RefuelingUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/refueling/delete/{refueling_id}": {
+            "delete": {
+                "tags": [
+                    "Refueling Management"
+                ],
+                "summary": "Delete refueling.",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/api/v1/account/update/password": {
             "put": {
                 "tags": [
@@ -1079,6 +1162,77 @@
                 "example": {
                     "longitude": "+50.235423",
                     "latitude": "-15.152354"
+                }
+            },
+            "Refueling": {
+                "properties": {
+                    "date": {
+                        "type": "string|required"
+                    },
+                    "FuelType": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "string"
+                    },
+                    "TotalPrice": {
+                        "type": "string|required"
+                    },
+                    "receipt": {
+                        "type": "file"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "date": "15/10/2020",
+                    "FuelType": "gasoline",
+                    "amount": "50l",
+                    "TotalPrice": "200",
+                    "receipt": "file"
+                }
+            },
+            "RefuelingCollection": {
+                "properties": {
+                    "refueling": {
+                        "type": "list"
+                    }
+                },
+                "type": "object",
+                "example": [
+                    {
+                        "date": "15/10/2020",
+                        "FuelType": "gasoline",
+                        "amount": "50l",
+                        "TotalPrice": "200",
+                        "receipt": "file"
+                    }
+                ]
+            },
+            "RefuelingUpdate": {
+                "properties": {
+                    "date": {
+                        "type": "string"
+                    },
+                    "FuelType": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "string"
+                    },
+                    "TotalPrice": {
+                        "type": "string|required"
+                    },
+                    "receipt": {
+                        "type": "file"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "date": "15/10/2020",
+                    "FuelType": "gasoline",
+                    "amount": "50l",
+                    "TotalPrice": "200",
+                    "receipt": "file"
                 }
             },
             "UpdatePassword": {
