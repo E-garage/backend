@@ -21,7 +21,7 @@ class ValidateUpdateRefueling
     public function handle(Request $request, Closure $next): mixed
     {
         $rules = [
-            'date' => 'string|min:3|max:30|required',
+            'date' => 'date|min:3|max:30|required',
             'FuelType' => 'string|max:10',
             'amount' => 'string|max:10',
             'TotalPrice' => 'string|max:10|required',

@@ -6,6 +6,7 @@ use App\Events\CarCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Car extends Model
@@ -42,6 +43,11 @@ class Car extends Model
     public function budget(): HasOne
     {
         return $this->hasOne(EstimatedBudget::class);
+    }
+
+    public function refueling(): HasMany
+    {
+        return $this->hasMany(Refueling::class, 'car_id');
     }
 
     public function changeStatus(): void

@@ -97,7 +97,7 @@ class RefuelingController extends Controller
      *             type="file"
      *         ),
      *         example={
-     *              "date": "15/10/2020",
+     *              "date": "15/10/22",
      *              "FuelType": "gasoline",
      *              "amount": "50l",
      *              "TotalPrice": "200",
@@ -142,7 +142,7 @@ class RefuelingController extends Controller
      *         ),
      *         example={
      *              {
-     *                  "date": "15/10/2020",
+     *                  "date": "15/10/21",
      *                  "FuelType": "gasoline",
      *                  "amount": "50l",
      *                  "TotalPrice": "200",
@@ -186,7 +186,7 @@ class RefuelingController extends Controller
      *             type="file"
      *         ),
      *         example={
-     *              "date": "15/10/2020",
+     *              "date": "15/10/20",
      *              "FuelType": "gasoline",
      *              "amount": "50l",
      *              "TotalPrice": "200",
@@ -206,7 +206,7 @@ class RefuelingController extends Controller
             $refueling = $service->attachReceipt();
         }
 
-        $data = $request->only(['date', 'FuelType', 'amount']);
+        $data = $request->only(['date', 'FuelType', 'amount', 'TotalPrice']);
         $service = new UpdateRefuelingService($refueling, $data);
         $service->update();
 
