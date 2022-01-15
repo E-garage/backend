@@ -5,9 +5,11 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Exceptions\AvatarDeleteException;
+use App\Exceptions\UserNotUpdatedException;
 use App\Models\UserModel;
 use App\Repositories\UserRepository;
 use Auth;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -23,7 +25,7 @@ class AvatarManagementService
     }
 
     /**
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function getAvatar(): string
     {
@@ -35,7 +37,7 @@ class AvatarManagementService
     }
 
     /**
-     * @throws \App\Exceptions\UserNotUpdatedException
+     * @throws UserNotUpdatedException
      * @throws UploadException
      */
     public function uploadAvatar(UploadedFile $avatar): void
@@ -53,7 +55,7 @@ class AvatarManagementService
 
     /**
      * @throws AvatarDeleteException
-     * @throws \App\Exceptions\UserNotUpdatedException
+     * @throws UserNotUpdatedException
      */
     public function deleteAvatar(): void
     {
@@ -74,7 +76,7 @@ class AvatarManagementService
     }
 
     /**
-     * @throws \App\Exceptions\UserNotUpdatedException
+     * @throws UserNotUpdatedException
      */
     private function saveAvatarNameInDB(UserModel $user, string $filename): void
     {
@@ -83,7 +85,7 @@ class AvatarManagementService
     }
 
     /**
-     * @throws \App\Exceptions\UserNotUpdatedException
+     * @throws UserNotUpdatedException
      */
     private function deleteAvatarNameFromDB(UserModel $user): void
     {

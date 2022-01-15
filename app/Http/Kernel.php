@@ -18,7 +18,9 @@ use App\Validators\ValidateUpdateEmail;
 use App\Validators\ValidateUpdateFamily;
 use App\Validators\ValidateUpdateFamilyCars;
 use App\Validators\ValidateUpdateFamilyMembers;
+use App\Validators\ValidateUpdateLastPayment;
 use App\Validators\ValidateUpdateName;
+use App\Validators\ValidateUpdateOriginalBudget;
 use App\Validators\ValidateUpdatePassword;
 use App\Validators\ValidateUpdateRefueling;
 use App\Validators\ValidateUploadAvatar;
@@ -103,5 +105,7 @@ class Kernel extends HttpKernel
         'validate.update.car.details' => ValidateUpdateCarDetails::class,
         'validate.create.refueling' => ValidateCreateRefueling::class,
         'validate.update.refueling' => ValidateUpdateRefueling::class,
+        'validate.update.original.budget' => ValidateUpdateOriginalBudget::class,
+        'validate.update.last.payment' => ValidateUpdateLastPayment::class,
     ];
 }

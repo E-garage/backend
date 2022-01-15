@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Exceptions\UserCredentialsInvalidExecption;
 use App\Factories\UserFactory;
 use App\Http\Controllers\Controller;
 use App\Services\UserLoginService;
@@ -22,14 +23,6 @@ class LoginController extends Controller
      *     path="/api/v1/auth/login",
      *     tags={"User"},
      *     summary="Operates about user",
-     *     @OA\Parameter(
-     *         parameter="user_credentials_in_query_required",
-     *         name="body",
-     *         in="query",
-     *         required=true,
-     *         description="User object that needs to be log in.",
-     *         @OA\Schema(ref="#/components/schemas/Login"),
-     *     ),
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -56,7 +49,7 @@ class LoginController extends Controller
      *         description="User Credential Invalid",
      *  ),
      * ),
-     *     @OA\Component(
+     * @OA\Component(
      *         @OA\Schema(
      *             schema="Login",
      *             type="object",
@@ -70,8 +63,9 @@ class LoginController extends Controller
      *         ),
      *         example={"email": "cool@email.com", "password": "12345678"}
      *   )
-     *
-     * @throws \App\Exceptions\UserNotFoundException
+     */
+    /**
+     * @throws UserCredentialsInvalidExecption
      */
     public function login(Request $request): JsonResponse
     {
@@ -93,11 +87,9 @@ class LoginController extends Controller
 
     private function getDataFromRequest(Request $request): array
     {
-        $data = [
+        return [
             'email' => (string)$request['email'],
             'password' => (string)$request['password'],
         ];
-
-        return $data;
     }
 }

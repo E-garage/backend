@@ -8,6 +8,6 @@ class UserNotUpdatedException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Couldn't find or update the user.", 500);
+        parent::__construct("Couldn't find or update the user.", 422);
     }
 }
