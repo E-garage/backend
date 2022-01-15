@@ -50,7 +50,7 @@ class FamilyDeletionTest extends TestCase
 
         $this->assertDatabaseMissing('families', $family->toArray());
 
-        $this->assertEmpty($car->family_id); //@phpstan-ignore-line
+        $this->assertEmpty($car->family_id);
         $this->assertEmpty($this->user->createdFamilies()->get());
         $this->assertEmpty($this->secondUser->families()->first());
     }

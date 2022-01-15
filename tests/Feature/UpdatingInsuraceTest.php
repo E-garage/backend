@@ -23,7 +23,7 @@ class UpdatingInsuraceTest extends TestCase
         $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
         $this->actingAs($this->user); //@phpstan-ignore-line
 
-        $this->car = Car::factory()->create(['owner_id' => $this->user->id]);
+        $this->car = Car::factory()->create(['owner_id' => $this->user->id]); //@phpstan-ignore-line
     }
 
     public function testUserCanUpdateOwnedCarsInsurance()
@@ -41,13 +41,13 @@ class UpdatingInsuraceTest extends TestCase
     public function testUserCanUpdateSharedCarsInsurance()
     {
         $family = Family::factory()->create();
-        $car = Car::factory()->create(['family_id' => $family->id]);
-        $family->members()->attach($this->user->id);
+        $car = Car::factory()->create(['family_id' => $family->id]); //@phpstan-ignore-line
+        $family->members()->attach($this->user->id); //@phpstan-ignore-line
 
-        $insurance = $car->refresh()->insurance;
+        $insurance = $car->refresh()->insurance; //@phpstan-ignore-line
         $this->assertEquals(null, $insurance->end_date);
 
-        $response = $this->putJson('/api/v1/cars/insurance/' . $car->id . '/update', ['end_date' => '16-01-2022']);
+        $response = $this->putJson('/api/v1/cars/insurance/' . $car->id . '/update', ['end_date' => '16-01-2022']); //@phpstan-ignore-line
         $response->assertOk();
 
         $insurance->refresh();
@@ -57,11 +57,11 @@ class UpdatingInsuraceTest extends TestCase
     public function testUserCanNotUpdateUnsharedCarsInsurance()
     {
         $car = Car::factory()->create();
-        $insurance = $car->refresh()->insurance;
+        $insurance = $car->refresh()->insurance; //@phpstan-ignore-line
 
         $this->assertEquals(null, $insurance->end_date);
 
-        $response = $this->putJson('/api/v1/cars/insurance/' . $car->id . '/update', ['end_date' => '16-01-2022']);
+        $response = $this->putJson('/api/v1/cars/insurance/' . $car->id . '/update', ['end_date' => '16-01-2022']); //@phpstan-ignore-line
         $response->assertUnauthorized();
 
         $insurance->refresh();

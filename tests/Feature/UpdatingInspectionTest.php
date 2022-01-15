@@ -23,7 +23,7 @@ class UpdatingInspectionTest extends TestCase
         $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
         $this->actingAs($this->user); //@phpstan-ignore-line
 
-        $this->car = Car::factory()->create(['owner_id' => $this->user->id]);
+        $this->car = Car::factory()->create(['owner_id' => $this->user->id]); //@phpstan-ignore-line
     }
 
     public function testUserCanUpdateOwnedCarsInspection()
@@ -41,13 +41,13 @@ class UpdatingInspectionTest extends TestCase
     public function testUserCanUpdateSharedCarsInspection()
     {
         $family = Family::factory()->create();
-        $car = Car::factory()->create(['family_id' => $family->id]);
-        $family->members()->attach($this->user->id);
+        $car = Car::factory()->create(['family_id' => $family->id]); //@phpstan-ignore-line
+        $family->members()->attach($this->user->id); //@phpstan-ignore-line
 
-        $inspection = $car->refresh()->inspection;
+        $inspection = $car->refresh()->inspection; //@phpstan-ignore-line
         $this->assertEquals(null, $inspection->end_date);
 
-        $response = $this->putJson('/api/v1/cars/inspection/' . $car->id . '/update', ['end_date' => '16-01-2022']);
+        $response = $this->putJson('/api/v1/cars/inspection/' . $car->id . '/update', ['end_date' => '16-01-2022']); //@phpstan-ignore-line
         $response->assertOk();
 
         $inspection->refresh();
@@ -57,11 +57,11 @@ class UpdatingInspectionTest extends TestCase
     public function testUserCanNotUpdateUnsharedCarsInspection()
     {
         $car = Car::factory()->create();
-        $inspection = $car->refresh()->inspection;
+        $inspection = $car->refresh()->inspection; //@phpstan-ignore-line
 
         $this->assertEquals(null, $inspection->end_date);
 
-        $response = $this->putJson('/api/v1/cars/inspection/' . $car->id . '/update', ['end_date' => '16-01-2022']);
+        $response = $this->putJson('/api/v1/cars/inspection/' . $car->id . '/update', ['end_date' => '16-01-2022']); //@phpstan-ignore-line
         $response->assertUnauthorized();
 
         $inspection->refresh();

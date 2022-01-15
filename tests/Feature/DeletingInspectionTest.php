@@ -23,7 +23,7 @@ class DeletingInspectionTest extends TestCase
         $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
         $this->actingAs($this->user); //@phpstan-ignore-line
 
-        $this->car = Car::factory()->create(['owner_id' => $this->user->id]);
+        $this->car = Car::factory()->create(['owner_id' => $this->user->id]); //@phpstan-ignore-line
     }
 
     public function testUserCanDeleteOwnedCarsInspection()
@@ -44,15 +44,15 @@ class DeletingInspectionTest extends TestCase
     public function testUserCanDeleteSharedCarsInspection()
     {
         $family = Family::factory()->create();
-        $car = Car::factory()->create(['family_id' => $family->id]);
-        $family->members()->attach($this->user->id);
+        $car = Car::factory()->create(['family_id' => $family->id]); //@phpstan-ignore-line
+        $family->members()->attach($this->user->id); //@phpstan-ignore-line
 
-        $inspection = $car->refresh()->inspection;
+        $inspection = $car->refresh()->inspection; //@phpstan-ignore-line
         $inspection->update(['end_date' => '16-01-2022']);
 
         $this->assertEquals(Carbon::create(2022, 1, 16), $inspection->end_date);
 
-        $response = $this->deleteJson('/api/v1/cars/inspection/' . $car->id . '/delete');
+        $response = $this->deleteJson('/api/v1/cars/inspection/' . $car->id . '/delete'); //@phpstan-ignore-line
         $response->assertUnauthorized();
 
         $inspection->refresh();
@@ -62,13 +62,13 @@ class DeletingInspectionTest extends TestCase
     public function testUserCanNotDeleteUnsharedCarsInspection()
     {
         $car = Car::factory()->create();
-        $inspection = $car->refresh()->inspection;
+        $inspection = $car->refresh()->inspection; //@phpstan-ignore-line
         $inspection->update(['end_date' => '16-01-2022']);
         $inspection->refresh();
 
         $this->assertEquals(Carbon::create(2022, 1, 16), $inspection->end_date);
 
-        $response = $this->deleteJson('/api/v1/cars/inspection/' . $car->id . '/delete');
+        $response = $this->deleteJson('/api/v1/cars/inspection/' . $car->id . '/delete'); //@phpstan-ignore-line
         $response->assertUnauthorized();
 
         $inspection->refresh();

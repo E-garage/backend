@@ -22,7 +22,7 @@ class RetrievingInsuranceTest extends TestCase
         $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
         $this->actingAs($this->user); //@phpstan-ignore-line
 
-        $this->car = Car::factory()->create(['owner_id' => $this->user->id]);
+        $this->car = Car::factory()->create(['owner_id' => $this->user->id]); //@phpstan-ignore-line
     }
 
     public function testUserCanRetrieveOwnedCarsInsurance()
@@ -41,11 +41,11 @@ class RetrievingInsuranceTest extends TestCase
     public function testUserCanRetrieveSharedCarsInsurance()
     {
         $family = Family::factory()->create();
-        $car = Car::factory()->create(['family_id' => $family->id]);
-        $insurance = $car->refresh()->insurance;
-        $family->members()->attach($this->user->id);
+        $car = Car::factory()->create(['family_id' => $family->id]); //@phpstan-ignore-line
+        $insurance = $car->refresh()->insurance; //@phpstan-ignore-line
+        $family->members()->attach($this->user->id); //@phpstan-ignore-line
 
-        $response = $this->getJson('/api/v1/cars/insurance/' . $car->id);
+        $response = $this->getJson('/api/v1/cars/insurance/' . $car->id); //@phpstan-ignore-line
         $response->assertOk();
 
         $this->assertArrayHasKey('insurance', $response);
@@ -56,7 +56,7 @@ class RetrievingInsuranceTest extends TestCase
     {
         $car = Car::factory()->create();
 
-        $response = $this->getJson('/api/v1/cars/insurance/' . $car->id);
+        $response = $this->getJson('/api/v1/cars/insurance/' . $car->id); //@phpstan-ignore-line
         $response->assertUnauthorized();
     }
 }

@@ -19,7 +19,7 @@ class RetrievingInspectionTest extends TestCase
         $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
         $this->actingAs($this->user); //@phpstan-ignore-line
 
-        $this->car = Car::factory()->create(['owner_id' => $this->user->id]);
+        $this->car = Car::factory()->create(['owner_id' => $this->user->id]); //@phpstan-ignore-line
     }
 
     public function testUserCanRetrieveOwnedCarsInspection()
@@ -38,11 +38,11 @@ class RetrievingInspectionTest extends TestCase
     public function testUserCanRetrieveSharedCarsInspection()
     {
         $family = Family::factory()->create();
-        $car = Car::factory()->create(['family_id' => $family->id]);
-        $inspection = $car->refresh()->inspection;
-        $family->members()->attach($this->user->id);
+        $car = Car::factory()->create(['family_id' => $family->id]); //@phpstan-ignore-line
+        $inspection = $car->refresh()->inspection; //@phpstan-ignore-line
+        $family->members()->attach($this->user->id); //@phpstan-ignore-line
 
-        $response = $this->getJson('/api/v1/cars/inspection/' . $car->id);
+        $response = $this->getJson('/api/v1/cars/inspection/' . $car->id); //@phpstan-ignore-line
         $response->assertOk();
 
         $this->assertArrayHasKey('inspection', $response);
@@ -53,7 +53,7 @@ class RetrievingInspectionTest extends TestCase
     {
         $car = Car::factory()->create();
 
-        $response = $this->getJson('/api/v1/cars/inspection/' . $car->id);
+        $response = $this->getJson('/api/v1/cars/inspection/' . $car->id); //@phpstan-ignore-line
         $response->assertUnauthorized();
     }
 }

@@ -10,13 +10,11 @@ class CreateInspection
     /**
      * Handle the event.
      *
-     * @param  object  $event
-     *
      * @return void
      */
     public function handle(CarCreated $event)
     {
-        if (!$event->car->inspection) { //@phpstan-ignore-line
+        if (!$event->car->inspection) {
             Inspection::create([
                 'car_id' => $event->car['id'],
             ]);

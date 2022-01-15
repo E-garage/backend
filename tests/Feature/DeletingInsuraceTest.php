@@ -23,7 +23,7 @@ class DeletingInsuraceTest extends TestCase
         $this->user = UserModel::factory()->create(); //@phpstan-ignore-line
         $this->actingAs($this->user); //@phpstan-ignore-line
 
-        $this->car = Car::factory()->create(['owner_id' => $this->user->id]);
+        $this->car = Car::factory()->create(['owner_id' => $this->user->id]); //@phpstan-ignore-line
     }
 
     public function testUserCanDeleteOwnedCarsInsurance()
@@ -44,15 +44,15 @@ class DeletingInsuraceTest extends TestCase
     public function testUserCanNotDeleteSharedCarsInsurance()
     {
         $family = Family::factory()->create();
-        $car = Car::factory()->create(['family_id' => $family->id]);
-        $family->members()->attach($this->user->id);
+        $car = Car::factory()->create(['family_id' => $family->id]); //@phpstan-ignore-line
+        $family->members()->attach($this->user->id); //@phpstan-ignore-line
 
-        $insurance = $car->refresh()->insurance;
+        $insurance = $car->refresh()->insurance; //@phpstan-ignore-line
         $insurance->update(['end_date' => '16-01-2022']);
 
         $this->assertEquals(Carbon::create(2022, 1, 16), $insurance->end_date);
 
-        $response = $this->deleteJson('/api/v1/cars/insurance/' . $car->id . '/delete');
+        $response = $this->deleteJson('/api/v1/cars/insurance/' . $car->id . '/delete'); //@phpstan-ignore-line
         $response->assertUnauthorized();
 
         $insurance->refresh();
@@ -62,13 +62,13 @@ class DeletingInsuraceTest extends TestCase
     public function testUserCanNotDeleteUnsharedCarsInsurance()
     {
         $car = Car::factory()->create();
-        $insurance = $car->refresh()->insurance;
+        $insurance = $car->refresh()->insurance; //@phpstan-ignore-line
         $insurance->update(['end_date' => '16-01-2022']);
         $insurance->refresh();
 
         $this->assertEquals(Carbon::create(2022, 1, 16), $insurance->end_date);
 
-        $response = $this->deleteJson('/api/v1/cars/insurance/' . $car->id . '/delete');
+        $response = $this->deleteJson('/api/v1/cars/insurance/' . $car->id . '/delete'); //@phpstan-ignore-line
         $response->assertUnauthorized();
 
         $this->assertTrue($insurance->end_date->equalTo(Carbon::create(2022, 1, 16)));
