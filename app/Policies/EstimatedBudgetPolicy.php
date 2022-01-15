@@ -18,15 +18,20 @@ class EstimatedBudgetPolicy
     public function view(UserModel $userModel, EstimatedBudget $budget)
     {
         $car = $budget->car;
-        $isCarOwner = $userModel->id === $car->owner_id;
 
-        if (!$isCarOwner) {
-            $family = $car->family;
-            $isFamilyOwner = $family->members()->where('id', $userModel->id)->exists();
-            $isFamilyMember = $family->owner->id === $userModel->id;
+        if($userModel->id === $car->owner_id) {
+            return true;
+        };
+
+        if (!$car->family()->exists()) {
+            return false;
         }
 
-        return $isCarOwner || $isFamilyOwner || $isFamilyMember;
+        $family = $car->family;
+        $isFamilyOwner = $family->members()->where('id', $userModel->id)->exists();
+        $isFamilyMember = $family->owner->id === $userModel->id;
+
+        return $isFamilyOwner || $isFamilyMember;
     }
 
     /**
@@ -37,15 +42,20 @@ class EstimatedBudgetPolicy
     public function update(UserModel $userModel, EstimatedBudget $budget)
     {
         $car = $budget->car;
-        $isCarOwner = $userModel->id === $car->owner_id;
 
-        if (!$isCarOwner) {
-            $family = $car->family;
-            $isFamilyOwner = $family->members()->where('id', $userModel->id)->exists();
-            $isFamilyMember = $family->owner->id === $userModel->id;
+        if($userModel->id === $car->owner_id) {
+            return true;
+        };
+
+        if (!$car->family()->exists()) {
+            return false;
         }
 
-        return $isCarOwner || $isFamilyOwner || $isFamilyMember;
+        $family = $car->family;
+        $isFamilyOwner = $family->members()->where('id', $userModel->id)->exists();
+        $isFamilyMember = $family->owner->id === $userModel->id;
+
+        return $isFamilyOwner || $isFamilyMember;
     }
 
     /**
