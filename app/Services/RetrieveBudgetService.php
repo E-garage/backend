@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Exceptions\CarBudgetNotFoundException;
 use App\Models\EstimatedBudget;
 use App\Repositories\BudgetRepository;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class RetrieveBudgetService
 {
