@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
-use App\Models\Car;
 use App\Exceptions\AuthorizedUserNotFoundException;
+use App\Models\Car;
 use App\Repositories\CarRepository;
 use Auth;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
