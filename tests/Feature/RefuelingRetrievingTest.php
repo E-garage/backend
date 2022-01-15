@@ -35,6 +35,8 @@ class RefuelingRetrievingTest extends TestCase
         $this->seconduser = $car->owner; //@phpstan-ignore-line
         $this->actingAs($this->seconduser);
         $this->addRefueling(3);
+
+        $this->actingAs($this->user);
     }
 
     public function testUserCanGetOnlyHisOwnRefueling()
