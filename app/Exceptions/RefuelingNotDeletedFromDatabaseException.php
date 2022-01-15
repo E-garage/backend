@@ -8,6 +8,6 @@ class RefuelingNotDeletedFromDatabaseException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Refueling couldn't be deleted.", 500);
+        parent::__construct("Refueling couldn't be deleted.", 422);
     }
 }

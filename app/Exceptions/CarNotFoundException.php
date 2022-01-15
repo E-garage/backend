@@ -8,6 +8,6 @@ class CarNotFoundException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Couldn't find car.", 500);
+        parent::__construct("Couldn't find car.", 404);
     }
 }

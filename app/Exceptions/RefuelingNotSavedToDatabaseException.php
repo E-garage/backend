@@ -8,6 +8,6 @@ class RefuelingNotSavedToDatabaseException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Couldn't save refueling.", 500);
+        parent::__construct("Couldn't save refueling.", 422);
     }
 }

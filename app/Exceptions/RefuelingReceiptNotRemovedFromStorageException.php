@@ -8,6 +8,6 @@ class RefuelingReceiptNotRemovedFromStorageException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Couldn't remove thumbnail.", 500);
+        parent::__construct("Couldn't remove thumbnail.", 422);
     }
 }
