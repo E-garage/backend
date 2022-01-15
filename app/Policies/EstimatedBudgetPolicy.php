@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Car;
 use App\Models\EstimatedBudget;
 use App\Models\UserModel;
 use Illuminate\Auth\Access\HandlesAuthorization;
