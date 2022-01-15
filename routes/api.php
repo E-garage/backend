@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\InspectionController;
+use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\LastParkedLocationController;
 use App\Http\Controllers\User\ResetPasswordController;
 use App\Http\Controllers\User\LoginController;
@@ -11,6 +13,7 @@ use App\Http\Controllers\User\AvatarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\RegisterController;
+use App\Models\Inspection;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -86,6 +89,22 @@ Route::prefix('/v1/cars')
     Route::put('/update/details/{car}', [CarController::class, 'updateDetails'])->middleware('validate.update.car.details');
     Route::post('/status/{car}', [CarController::class, 'status']);
     Route::delete('/delete/{car}', [CarController::class, 'delete']);
+
+    Route::prefix('/insurance/{car}')
+    ->group(function ()
+    {
+        Route::get('/', [InsuranceController::class, 'get']);
+        Route::put('/update', [InsuranceController::class, 'update'])->middleware('validate.update.car.insurance');
+        Route::delete('/delete', [InsuranceController::class, 'delete']);
+    });
+
+    Route::prefix('/inspection/{car}')
+    ->group(function ()
+    {
+        Route::get('/', [InspectionController::class, 'get']);
+        Route::put('/update', [InspectionController::class, 'update'])->middleware('validate.update.car.inspection');
+        Route::delete('/delete', [InspectionController::class, 'delete']);
+    });
 });
 
 Route::prefix('/v1/last-parked-location')
