@@ -25,13 +25,11 @@ use Illuminate\Http\Request;
  *     tags={"Car Management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Add car.",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Acceptable extensions for thumbnail: png, jpg, jpeg.",
- *         @OA\Schema(ref="#/components/schemas/Car"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/CarUpdate"),
+ *         ),
  *     ),
  *     @OA\Response(response="201", description="Success"),
  *     @OA\Response(response="500", description="Couldnt save car."),
@@ -168,9 +166,9 @@ class CarController extends Controller
      */
     public function create(Request $request): JsonResponse
     {
+
         $data = $this->getDataFormRequest($request);
         $thumbnail = $request['thumbnail'];
-
         $factory = new CarFactory();
         $car = $factory->createFromRequest($data);
 
@@ -181,7 +179,6 @@ class CarController extends Controller
 
         $service = new AddCarService($car);
         $service->addCar();
-
         return new JsonResponse(null, 201);
     }
 
@@ -336,6 +333,20 @@ class CarController extends Controller
             $data['details'] = null;
         }
 
+        $service = new UpdateCarService($car, $data);
+        $service->update();
+
+        return new JsonResponse();
+    }
+
+
+
+    public function addFaults(Car $car, Request $request): JsonResponse
+    {
+        $data = $this->getDataFormRequest($request);
+        if (Auth::user()->cannot('update', $car)) {
+            return new JsonResponse(null, 401);
+        }
         $service = new UpdateCarService($car, $data);
         $service->update();
 

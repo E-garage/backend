@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Http;
 
+use App\Validators\ValidateCarFaults;
 use App\Validators\ValidateCreateCar;
 use App\Validators\ValidateCreateFamily;
 use App\Validators\ValidateLoginCredentials;
@@ -95,6 +96,7 @@ class Kernel extends HttpKernel
         'validate.reset.password' => ValidateResetPassword::class,
         'validate.create.car' => ValidateCreateCar::class,
         'validate.update.car' => ValidateUpdateCar::class,
+        'validate.faults.car' => ValidateCarFaults::class,
         'validate.set.location' => ValidateSetLastParkedLocation::class,
         'validate.create.family' => ValidateCreateFamily::class,
         'validate.update.family' => ValidateUpdateFamily::class,

@@ -85,6 +85,7 @@ Route::prefix('/v1/cars')
     Route::get('/', [CarController::class, 'get']);
     Route::put('/update/{car}', [CarController::class, 'update'])->middleware('validate.update.car');
     Route::put('/update/details/{car}', [CarController::class, 'updateDetails'])->middleware('validate.update.car.details');
+    Route::post('/update/faults/{car}', [CarController::class, 'updateDetails'])->middleware('validate.faults.car');
     Route::post('/status/{car}', [CarController::class, 'status']);
     Route::delete('/delete/{car}', [CarController::class, 'delete']);
 });

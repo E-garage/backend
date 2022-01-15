@@ -19,6 +19,7 @@ class CreateCarsTable extends Migration
             $table->string('brand');
             $table->string('description')->nullable();
             $table->string('thumbnail')->unique()->nullable();
+            $table->string('faults')->nullable();
             $table->timestamps();
         });
     }

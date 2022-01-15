@@ -19,10 +19,12 @@ class Car extends Model
         'brand',
         'description',
         'details',
+        'faults',
     ];
 
     protected $casts = [
         'details' => 'json',
+        'faults' => 'json',
     ];
 
     protected $dispatchesEvents = [

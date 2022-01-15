@@ -12,6 +12,9 @@
         {
             "url": "http://localhost",
             "description": "Dev server offline"
+        },
+        {
+            "url": ""
         }
     ],
     "paths": {
@@ -160,18 +163,15 @@
                     "Car Management"
                 ],
                 "summary": "Add car.",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Acceptable extensions for thumbnail: png, jpg, jpeg.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Car"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarUpdate"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "Success"
