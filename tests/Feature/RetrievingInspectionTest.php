@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Models\Car;
 use App\Models\Family;
 use App\Models\UserModel;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RetrievingInspectionTest extends TestCase

@@ -7,7 +7,6 @@ use App\Models\Family;
 use App\Models\UserModel;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UpdatingInsuraceTest extends TestCase
@@ -50,7 +49,7 @@ class UpdatingInsuraceTest extends TestCase
 
         $response = $this->putJson('/api/v1/cars/insurance/' . $car->id . '/update', ['end_date' => '16-01-2022']);
         $response->assertOk();
-        
+
         $insurance->refresh();
         $this->assertEquals(Carbon::create(2022, 1, 16), $insurance->end_date);
     }

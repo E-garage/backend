@@ -7,7 +7,6 @@ use App\Models\Family;
 use App\Models\UserModel;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UpdatingInspectionTest extends TestCase
