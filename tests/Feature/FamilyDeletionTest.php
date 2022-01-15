@@ -32,8 +32,9 @@ class FamilyDeletionTest extends TestCase
 
     public function testFamilyIsDeletedSuccessfully()
     {
-        $family = $this->user->createdFamilies()->first();
-        $car = Car::factory()->create(['family_id' => $family->id]);
+        $family = $this->user->createdFamilies()->where('name', 'testing testing')->first();
+        Car::factory()->create(['family_id' => $family->id]);
+        $car = Car::where('family_id', $family->id)->first();
         $family->members()->attach($this->secondUser->id);
 
         $this->assertDatabaseHas('families', $family->toArray());
@@ -49,7 +50,7 @@ class FamilyDeletionTest extends TestCase
 
         $this->assertDatabaseMissing('families', $family->toArray());
 
-        $this->assertEmpty($car->family_id); //@phpstan-ignore-line
+        $this->assertEmpty($car->family_id);
         $this->assertEmpty($this->user->createdFamilies()->get());
         $this->assertEmpty($this->secondUser->families()->first());
     }

@@ -17,6 +17,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Car' => 'App\Policies\CarPolicy',
         'App\Models\Family' => 'App\Policies\FamilyPolicy',
         'App\Models\Refueling' => 'App\Policies\RefuelingPolicy',
+        'App\Models\Insurance' => 'App\Policies\InsurancePolicy',
+        'App\Models\Inspection' => 'App\Policies\InspectionPolicy',
         'App\Models\EstimatedBudget' => 'App\Policies\EstimatedBudgetPolicy',
     ];
 

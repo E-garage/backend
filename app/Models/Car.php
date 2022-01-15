@@ -40,6 +40,16 @@ class Car extends Model
         return $this->belongsTo(Family::class);
     }
 
+    public function insurance(): HasOne
+    {
+        return $this->hasOne(Insurance::class);
+    }
+
+    public function inspection(): HasOne
+    {
+        return $this->hasOne(Inspection::class);
+    }
+
     public function budget(): HasOne
     {
         return $this->hasOne(EstimatedBudget::class);

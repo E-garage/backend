@@ -158,10 +158,6 @@ class BudgetController extends Controller
      *         @OA\Schema(
      *             schema="Budget",
      *             type="object",
-     *         @OA\Property(
-     *             property="last_payment_amount",
-     *             type="numeric|required"
-     *         ),
      *         example={
      *              "budget": {
      *              "id": 2,
