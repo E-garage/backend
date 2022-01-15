@@ -19,9 +19,9 @@ class EstimatedBudgetPolicy
     {
         $car = $budget->car;
 
-        if($userModel->id === $car->owner_id) {
+        if ($userModel->id === $car->owner_id) {
             return true;
-        };
+        }
 
         if (!$car->family()->exists()) {
             return false;
@@ -43,9 +43,9 @@ class EstimatedBudgetPolicy
     {
         $car = $budget->car;
 
-        if($userModel->id === $car->owner_id) {
+        if ($userModel->id === $car->owner_id) {
             return true;
-        };
+        }
 
         if (!$car->family()->exists()) {
             return false;

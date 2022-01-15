@@ -9,7 +9,6 @@ use App\Exceptions\BudgetNotUpdatedException;
 use App\Exceptions\CarBudgetNotFoundException;
 use App\Models\EstimatedBudget;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Collection;
 
 class BudgetRepository
 {
@@ -23,10 +22,10 @@ class BudgetRepository
     /**
      * @throws CarBudgetNotFoundException
      */
-    public function get(): Collection
+    public function get(): EstimatedBudget
     {
         try {
-            return $this->budget->get()->flatten();
+            return $this->budget->refresh();
         } catch (ModelNotFoundException) {
             throw new CarBudgetNotFoundException();
         }

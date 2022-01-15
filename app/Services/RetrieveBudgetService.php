@@ -7,7 +7,6 @@ namespace App\Services;
 use App\Exceptions\CarBudgetNotFoundException;
 use App\Models\EstimatedBudget;
 use App\Repositories\BudgetRepository;
-use Illuminate\Support\Collection;
 
 class RetrieveBudgetService
 {
@@ -23,7 +22,7 @@ class RetrieveBudgetService
     /**
      * @throws CarBudgetNotFoundException
      */
-    public function get(): Collection
+    public function get(): EstimatedBudget
     {
         return $this->repository->get();
     }
