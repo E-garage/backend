@@ -28,7 +28,7 @@ class CarRepository
     public function index(UserModel $user): Collection
     {
         try {
-            return $user->cars()->get(['id', 'brand', 'description', 'thumbnail', 'availability', 'details']);
+            return $user->cars()->get();
         } catch (\Throwable) {
             throw new AuthorizedUserNotFoundException();
         }

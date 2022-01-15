@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\InspectionController;
@@ -105,6 +106,16 @@ Route::prefix('/v1/cars')
         Route::put('/update', [InspectionController::class, 'update'])->middleware('validate.update.car.inspection');
         Route::delete('/delete', [InspectionController::class, 'delete']);
     });
+});
+
+Route::prefix('/v1/car-budget/{budget}')
+->middleware(['auth:sanctum', 'verified:loginPage'])
+->group(function ()
+{
+    Route::get('/', [BudgetController::class, 'get']);
+    Route::put('/update/original-budget', [BudgetController::class, 'updateOriginalBudget'])->middleware('validate.update.original.budget');
+    Route::put('/update/last-payment', [BudgetController::class, 'updateLastPayment'])->middleware('validate.update.last.payment');
+    Route::delete('/delete', [BudgetController::class, 'delete']);
 });
 
 Route::prefix('/v1/last-parked-location')

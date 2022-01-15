@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Car;
 use App\Models\UserModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -23,6 +24,24 @@ class CarCreationTest extends TestCase
         $this->actingAs($this->user); //@phpstan-ignore-line
 
         Storage::fake('cars_thumbnails');
+    }
+
+    public function testEstimatedBudgetModelIsCreatedRightAfterCar()
+    {
+        $data = [
+            'brand' => 'BMW X1',
+            'description' => 'Testing description',
+        ];
+
+        $response = $this->postJson('/api/v1/cars/add', $data);
+        $response->assertCreated();
+
+        $this->assertDatabaseHas('cars', $data);
+
+        $car = Car::where('brand', $data['brand'])->first();
+        $budget = $car->budget;
+
+        $this->assertEquals($car->id, $budget['car_id']);
     }
 
     public function testCarWithoutThumbnailHasBeenCreatedSuccessfully()

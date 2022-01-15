@@ -49,6 +49,11 @@ class Car extends Model
         return $this->hasOne(Inspection::class);
     }
 
+    public function budget(): HasOne
+    {
+        return $this->hasOne(EstimatedBudget::class);
+    }
+
     public function changeStatus(): void
     {
         $status = $this->getAttribute('availability');
