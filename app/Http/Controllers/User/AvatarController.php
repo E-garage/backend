@@ -25,6 +25,8 @@ use Illuminate\Http\Request;
  *         @OA\Schema(ref="#/components/schemas/Avatar"),
  *     ),
  *     @OA\Response(response="201", description="Success"),
+ *     @OA\Response(response="500", description="Couldnt delete avatar."),
+ *     @OA\Response(response="422", description="Couldnt find or update the user."),
  * ),
  *
  * @OA\GET(
@@ -42,6 +44,7 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="404", description="Couldnt get avatar."),
  * ),
  *
  * @OA\DELETE(
@@ -50,6 +53,8 @@ use Illuminate\Http\Request;
  *     security={{"bearerAuth": {}}},
  *     summary="Delete user's avatar",
  *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="500", description="Couldnt delete avatar."),
+ *     @OA\Response(response="422", description="Couldnt find or update the user.")
  * ),
  */
 class AvatarController extends Controller

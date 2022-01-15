@@ -22,7 +22,8 @@ use Illuminate\Http\Request;
  *             @OA\Schema(ref="#/components/schemas/UpdatePassword"),
  *         ),
  *     ),
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="200", description="Successful update password"),
+ *     @OA\Response(response="500", description="Couldnt find or update the user."),
  * ),
  *
  * @OA\Put(
@@ -36,7 +37,8 @@ use Illuminate\Http\Request;
  *             @OA\Schema(ref="#/components/schemas/UpdateName"),
  *         ),
  *     ),
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="200", description="Successful update name"),
+ *     @OA\Response(response="500", description="Couldnt find or update the user."),
  * ),
  *
  * @OA\Put(
@@ -50,7 +52,8 @@ use Illuminate\Http\Request;
  *             @OA\Schema(ref="#/components/schemas/UpdateEmail"),
  *         ),
  *     ),
- *     @OA\Response(response="200", description=""),
+ *     @OA\Response(response="200", description="Successful update email"),
+ *     @OA\Response(response="500", description="Couldnt find or update the user."),
  * )
  */
 class AccountManagementController extends Controller

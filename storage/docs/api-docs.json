@@ -39,6 +39,12 @@
                 "responses": {
                     "201": {
                         "description": "Success"
+                    },
+                    "500": {
+                        "description": "Couldnt save car."
+                    },
+                    "422": {
+                        "description": "Couldnt remove thumbnail."
                     }
                 },
                 "security": [
@@ -99,6 +105,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Reset Link Not Sent"
                     }
                 },
                 "security": [
@@ -122,21 +131,23 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Acceptable extensions for thumbnail: png, jpg, jpeg.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/CarUpdate"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarUpdate"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success add info or thumbnail"
+                    },
+                    "500": {
+                        "description": "Reset Link Not Sent"
                     }
                 },
                 "security": [
@@ -160,20 +171,23 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/CarDetailsUpdate"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarDetailsUpdate"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success update car"
+                    },
+                    "422": {
+                        "description": "Couldnt update car."
                     }
                 },
                 "security": [
@@ -201,7 +215,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success delete car"
                     }
                 },
                 "security": [
@@ -245,6 +259,12 @@
                 "responses": {
                     "201": {
                         "description": "Success"
+                    },
+                    "500": {
+                        "description": "Couldnt save car."
+                    },
+                    "422": {
+                        "description": "Couldnt remove thumbnail."
                     }
                 },
                 "security": [
@@ -270,6 +290,12 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Couldnt save car."
+                    },
+                    "422": {
+                        "description": "Couldnt remove thumbnail."
                     }
                 },
                 "security": [
@@ -305,6 +331,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Couldnt get authorized user"
                     }
                 },
                 "security": [
@@ -350,6 +379,12 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Couldnt update the family."
+                    },
+                    "500": {
+                        "description": "Couldnt map data to object."
                     }
                 },
                 "security": [
@@ -395,6 +430,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Couldnt update the family."
                     }
                 },
                 "security": [
@@ -440,6 +478,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Couldnt attach car to family."
                     }
                 },
                 "security": [
@@ -483,6 +524,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Couldnt attach car to family."
                     }
                 },
                 "security": [
@@ -497,7 +541,6 @@
                 "tags": [
                     "Family Sharing Management"
                 ],
-                "summary": "Delete family. Restricted for owners.",
                 "parameters": [
                     {
                         "name": "family_id",
@@ -510,7 +553,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success delete "
+                    },
+                    "500": {
+                        "description": "Couldnt delete familly."
                     }
                 },
                 "security": [
@@ -541,6 +587,9 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "500": {
+                        "description": "Couldn't update the location."
                     }
                 },
                 "security": [
@@ -566,6 +615,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Couldn't retrieve location."
                     }
                 },
                 "security": [
@@ -583,7 +635,10 @@
                 "summary": "Delete coordinates.",
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success delete"
+                    },
+                    "500": {
+                        "description": "Couldn't update the location."
                     }
                 },
                 "security": [
@@ -610,7 +665,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Successful update password"
+                    },
+                    "500": {
+                        "description": "Couldnt find or update the user."
                     }
                 },
                 "security": [
@@ -637,7 +695,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Successful update name"
+                    },
+                    "500": {
+                        "description": "Couldnt find or update the user."
                     }
                 },
                 "security": [
@@ -664,7 +725,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Successful update email"
+                    },
+                    "500": {
+                        "description": "Couldnt find or update the user."
                     }
                 },
                 "security": [
@@ -695,6 +759,12 @@
                 "responses": {
                     "201": {
                         "description": "Success"
+                    },
+                    "500": {
+                        "description": "Couldnt delete avatar."
+                    },
+                    "422": {
+                        "description": "Couldnt find or update the user."
                     }
                 },
                 "security": [
@@ -720,6 +790,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Couldnt get avatar."
                     }
                 },
                 "security": [
@@ -738,6 +811,12 @@
                 "responses": {
                     "200": {
                         "description": "Success"
+                    },
+                    "500": {
+                        "description": "Couldnt delete avatar."
+                    },
+                    "422": {
+                        "description": "Couldnt find or update the user."
                     }
                 },
                 "security": [
@@ -856,6 +935,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Couldnt save the user."
                     }
                 }
             }
@@ -877,7 +959,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Succes reset password"
+                    },
+                    "500": {
+                        "description": "Reset Link Not Sent"
                     }
                 }
             }
@@ -899,7 +984,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "Succes update password"
+                    },
+                    "500": {
+                        "description": "Password Not Reseted"
                     }
                 }
             }

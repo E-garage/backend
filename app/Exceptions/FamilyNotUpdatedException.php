@@ -8,6 +8,6 @@ class FamilyNotUpdatedException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Couldn't update the family.", 500);
+        parent::__construct("Couldn't update the family.", 422);
     }
 }

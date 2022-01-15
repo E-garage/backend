@@ -43,6 +43,7 @@ class RegisterController extends Controller
      *             ),
      *         ),
      *  ),
+     *     @OA\Response(response="500", description="Couldnt save the user."),
      * ),
      * @OA\Component(
      *         @OA\Schema(

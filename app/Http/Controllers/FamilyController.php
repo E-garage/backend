@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\AuthorizedUserNotFoundException;
+use App\Exceptions\CarNotAttachedToFamilyException;
+use App\Exceptions\CarNotSavedToDatabaseException;
+use App\Exceptions\FamilyDetailsNotFoundException;
+use App\Exceptions\FamilyNotDeletedException;
 use App\Exceptions\FamilyNotSavedToDatabaseException;
+use App\Exceptions\FamilyNotUpdatedException;
+use App\Exceptions\MappingDataToObjectException;
 use App\Factories\FamilyFactory;
 use App\Models\Car;
 use App\Models\Family;
@@ -31,6 +37,8 @@ use Illuminate\Http\Request;
  *         @OA\Schema(ref="#/components/schemas/FamilyCreate"),
  *     ),
  *     @OA\Response(response="201", description="Success"),
+ *     @OA\Response(response="500", description="Couldnt save car."),
+ *     @OA\Response(response="422", description="Couldnt remove thumbnail."),
  * ),
  *
  * @OA\GET(
@@ -48,6 +56,8 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Couldnt save car."),
+ *     @OA\Response(response="422", description="Couldnt remove thumbnail."),
  * ),
  *
  * @OA\GET(
@@ -71,6 +81,7 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="404", description="Couldnt get authorized user"),
  * ),
  *
  * @OA\PUT(
@@ -102,6 +113,8 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="422", description="Couldnt update the family."),
+ *     @OA\Response(response="500", description="Couldnt map data to object."),
  * ),
  *
  * @OA\PUT(
@@ -133,6 +146,7 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Couldnt update the family."),
  * ),
  *
  * @OA\PUT(
@@ -164,6 +178,7 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Couldnt attach car to family."),
  * ),
  *
  * @OA\PUT(
@@ -193,6 +208,7 @@ use Illuminate\Http\Request;
  *              ),
  *          ),
  *     ),
+ *     @OA\Response(response="500", description="Couldnt attach car to family."),
  * ),
  *
  * @OA\DELETE(
@@ -205,8 +221,8 @@ use Illuminate\Http\Request;
  *          in="path",
  *          @OA\Schema(type="integer")
  *     ),
- *     summary="Delete family. Restricted for owners.",
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="200", description="Success delete "),
+ *     @OA\Response(response="500", description="Couldnt delete familly."),
  * ),
  */
 class FamilyController extends Controller
@@ -330,6 +346,9 @@ class FamilyController extends Controller
      *          },
      * )
      */
+    /**
+     * @throws FamilyDetailsNotFoundException
+     */
     public function show(Family $family): JsonResponse
     {
         if (Auth::user()->cannot('view', $family)) {
@@ -374,6 +393,10 @@ class FamilyController extends Controller
      *             "updated_at": "2022-01-12T08:42:38.000000Z"
      *         },
      * )
+     */
+    /**
+     * @throws FamilyNotUpdatedException
+     * @throws MappingDataToObjectException
      */
     public function updateDetails(Request $request, Family $family): JsonResponse
     {
@@ -423,6 +446,9 @@ class FamilyController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws FamilyNotUpdatedException
+     */
     public function updateMembers(Request $request, Family $family): JsonResponse
     {
         if (Auth::user()->cannot('update', $family)) {
@@ -459,6 +485,9 @@ class FamilyController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws CarNotAttachedToFamilyException
+     */
     public function updateCars(Request $request, Family $family): JsonResponse
     {
         if (Auth::user()->cannot('update', $family)) {
@@ -473,6 +502,9 @@ class FamilyController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @throws CarNotSavedToDatabaseException
+     */
     public function detachCar(Family $family, Car $car): JsonResponse
     {
         if (Auth::user()->cannot('update', $family)) {
@@ -485,6 +517,9 @@ class FamilyController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @throws FamilyNotDeletedException
+     */
     public function delete(Family $family): JsonResponse
     {
         if (Auth::user()->cannot('delete', $family)) {

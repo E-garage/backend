@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Repositories;
 
 use App\Exceptions\UserNotDeletedException;
+use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserNotSavedToDatabaseException;
 use App\Exceptions\UserNotUpdatedException;
 use App\Models\UserModel;
@@ -18,30 +19,39 @@ class UserRepository
         return UserModel::all();
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     public function findByNameOrEmail(string $nameOrEmail): ?UserModel
     {
         try {
             return UserModel::where('name', $nameOrEmail)->orWhere('email', $nameOrEmail)->first();
         } catch (ModelNotFoundException) {
-            return null;
+            throw new UserNotFoundException();
         }
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     public function findByEmail(string $email): ?UserModel
     {
         try {
             return UserModel::where('email', $email)->first();
         } catch (ModelNotFoundException) {
-            return null;
+            throw new UserNotFoundException();
         }
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     public function findById(string $id): ?UserModel
     {
         try {
             return UserModel::where('id', $id)->first();
         } catch (ModelNotFoundException) {
-            return null;
+            throw new UserNotFoundException();
         }
     }
 

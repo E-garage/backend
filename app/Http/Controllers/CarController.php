@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\AuthorizedUserNotFoundException;
 use App\Exceptions\CarNotDeletedFromDatabaseException;
+use App\Exceptions\CarNotSavedToDatabaseException;
 use App\Exceptions\CarNotUpdatedException;
 use App\Exceptions\CarsThumbnailNotRemovedFromStorageException;
 use App\Factories\CarFactory;
@@ -13,6 +15,7 @@ use App\Services\DeleteCarService;
 use App\Services\IndexCarsService;
 use App\Services\UpdateCarService;
 use Auth;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -31,6 +34,8 @@ use Illuminate\Http\Request;
  *         @OA\Schema(ref="#/components/schemas/Car"),
  *     ),
  *     @OA\Response(response="201", description="Success"),
+ *     @OA\Response(response="500", description="Couldnt save car."),
+ *     @OA\Response(response="422", description="Couldnt remove thumbnail.")
  * ),
  *
  * @OA\POST(
@@ -70,6 +75,8 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Reset Link Not Sent"),
+ *
  * ),
  *
  * @OA\PUT(
@@ -83,15 +90,15 @@ use Illuminate\Http\Request;
  *          in="path",
  *          @OA\Schema(type="integer")
  *     ),
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Acceptable extensions for thumbnail: png, jpg, jpeg.",
- *         @OA\Schema(ref="#/components/schemas/CarUpdate"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/CarUpdate"),
+ *         ),
  *     ),
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="200", description="Success add info or thumbnail"),
+ *     @OA\Response(response="500", description="Reset Link Not Sent"),
+ *
  * ),
  *
  * @OA\PUT(
@@ -105,14 +112,14 @@ use Illuminate\Http\Request;
  *          in="path",
  *          @OA\Schema(type="integer")
  *     ),
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         @OA\Schema(ref="#/components/schemas/CarDetailsUpdate"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/CarDetailsUpdate"),
+ *         ),
  *     ),
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="200", description="Success update car"),
+ *     @OA\Response(response="422", description="Couldnt update car."),
  * ),
  *
  * @OA\DELETE(
@@ -126,7 +133,7 @@ use Illuminate\Http\Request;
  *          in="path",
  *          @OA\Schema(type="integer")
  *     ),
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="200", description="Success delete car"),
  * ),
  */
 class CarController extends Controller
@@ -156,7 +163,7 @@ class CarController extends Controller
      * )
      */
     /**
-     * @throws \App\Exceptions\CarNotSavedToDatabaseException
+     * @throws CarNotSavedToDatabaseException
      * @throws CarsThumbnailNotRemovedFromStorageException
      */
     public function create(Request $request): JsonResponse
@@ -202,8 +209,8 @@ class CarController extends Controller
      * )
      */
     /**
-     * @throws \App\Exceptions\AuthorizedUserNotFoundException
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws AuthorizedUserNotFoundException
+     * @throws FileNotFoundException
      */
     public function get(): JsonResponse
     {

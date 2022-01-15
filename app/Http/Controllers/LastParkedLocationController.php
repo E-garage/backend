@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
  *         @OA\Schema(ref="#/components/schemas/Coordinates"),
  *     ),
  *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="500", description="Couldn't update the location."),
  * ),
  *
  * @OA\GET(
@@ -40,6 +41,7 @@ use Illuminate\Http\Request;
  *             @OA\Schema(ref="#/components/schemas/Coordinates"),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Couldn't retrieve location."),
  * ),
  *
  * @OA\DELETE(
@@ -47,7 +49,8 @@ use Illuminate\Http\Request;
  *     tags={"Last parked location management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Delete coordinates.",
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\Response(response="200", description="Success delete"),
+ *     @OA\Response(response="500", description="Couldn't update the location."),
  * ),
  */
 class LastParkedLocationController extends Controller

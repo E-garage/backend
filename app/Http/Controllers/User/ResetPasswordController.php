@@ -21,7 +21,8 @@ use Illuminate\Http\Request;
  *             @OA\Schema(ref="#/components/schemas/SendResetPasswordLink"),
  *         ),
  *     ),
- *     @OA\Response(response="200", description=""),
+ *     @OA\Response(response="200", description="Succes reset password"),
+ *     @OA\Response(response="500", description="Reset Link Not Sent"),
  * ),
  *
  * @OA\PUT(
@@ -34,7 +35,8 @@ use Illuminate\Http\Request;
  *             @OA\Schema(ref="#/components/schemas/ResetPassword"),
  *         ),
  *     ),
- *     @OA\Response(response="200", description=""),
+ *     @OA\Response(response="200", description="Succes update password"),
+ *     @OA\Response(response="500", description="Password Not Reseted"),
  * ),
  */
 class ResetPasswordController extends Controller
