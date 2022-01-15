@@ -43,7 +43,19 @@ class InsurancePolicy
     {
         $car = $insurance->car;
 
-        return $userModel->id === $car->owner_id;
+        if ($userModel->id === $car->owner_id) {
+            return true;
+        }
+
+        if (!$car->family()->exists()) {
+            return false;
+        }
+
+        $family = $car->family;
+        $isFamilyOwner = $family->members()->where('id', $userModel->id)->exists();
+        $isFamilyMember = $family->owner->id === $userModel->id;
+
+        return $isFamilyOwner || $isFamilyMember;
     }
 
     /**
