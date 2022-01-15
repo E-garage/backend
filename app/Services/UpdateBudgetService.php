@@ -6,18 +6,18 @@ namespace App\Services;
 
 use App\Dto\EstimatedBudgetDTO;
 use App\Exceptions\BudgetNotUpdatedException;
-use App\Models\Car;
+use App\Models\EstimatedBudget;
 use App\Repositories\BudgetRepository;
 
 class UpdateBudgetService
 {
-    protected Car $car;
+    protected EstimatedBudget $budget;
     protected BudgetRepository $repository;
 
-    public function __construct(Car $car)
+    public function __construct(EstimatedBudget $budget)
     {
-        $this->car = $car;
-        $this->repository = new BudgetRepository($this->car);
+        $this->budget = $budget;
+        $this->repository = new BudgetRepository($this->budget);
     }
 
     /**
@@ -26,9 +26,9 @@ class UpdateBudgetService
     public function updateOriginalBudget(array $data): void
     {
         $dto = new EstimatedBudgetDTO();
-        $budget = $this->repository->get();
-        $budget = $dto->mapDataToObject($data, $budget);
-        $this->repository->update($budget);
+
+        $this->budget = $dto->mapDataToObject($data, $this->budget);
+        $this->repository->update($this->budget);
     }
 
     /**
@@ -37,8 +37,8 @@ class UpdateBudgetService
     public function updateLastPayment(array $data): void
     {
         $dto = new EstimatedBudgetDTO();
-        $budget = $this->repository->get();
-        $budget = $dto->mapDataToObject($data, $budget);
-        $this->repository->update($budget);
+
+        $this->budget = $dto->mapDataToObject($data, $this->budget);
+        $this->repository->update($this->budget);
     }
 }

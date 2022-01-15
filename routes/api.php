@@ -89,7 +89,7 @@ Route::prefix('/v1/cars')
     Route::delete('/delete/{car}', [CarController::class, 'delete']);
 });
 
-Route::prefix('/v1/car-budget/{car}')
+Route::prefix('/v1/car-budget/{budget}')
 ->middleware(['auth:sanctum', 'verified:loginPage'])
 ->group(function ()
 {

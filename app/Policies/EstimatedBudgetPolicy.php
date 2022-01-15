@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Car;
+use App\Models\EstimatedBudget;
 use App\Models\UserModel;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -15,8 +16,9 @@ class EstimatedBudgetPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(UserModel $userModel, Car $car)
+    public function view(UserModel $userModel, EstimatedBudget $budget)
     {
+        $car = $budget->car;
         $isCarOwner = $userModel->id === $car->owner_id;
 
         if (!$isCarOwner) {
@@ -33,8 +35,9 @@ class EstimatedBudgetPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(UserModel $userModel, Car $car)
+    public function update(UserModel $userModel, EstimatedBudget $budget)
     {
+        $car = $budget->car;
         $isCarOwner = $userModel->id === $car->owner_id;
 
         if (!$isCarOwner) {
@@ -51,8 +54,8 @@ class EstimatedBudgetPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(UserModel $userModel, Car $car)
+    public function delete(UserModel $userModel, EstimatedBudget $budget)
     {
-        return $userModel->id === $car->owner_id;
+        return $userModel->id === $budget->car->owner_id;
     }
 }

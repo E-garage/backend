@@ -7,26 +7,26 @@ namespace App\Repositories;
 use App\Exceptions\BudgetNotDeletedException;
 use App\Exceptions\BudgetNotUpdatedException;
 use App\Exceptions\CarBudgetNotFoundException;
-use App\Models\Car;
 use App\Models\EstimatedBudget;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BudgetRepository
 {
-    protected ?Car $car;
+    protected ?EstimatedBudget $budget;
 
-    public function __construct(Car $car = null)
+    public function __construct(EstimatedBudget $budget = null)
     {
-        $this->car = $car;
+        $this->budget = $budget;
     }
 
     /**
      * @throws CarBudgetNotFoundException
      */
-    public function get(): EstimatedBudget
+    public function get(): Collection
     {
         try {
-            return $this->car->budget;
+            return $this->budget->get()->flatten();
         } catch (ModelNotFoundException) {
             throw new CarBudgetNotFoundException();
         }
