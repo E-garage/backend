@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\AuthorizedUserNotFoundException;
+use App\Exceptions\CarNotDeletedFromDatabaseException;
+use App\Exceptions\CarNotSavedToDatabaseException;
+use App\Exceptions\CarNotUpdatedException;
+use App\Exceptions\CarsThumbnailNotRemovedFromStorageException;
 use App\Factories\CarFactory;
 use App\Models\Car;
 use App\Services\AddCarService;
@@ -10,6 +15,7 @@ use App\Services\DeleteCarService;
 use App\Services\IndexCarsService;
 use App\Services\UpdateCarService;
 use Auth;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -17,6 +23,7 @@ use Illuminate\Http\Request;
  * @OA\POST(
  *     path="/api/v1/cars/add",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Add car.",
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
@@ -27,12 +34,21 @@ use Illuminate\Http\Request;
  *         @OA\Schema(ref="#/components/schemas/Car"),
  *     ),
  *     @OA\Response(response="201", description="Success"),
+ *     @OA\Response(response="500", description="Couldnt save car."),
+ *     @OA\Response(response="422", description="Couldnt remove thumbnail.")
  * ),
  *
  * @OA\POST(
  *     path="/api/v1/cars/status/{car_id}",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Change availability status of car's.",
+ *     @OA\Parameter(
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Response(
  *          response="200",
  *          description="Success",
@@ -47,6 +63,7 @@ use Illuminate\Http\Request;
  * @OA\GET(
  *     path="/api/v1/cars",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Get all cars that logged user own.",
  *     @OA\Response(
  *          response="200",
@@ -58,42 +75,65 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Reset Link Not Sent"),
+ *
  * ),
  *
  * @OA\PUT(
  *     path="/api/v1/cars/update/{car_id}",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update car's info or thumbnail.",
  *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Acceptable extensions for thumbnail: png, jpg, jpeg.",
- *         @OA\Schema(ref="#/components/schemas/CarUpdate"),
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
  *     ),
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/CarUpdate"),
+ *         ),
+ *     ),
+ *     @OA\Response(response="200", description="Success add info or thumbnail"),
+ *     @OA\Response(response="500", description="Reset Link Not Sent"),
+ *
  * ),
  *
  * @OA\PUT(
  *     path="/api/v1/cars/update/details/{car_id}",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update car's details.",
  *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         @OA\Schema(ref="#/components/schemas/CarDetailsUpdate"),
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
  *     ),
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/CarDetailsUpdate"),
+ *         ),
+ *     ),
+ *     @OA\Response(response="200", description="Success update car"),
+ *     @OA\Response(response="422", description="Couldnt update car."),
  * ),
  *
  * @OA\DELETE(
  *     path="/api/v1/cars/delete/{car_id}",
  *     tags={"Car Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Delete car.",
- *     @OA\Response(response="200", description="Success"),
+ *     @OA\Parameter(
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(response="200", description="Success delete car"),
  * ),
  */
 class CarController extends Controller
@@ -121,6 +161,10 @@ class CarController extends Controller
      *              "thumbnail": "file"
      *         },
      * )
+     */
+    /**
+     * @throws CarNotSavedToDatabaseException
+     * @throws CarsThumbnailNotRemovedFromStorageException
      */
     public function create(Request $request): JsonResponse
     {
@@ -164,6 +208,10 @@ class CarController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws AuthorizedUserNotFoundException
+     * @throws FileNotFoundException
+     */
     public function get(): JsonResponse
     {
         $service = new IndexCarsService();
@@ -195,6 +243,10 @@ class CarController extends Controller
      *              "thumbnail": "file"
      *         },
      * )
+     */
+    /**
+     * @throws CarNotUpdatedException
+     * @throws CarsThumbnailNotRemovedFromStorageException
      */
     public function update(Car $car, Request $request): JsonResponse
     {
@@ -270,6 +322,9 @@ class CarController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws CarNotUpdatedException
+     */
     public function updateDetails(Car $car, Request $request): JsonResponse
     {
         if (Auth::user()->cannot('update', $car)) {
@@ -316,6 +371,9 @@ class CarController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws CarNotUpdatedException
+     */
     public function status(Car $car): JsonResponse
     {
         if (Auth::user()->cannot('update', $car)) {
@@ -329,6 +387,10 @@ class CarController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @throws CarNotDeletedFromDatabaseException
+     * @throws CarsThumbnailNotRemovedFromStorageException
+     */
     public function delete(Car $car): JsonResponse
     {
         if (Auth::user()->cannot('delete', $car)) {

@@ -2,6 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\AuthorizedUserNotFoundException;
+use App\Exceptions\CarNotAttachedToFamilyException;
+use App\Exceptions\CarNotSavedToDatabaseException;
+use App\Exceptions\FamilyDetailsNotFoundException;
+use App\Exceptions\FamilyNotDeletedException;
+use App\Exceptions\FamilyNotSavedToDatabaseException;
+use App\Exceptions\FamilyNotUpdatedException;
+use App\Exceptions\MappingDataToObjectException;
 use App\Factories\FamilyFactory;
 use App\Models\Car;
 use App\Models\Family;
@@ -18,6 +26,7 @@ use Illuminate\Http\Request;
  * @OA\POST(
  *     path="/api/v1/family-sharing/create",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Add family.",
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
@@ -28,11 +37,14 @@ use Illuminate\Http\Request;
  *         @OA\Schema(ref="#/components/schemas/FamilyCreate"),
  *     ),
  *     @OA\Response(response="201", description="Success"),
+ *     @OA\Response(response="500", description="Couldnt save car."),
+ *     @OA\Response(response="422", description="Couldnt remove thumbnail."),
  * ),
  *
  * @OA\GET(
  *     path="/api/v1/family-sharing",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Get all families that current user is part of (member or creator).",
  *     @OA\Response(
  *          response="200",
@@ -44,12 +56,21 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Couldnt save car."),
+ *     @OA\Response(response="422", description="Couldnt remove thumbnail."),
  * ),
  *
  * @OA\GET(
  *     path="/api/v1/family-sharing/{family_id}",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Get chosen family with details. Restricted for members and owners of chosen family.",
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Response(
  *          response="200",
  *          description="Success",
@@ -60,11 +81,13 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="404", description="Couldnt get authorized user"),
  * ),
  *
  * @OA\PUT(
  *     path="/api/v1/family-sharing/update/{family_id}",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Update family's name or description. Restricted for owners.",
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
@@ -73,6 +96,12 @@ use Illuminate\Http\Request;
  *         required=true,
  *         description="Name or/and description of family to put.",
  *         @OA\Schema(ref="#/components/schemas/FamilyUpdateDetails"),
+ *     ),
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
  *     ),
  *     @OA\Response(
  *          response="200",
@@ -84,12 +113,21 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="422", description="Couldnt update the family."),
+ *     @OA\Response(response="500", description="Couldnt map data to object."),
  * ),
  *
  * @OA\PUT(
  *     path="/api/v1/family-sharing/update/{family_id}/members",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Add or remove members. Restricted for owners.",
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
  *         name="body",
@@ -108,12 +146,20 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Couldnt update the family."),
  * ),
  *
  * @OA\PUT(
  *     path="/api/v1/family-sharing/update/{family_id}/cars",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Add cars to family. Restricted for owners.",
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
  *         name="body",
@@ -132,17 +178,25 @@ use Illuminate\Http\Request;
  *             ),
  *         ),
  *     ),
+ *     @OA\Response(response="500", description="Couldnt attach car to family."),
  * ),
  *
  * @OA\PUT(
  *     path="/api/v1/family-sharing/update/{family_id}/{car_id}/detach",
  *     tags={"Family Sharing Management"},
+ *     security={{"bearerAuth": {}}},
  *     summary="Remove car from family. Restricted for owners.",
  *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Parameter(
+ *          name="car_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
  *     ),
  *     @OA\Response(
  *           response="200",
@@ -154,13 +208,21 @@ use Illuminate\Http\Request;
  *              ),
  *          ),
  *     ),
+ *     @OA\Response(response="500", description="Couldnt attach car to family."),
  * ),
  *
  * @OA\DELETE(
  *     path="/api/v1/family-sharing/delete/{family_id}",
  *     tags={"Family Sharing Management"},
- *     summary="Delete family. Restricted for owners.",
- *     @OA\Response(response="200", description="Success"),
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(
+ *          name="family_id",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(response="200", description="Success delete "),
+ *     @OA\Response(response="500", description="Couldnt delete familly."),
  * ),
  */
 class FamilyController extends Controller
@@ -194,6 +256,9 @@ class FamilyController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws AuthorizedUserNotFoundException
+     */
     public function get(): JsonResponse
     {
         $service = new IndexFamiliesService();
@@ -220,6 +285,9 @@ class FamilyController extends Controller
      *              "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam tempora aperiam sint sequi."
      *         },
      * )
+     */
+    /**
+     * @throws FamilyNotSavedToDatabaseException
      */
     public function create(Request $request): JsonResponse
     {
@@ -278,6 +346,9 @@ class FamilyController extends Controller
      *          },
      * )
      */
+    /**
+     * @throws FamilyDetailsNotFoundException
+     */
     public function show(Family $family): JsonResponse
     {
         if (Auth::user()->cannot('view', $family)) {
@@ -322,6 +393,10 @@ class FamilyController extends Controller
      *             "updated_at": "2022-01-12T08:42:38.000000Z"
      *         },
      * )
+     */
+    /**
+     * @throws FamilyNotUpdatedException
+     * @throws MappingDataToObjectException
      */
     public function updateDetails(Request $request, Family $family): JsonResponse
     {
@@ -371,6 +446,9 @@ class FamilyController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws FamilyNotUpdatedException
+     */
     public function updateMembers(Request $request, Family $family): JsonResponse
     {
         if (Auth::user()->cannot('update', $family)) {
@@ -407,6 +485,9 @@ class FamilyController extends Controller
      *         },
      * )
      */
+    /**
+     * @throws CarNotAttachedToFamilyException
+     */
     public function updateCars(Request $request, Family $family): JsonResponse
     {
         if (Auth::user()->cannot('update', $family)) {
@@ -421,6 +502,9 @@ class FamilyController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @throws CarNotSavedToDatabaseException
+     */
     public function detachCar(Family $family, Car $car): JsonResponse
     {
         if (Auth::user()->cannot('update', $family)) {
@@ -433,6 +517,9 @@ class FamilyController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @throws FamilyNotDeletedException
+     */
     public function delete(Family $family): JsonResponse
     {
         if (Auth::user()->cannot('delete', $family)) {

@@ -5,9 +5,7 @@ declare(strict_types = 1);
 namespace App\Validators;
 
 use Closure;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Validator;
 
@@ -16,11 +14,9 @@ class ValidateSetLastParkedLocation
     /**
      * Handle an incoming request.
      *
-     * @param Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param Closure $next (\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      *
      * @throws ValidationException
-     *
-     * @return Response|RedirectResponse
      */
     public function handle(Request $request, Closure $next): mixed
     {

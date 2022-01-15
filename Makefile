@@ -6,6 +6,8 @@ db-create:
 	docker-compose exec php php artisan migrate
 db-refresh:
 	docker-compose exec php php artisan migrate:refresh
+db-seed:
+	docker-compose exec php php artisan db:seed
 start:
 	docker-compose up -d
 
