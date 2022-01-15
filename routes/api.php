@@ -6,6 +6,7 @@ use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\LastParkedLocationController;
+use App\Http\Controllers\RefuelingController;
 use App\Http\Controllers\User\ResetPasswordController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\LogoutController;
@@ -107,6 +108,14 @@ Route::prefix('/v1/cars')
         Route::delete('/delete', [InspectionController::class, 'delete']);
     });
 });
+Route::prefix('/v1/refueling')
+    ->middleware(['auth:sanctum', 'verified:loginPage'])
+    ->group(function (){
+        Route::post('/add', [RefuelingController::class, 'create'])->middleware('validate.create.refueling');
+        Route::get('/', [RefuelingController::class, 'get']);
+        Route::put('/update/{refueling}', [RefuelingController::class, 'update'])->middleware('validate.update.refueling');
+        Route::delete('/delete/{refueling}', [RefuelingController::class, 'delete']);
+    });
 
 Route::prefix('/v1/car-budget/{budget}')
 ->middleware(['auth:sanctum', 'verified:loginPage'])

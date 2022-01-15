@@ -34,6 +34,16 @@ class IndexCarsService
     }
 
     /**
+     * @throws \App\Exceptions\CarNotFoundException
+     */
+    public function findByID(string|int $id): ?Car
+    {
+        $car = $this->repository->findById($id);
+
+        return $car;
+    }
+
+    /**
      * @throws FileNotFoundException
      */
     private function getThumbnailsForCars(Collection $cars): Collection

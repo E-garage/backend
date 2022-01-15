@@ -6,6 +6,7 @@ namespace App\Http;
 
 use App\Validators\ValidateCreateCar;
 use App\Validators\ValidateCreateFamily;
+use App\Validators\ValidateCreateRefueling;
 use App\Validators\ValidateLoginCredentials;
 use App\Validators\ValidateRegisterCredentials;
 use App\Validators\ValidateResetPassword;
@@ -23,6 +24,7 @@ use App\Validators\ValidateUpdateLastPayment;
 use App\Validators\ValidateUpdateName;
 use App\Validators\ValidateUpdateOriginalBudget;
 use App\Validators\ValidateUpdatePassword;
+use App\Validators\ValidateUpdateRefueling;
 use App\Validators\ValidateUploadAvatar;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -103,6 +105,8 @@ class Kernel extends HttpKernel
         'validate.update.family.members' => ValidateUpdateFamilyMembers::class,
         'validate.update.family.cars' => ValidateUpdateFamilyCars::class,
         'validate.update.car.details' => ValidateUpdateCarDetails::class,
+        'validate.create.refueling' => ValidateCreateRefueling::class,
+        'validate.update.refueling' => ValidateUpdateRefueling::class,
         'validate.update.car.insurance' => ValidateUpdateCarInsurance::class,
         'validate.update.car.inspection' => ValidateUpdateCarInspection::class,
         'validate.update.original.budget' => ValidateUpdateOriginalBudget::class,

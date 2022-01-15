@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
  *     tags={"Car Management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Add car.",
+ *
  *     @OA\Parameter(
  *         parameter="user_credentials_in_query_required",
  *         name="body",
