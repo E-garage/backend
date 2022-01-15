@@ -13,6 +13,8 @@ use App\Validators\ValidateSendResetLink;
 use App\Validators\ValidateSetLastParkedLocation;
 use App\Validators\ValidateUpdateCar;
 use App\Validators\ValidateUpdateCarDetails;
+use App\Validators\ValidateUpdateCarInspection;
+use App\Validators\ValidateUpdateCarInsurance;
 use App\Validators\ValidateUpdateEmail;
 use App\Validators\ValidateUpdateFamily;
 use App\Validators\ValidateUpdateFamilyCars;
@@ -101,6 +103,8 @@ class Kernel extends HttpKernel
         'validate.update.family.members' => ValidateUpdateFamilyMembers::class,
         'validate.update.family.cars' => ValidateUpdateFamilyCars::class,
         'validate.update.car.details' => ValidateUpdateCarDetails::class,
+        'validate.update.car.insurance' => ValidateUpdateCarInsurance::class,
+        'validate.update.car.inspection' => ValidateUpdateCarInspection::class,
         'validate.update.original.budget' => ValidateUpdateOriginalBudget::class,
         'validate.update.last.payment' => ValidateUpdateLastPayment::class,
     ];
