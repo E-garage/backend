@@ -23,7 +23,7 @@ class BudgetController extends Controller
         $service = new UpdateBudgetService($car);
         $service->updateOriginalBudget($data);
 
-        return new JsonResponse(null, 201);
+        return new JsonResponse();
     }
 
     public function updateLastPayment(Request $request, Car $car): JsonResponse
@@ -37,7 +37,7 @@ class BudgetController extends Controller
         $service = new UpdateBudgetService($car);
         $service->updateLastPayment($data);
 
-        return new JsonResponse(null, 201);
+        return new JsonResponse();
     }
 
     public function get(Car $car): JsonResponse
