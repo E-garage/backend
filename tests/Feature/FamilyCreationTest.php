@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\UserModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class FamilyCreationTest extends TestCase
@@ -76,31 +75,6 @@ class FamilyCreationTest extends TestCase
     {
         $data = [
             'description' => 'lorem ipsum',
-        ];
-
-        $response = $this->postJson('/api/v1/family-sharing/create', $data);
-        $response->assertUnprocessable();
-    }
-
-    public function testRequestWithInvalidBodyWasRejected()
-    {
-        $data = [
-            'name' => 123456,
-            'description' => 123456,
-        ];
-
-        $response = $this->postJson('/api/v1/family-sharing/create', $data);
-        $response->assertUnprocessable();
-
-        $data = [
-            'name' => UploadedFile::fake()->create('reject_me', 0, 'txt'),
-        ];
-
-        $response = $this->postJson('/api/v1/family-sharing/create', $data);
-        $response->assertUnprocessable();
-
-        $data = [
-            'name' => UploadedFile::fake()->image('reject_me'),
         ];
 
         $response = $this->postJson('/api/v1/family-sharing/create', $data);

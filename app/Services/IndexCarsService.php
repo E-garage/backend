@@ -5,8 +5,10 @@ declare(strict_types = 1);
 namespace App\Services;
 
 use App\Models\Car;
+use App\Exceptions\AuthorizedUserNotFoundException;
 use App\Repositories\CarRepository;
 use Auth;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
 use Storage;
 
@@ -20,8 +22,8 @@ class IndexCarsService
     }
 
     /**
-     * @throws \App\Exceptions\AuthorizedUserNotFoundException
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws AuthorizedUserNotFoundException
+     * @throws FileNotFoundException
      */
     public function index(): Collection
     {
@@ -32,7 +34,7 @@ class IndexCarsService
     }
 
     /**
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     private function getThumbnailsForCars(Collection $cars): Collection
     {

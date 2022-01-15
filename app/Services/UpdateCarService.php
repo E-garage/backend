@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\CarNotUpdatedException;
 use App\Models\Car;
 use App\Repositories\CarRepository;
 
@@ -21,7 +22,7 @@ class UpdateCarService
     }
 
     /**
-     * @throws \App\Exceptions\CarNotUpdatedException
+     * @throws CarNotUpdatedException
      */
     public function update(): void
     {

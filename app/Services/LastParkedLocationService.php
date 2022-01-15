@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\LastParkedLocationNotRetrievedException;
+use App\Exceptions\LastParkedLocationNotUpdatedException;
 use App\Repositories\LastParkedLocationRepository;
 use Auth;
 
@@ -17,7 +19,7 @@ class LastParkedLocationService
     }
 
     /**
-     * @throws \App\Exceptions\LastParkedLocationNotUpdatedException
+     * @throws LastParkedLocationNotUpdatedException
      */
     public function setLocation($coordinates): void
     {
@@ -26,7 +28,7 @@ class LastParkedLocationService
     }
 
     /**
-     * @throws \App\Exceptions\LastParkedLocationNotRetrievedException
+     * @throws LastParkedLocationNotRetrievedException
      */
     public function getLocation(): array
     {
@@ -36,7 +38,7 @@ class LastParkedLocationService
     }
 
     /**
-     * @throws \App\Exceptions\LastParkedLocationNotUpdatedException
+     * @throws LastParkedLocationNotUpdatedException
      */
     public function deleteLocation(): void
     {

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\CarNotSavedToDatabaseException;
 use App\Models\Car;
 use App\Repositories\CarRepository;
 
@@ -19,7 +20,7 @@ class AddCarService
     }
 
     /**
-     * @throws \App\Exceptions\CarNotSavedToDatabaseException
+     * @throws CarNotSavedToDatabaseException
      */
     public function addCar(): void
     {

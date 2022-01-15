@@ -13,6 +13,8 @@ class ValidateUpdateName
 {
     /**
      * Handle an incoming request.
+     *
+     * @throws ValidationException
      */
     public function handle(Request $request, Closure $next): mixed
     {
