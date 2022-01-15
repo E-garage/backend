@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\CarsThumbnailNotRemovedFromStorageException;
 use App\Models\Car;
 use Illuminate\Http\UploadedFile;
 use Image;
@@ -24,7 +25,7 @@ class AttachThumbnailToCarService
     }
 
     /**
-     * @throws \App\Exceptions\CarsThumbnailNotRemovedFromStorageException
+     * @throws CarsThumbnailNotRemovedFromStorageException
      */
     public function attachThumbnail(): Car
     {

@@ -11,9 +11,6 @@ use Throwable;
 class FamilyDTO
 {
     /**
-     * @param array $data
-     * @param Family $family
-     * @return Family
      * @throws MappingDataToObjectException
      */
     public function mapDataToObject(array $data, Family $family): Family

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\Exceptions\CarNotDeletedFromDatabaseException;
+use App\Exceptions\CarsThumbnailNotRemovedFromStorageException;
 use App\Models\Car;
 use App\Repositories\CarRepository;
 
@@ -21,8 +23,8 @@ class DeleteCarService
     }
 
     /**
-     * @throws \App\Exceptions\CarsThumbnailNotRemovedFromStorageException
-     * @throws \App\Exceptions\CarNotDeletedFromDatabaseException
+     * @throws CarsThumbnailNotRemovedFromStorageException
+     * @throws CarNotDeletedFromDatabaseException
      */
     public function deleteCar(): void
     {
