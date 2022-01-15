@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace App\Providers;
 
 use App\Events\CarCreated;
+use App\Listeners\CreateEstimatedBudget;
 use App\Listeners\CreateInspection;
 use App\Listeners\CreateInsurance;
-use App\Listeners\CreateEstimatedBudget;
 use App\Listeners\CreateLastParkedLocation;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
