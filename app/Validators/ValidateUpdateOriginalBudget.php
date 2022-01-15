@@ -6,10 +6,10 @@ namespace App\Validators;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Validator;
 
-class ValidateUpdateEmail
+class ValidateUpdateOriginalBudget
 {
     /**
      * Handle an incoming request.
@@ -21,7 +21,7 @@ class ValidateUpdateEmail
     public function handle(Request $request, Closure $next): mixed
     {
         $rules = [
-            'email' => 'required|email',
+            'original_budget' => 'numeric|required',
         ];
 
         $validator = Validator::make($request->all(), $rules);

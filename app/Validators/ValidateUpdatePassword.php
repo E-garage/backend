@@ -14,6 +14,8 @@ class ValidateUpdatePassword
     /**
      * Handle an incoming request.
      *
+     * @param Closure $next (\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     *
      * @throws ValidationException
      */
     public function handle(Request $request, Closure $next): mixed

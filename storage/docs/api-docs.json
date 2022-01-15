@@ -12,12 +12,148 @@
         {
             "url": "http://localhost",
             "description": "Dev server offline"
-        },
-        {
-            "url": ""
         }
     ],
     "paths": {
+        "/api/v1/car-budget/{budget_id}/": {
+            "get": {
+                "tags": [
+                    "Estimated Budget Management"
+                ],
+                "summary": "Get estimated budget for given car.",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Budget"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Couldnt find estimated budget for the car."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/car-budget/{budget_id}/update/original-budget": {
+            "put": {
+                "tags": [
+                    "Estimated Budget Management"
+                ],
+                "summary": "Updated estimated original budget for car.",
+                "parameters": [
+                    {
+                        "name": "budget_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateOriginalBudget"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update budget"
+                    },
+                    "422": {
+                        "description": "Couldn't update car's budget."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/car-budget/{budget_id}/update/last-payment": {
+            "put": {
+                "tags": [
+                    "Estimated Budget Management"
+                ],
+                "summary": "Updated last payment amount.",
+                "parameters": [
+                    {
+                        "name": "budget_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateLastPayment"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update budget"
+                    },
+                    "422": {
+                        "description": "Couldn't update car's budget."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/car-budget/{budget_id}/delete": {
+            "delete": {
+                "tags": [
+                    "Estimated Budget Management"
+                ],
+                "summary": "Delete budget.",
+                "parameters": [
+                    {
+                        "name": "budget_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success delete budget"
+                    },
+                    "500": {
+                        "description": "Success delete budget"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/cars/add": {
             "post": {
                 "tags": [
@@ -995,6 +1131,59 @@
     },
     "components": {
         "schemas": {
+            "UpdateOriginalBudget": {
+                "properties": {
+                    "original_budget": {
+                        "type": "numeric|required"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "original_budget": "130"
+                }
+            },
+            "UpdateLastPayment": {
+                "properties": {
+                    "last_payment_amount": {
+                        "type": "numeric|required"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "last_payment_amount": "130"
+                }
+            },
+            "Budget": {
+                "properties": {
+                    "last_payment_amount": {
+                        "type": "numeric|required"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "budget": {
+                        "id": 2,
+                        "car_id": 2,
+                        "original_budget": "0",
+                        "budget_left": "0",
+                        "last_payment_amount": null,
+                        "created_at": "2022-01-15T03:09:07.000000Z",
+                        "updated_at": "2022-01-15T03:09:07.000000Z",
+                        "car": {
+                            "id": 2,
+                            "owner_id": "fd31be72-6928-42e2-b2d4-03985219d77a",
+                            "brand": "AAA123",
+                            "description": "Lorem Ipsum",
+                            "thumbnail": null,
+                            "created_at": "2022-01-15T03:09:07.000000Z",
+                            "updated_at": "2022-01-15T03:09:07.000000Z",
+                            "family_id": null,
+                            "availability": "available",
+                            "details": null
+                        }
+                    }
+                }
+            },
             "Car": {
                 "properties": {
                     "brand": {

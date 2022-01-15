@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Events\CarCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Car extends Model
 {
@@ -23,6 +25,10 @@ class Car extends Model
         'details' => 'json',
     ];
 
+    protected $dispatchesEvents = [
+        'created' => CarCreated::class,
+    ];
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(UserModel::class);
@@ -31,6 +37,11 @@ class Car extends Model
     public function family(): BelongsTo
     {
         return $this->belongsTo(Family::class);
+    }
+
+    public function budget(): HasOne
+    {
+        return $this->hasOne(EstimatedBudget::class);
     }
 
     public function changeStatus(): void
