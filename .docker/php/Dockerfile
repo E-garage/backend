@@ -15,6 +15,8 @@ RUN apt-get update -y && apt-get upgrade -y \
     && docker-php-ext-install intl bcmath mbstring bz2 gd zip pgsql pdo_pgsql opcache \
     && docker-php-ext-enable intl
 
+RUN pecl install redis && docker-php-ext-enable redis
+
 WORKDIR /var/www
 
 COPY --chown=www-data:www-data . /var/www
