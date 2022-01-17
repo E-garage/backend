@@ -16,13 +16,11 @@ use Illuminate\Http\Request;
  *     tags={"Avatar Management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Upload user's avatar",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
- *         @OA\Schema(ref="#/components/schemas/Avatar"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/Avatar"),
+ *         ),
  *     ),
  *     @OA\Response(response="201", description="Success"),
  *     @OA\Response(response="500", description="Couldnt delete avatar."),
