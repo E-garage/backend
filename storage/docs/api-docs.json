@@ -15,7 +15,7 @@
         }
     ],
     "paths": {
-        "/api/v1/car-budget/{budget_id}/": {
+        "/api/v1/car-budget/{budget_id}": {
             "get": {
                 "tags": [
                     "Estimated Budget Management"
@@ -160,18 +160,15 @@
                     "Car Management"
                 ],
                 "summary": "Add car.",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Acceptable extensions for thumbnail: png, jpg, jpeg.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Car"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Car"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "Success"
@@ -380,18 +377,15 @@
                     "Family Sharing Management"
                 ],
                 "summary": "Add family.",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Name and/or description of family.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/FamilyCreate"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FamilyCreate"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "Success"
@@ -487,16 +481,6 @@
                 "summary": "Update family's name or description. Restricted for owners.",
                 "parameters": [
                     {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Name or/and description of family to put.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/FamilyUpdateDetails"
-                        }
-                    },
-                    {
                         "name": "family_id",
                         "in": "path",
                         "required": true,
@@ -505,6 +489,15 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FamilyUpdateDetails"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -544,18 +537,17 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Array of users' names or array of users' emails. Request will be rejected if both exists in it.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/FamilyUpdateMembers"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FamilyUpdateMembers"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -592,18 +584,17 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Array of cars' ids.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/FamilyUpdateCars"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FamilyUpdateCars"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
