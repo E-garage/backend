@@ -9,8 +9,10 @@ use App\Listeners\CreateEstimatedBudget;
 use App\Listeners\CreateInspection;
 use App\Listeners\CreateInsurance;
 use App\Listeners\CreateLastParkedLocation;
+use App\Listeners\DumpDatabase;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Database\Events\MigrationsStarted;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
@@ -31,6 +33,10 @@ class EventServiceProvider extends ServiceProvider
             CreateInsurance::class,
             CreateInspection::class,
             CreateEstimatedBudget::class,
+        ],
+
+        MigrationsStarted::class => [
+            DumpDatabase::class,
         ],
     ];
 
