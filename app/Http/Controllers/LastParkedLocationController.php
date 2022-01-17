@@ -16,13 +16,11 @@ use Illuminate\Http\Request;
  *     tags={"Last parked location management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Set coordinates.",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Coordinates of last parked location.",
- *         @OA\Schema(ref="#/components/schemas/Coordinates"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/Coordinates"),
+ *         ),
  *     ),
  *     @OA\Response(response="200", description="Success"),
  *     @OA\Response(response="500", description="Couldn't update the location."),

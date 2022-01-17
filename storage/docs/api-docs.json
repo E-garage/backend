@@ -926,18 +926,15 @@
                     "Last parked location management"
                 ],
                 "summary": "Set coordinates.",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Coordinates of last parked location.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Coordinates"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Coordinates"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Success"
@@ -1008,23 +1005,25 @@
                     "Refueling Management"
                 ],
                 "summary": "Add refueling.",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Acceptable extensions for receipt: png, jpg, jpeg.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Refueling"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Refueling"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/refueling": {
@@ -1044,7 +1043,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/refueling/update/{refueling_id}": {
@@ -1053,23 +1057,25 @@
                     "Refueling Management"
                 ],
                 "summary": "Update refueling's info or receipt.",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Acceptable extensions for receipt: png, jpg, jpeg.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/RefuelingUpdate"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefuelingUpdate"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/refueling/delete/{refueling_id}": {
@@ -1082,7 +1088,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/account/update/password": {
@@ -1181,18 +1192,15 @@
                     "Avatar Management"
                 ],
                 "summary": "Upload user's avatar",
-                "parameters": [
-                    {
-                        "parameter": "user_credentials_in_query_required",
-                        "name": "body",
-                        "in": "query",
-                        "description": "Avatar needed to perform action. Acceptable extensions: png, jpg, jpeg.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/Avatar"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Avatar"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "Success"
@@ -1858,7 +1866,7 @@
                 },
                 "type": "object",
                 "example": {
-                    "date": "15/10/2020",
+                    "date": "15/10/22",
                     "FuelType": "gasoline",
                     "amount": "50l",
                     "TotalPrice": "200",
@@ -1874,7 +1882,7 @@
                 "type": "object",
                 "example": [
                     {
-                        "date": "15/10/2020",
+                        "date": "15/10/21",
                         "FuelType": "gasoline",
                         "amount": "50l",
                         "TotalPrice": "200",
@@ -1902,7 +1910,7 @@
                 },
                 "type": "object",
                 "example": {
-                    "date": "15/10/2020",
+                    "date": "15/10/20",
                     "FuelType": "gasoline",
                     "amount": "50l",
                     "TotalPrice": "200",
