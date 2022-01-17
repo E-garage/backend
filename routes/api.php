@@ -41,7 +41,7 @@ Route::get('/email/verify/{id}/{hash}', fn(EmailVerificationRequest $request) =>
     ->middleware(['auth:sanctum', 'signed'])
     ->name('verification.verify');
 
-Route::prefix('/v1/auth')->group(function ()
+Route::middleware(['cors'])->prefix('/v1/auth')->group(function ()
 {
     Route::post('/signup', [RegisterController::class, 'create'])
         ->middleware('validate.register')
@@ -56,14 +56,14 @@ Route::prefix('/v1/auth')->group(function ()
         ->name('logout');
 });
 
-Route::prefix('/v1/reset-password')->group(function ()
+Route::middleware(['cors'])->prefix('/v1/reset-password')->group(function ()
 {
     Route::put('/send-link', [ResetPasswordController::class, 'sendResetLink'])->middleware('validate.send.reset.link');
     Route::put('/', [ResetPasswordController::class, 'resetPassword'])->middleware('validate.reset.password')->name('password.reset');
 });
 
 Route::prefix('/v1/account')
-->middleware(['auth:sanctum', 'verified:loginPage'])
+->middleware(['auth:sanctum', 'verified:loginPage','cors'])
 ->group(function ()
 {
     Route::prefix('/update')->group(function ()
@@ -82,7 +82,7 @@ Route::prefix('/v1/account')
 });
 
 Route::prefix('/v1/cars')
-->middleware(['auth:sanctum', 'verified:loginPage'])
+->middleware(['auth:sanctum', 'verified:loginPage','cors'])
 ->group(function ()
 {
     Route::post('/add', [CarController::class, 'create'])->middleware('validate.create.car');
@@ -109,7 +109,7 @@ Route::prefix('/v1/cars')
     });
 });
 Route::prefix('/v1/refueling')
-    ->middleware(['auth:sanctum', 'verified:loginPage'])
+    ->middleware(['auth:sanctum', 'verified:loginPage','cors'])
     ->group(function (){
         Route::post('/add', [RefuelingController::class, 'create'])->middleware('validate.create.refueling');
         Route::get('/', [RefuelingController::class, 'get']);
@@ -118,7 +118,7 @@ Route::prefix('/v1/refueling')
     });
 
 Route::prefix('/v1/car-budget/{budget}')
-->middleware(['auth:sanctum', 'verified:loginPage'])
+->middleware(['auth:sanctum', 'verified:loginPage','cors'])
 ->group(function ()
 {
     Route::get('/', [BudgetController::class, 'get']);
@@ -128,7 +128,7 @@ Route::prefix('/v1/car-budget/{budget}')
 });
 
 Route::prefix('/v1/last-parked-location')
-->middleware(['auth:sanctum', 'verified:loginPage'])
+->middleware(['auth:sanctum', 'verified:loginPage','cors'])
 ->group(function ()
 {
     Route::get('/', [LastParkedLocationController::class, 'get']);
@@ -137,7 +137,7 @@ Route::prefix('/v1/last-parked-location')
 });
 
 Route::prefix('/v1/family-sharing')
-->middleware('auth:sanctum')
+->middleware(['auth:sanctum','cors'])
 ->group(function ()
 {
     Route::get('/', [FamilyController::class, 'get']);

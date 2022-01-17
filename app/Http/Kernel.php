@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace App\Http;
 
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\Cors;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Validators\ValidateCreateCar;
 use App\Validators\ValidateCreateFamily;
 use App\Validators\ValidateCreateRefueling;
@@ -26,8 +29,14 @@ use App\Validators\ValidateUpdateOriginalBudget;
 use App\Validators\ValidateUpdatePassword;
 use App\Validators\ValidateUpdateRefueling;
 use App\Validators\ValidateUploadAvatar;
+use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Http\Middleware\SetCacheHeaders;
+use Illuminate\Routing\Middleware\ThrottleRequests;
+use Illuminate\Routing\Middleware\ValidateSignature;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 class Kernel extends HttpKernel
@@ -80,14 +89,14 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'auth' => Authenticate::class,
+        'auth.basic' => AuthenticateWithBasicAuth::class,
+        'cache.headers' => SetCacheHeaders::class,
+        'can' => Authorize::class,
+        'guest' => RedirectIfAuthenticated::class,
+        'password.confirm' => RequirePassword::class,
+        'signed' => ValidateSignature::class,
+        'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'validate.register' => ValidateRegisterCredentials::class,
         'validate.login' => ValidateLoginCredentials::class,
@@ -111,5 +120,6 @@ class Kernel extends HttpKernel
         'validate.update.car.inspection' => ValidateUpdateCarInspection::class,
         'validate.update.original.budget' => ValidateUpdateOriginalBudget::class,
         'validate.update.last.payment' => ValidateUpdateLastPayment::class,
+        'cors' => Cors::class,
     ];
 }
