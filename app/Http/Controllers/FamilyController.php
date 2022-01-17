@@ -28,13 +28,11 @@ use Illuminate\Http\Request;
  *     tags={"Family Sharing Management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Add family.",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Name and/or description of family.",
- *         @OA\Schema(ref="#/components/schemas/FamilyCreate"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/FamilyCreate"),
+ *         ),
  *     ),
  *     @OA\Response(response="201", description="Success"),
  *     @OA\Response(response="500", description="Couldnt save car."),
@@ -89,13 +87,11 @@ use Illuminate\Http\Request;
  *     tags={"Family Sharing Management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Update family's name or description. Restricted for owners.",
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Name or/and description of family to put.",
- *         @OA\Schema(ref="#/components/schemas/FamilyUpdateDetails"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/FamilyUpdateDetails"),
+ *         ),
  *     ),
  *     @OA\Parameter(
  *          name="family_id",
@@ -128,13 +124,11 @@ use Illuminate\Http\Request;
  *          in="path",
  *          @OA\Schema(type="integer")
  *     ),
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Array of users' names or array of users' emails. Request will be rejected if both exists in it.",
- *         @OA\Schema(ref="#/components/schemas/FamilyUpdateMembers"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/FamilyUpdateMembers"),
+ *         ),
  *     ),
  *     @OA\Response(
  *          response="200",
@@ -160,13 +154,11 @@ use Illuminate\Http\Request;
  *          in="path",
  *          @OA\Schema(type="integer")
  *     ),
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Array of cars' ids.",
- *         @OA\Schema(ref="#/components/schemas/FamilyUpdateCars"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/FamilyUpdateCars"),
+ *         ),
  *     ),
  *     @OA\Response(
  *          response="200",

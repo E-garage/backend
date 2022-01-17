@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 /**
  * * @OA\GET(
- *     path="/api/v1/car-budget/{budget_id}/",
+ *     path="/api/v1/car-budget/{budget_id}",
  *     tags={"Estimated Budget Management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Get estimated budget for given car.",
