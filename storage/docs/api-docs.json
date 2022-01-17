@@ -2052,8 +2052,8 @@
         },
         "securitySchemes": {
             "bearerAuth": {
-                "type": "http",
-                "name": "bearerAuth",
+                "type": "apiKey",
+                "name": "Bearer",
                 "in": "header",
                 "bearerFormat": "JWT",
                 "scheme": "bearer"
