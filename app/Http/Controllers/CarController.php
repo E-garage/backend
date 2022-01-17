@@ -25,14 +25,11 @@ use Illuminate\Http\Request;
  *     tags={"Car Management"},
  *     security={{"bearerAuth": {}}},
  *     summary="Add car.",
- *
- *     @OA\Parameter(
- *         parameter="user_credentials_in_query_required",
- *         name="body",
- *         in="query",
- *         required=true,
- *         description="Acceptable extensions for thumbnail: png, jpg, jpeg.",
- *         @OA\Schema(ref="#/components/schemas/Car"),
+ *     @OA\RequestBody(
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/Car"),
+ *         ),
  *     ),
  *     @OA\Response(response="201", description="Success"),
  *     @OA\Response(response="500", description="Couldnt save car."),
