@@ -30,7 +30,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::get('/verified-notice', function () {
-    return redirect('https://egarage.store/login');
+    return redirect(env('APP_URL').'/login');
 })->name('loginPage');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -63,7 +63,7 @@ Route::middleware(['cors'])->prefix('/v1/reset-password')->group(function ()
 });
 
 Route::prefix('/v1/account')
-->middleware(['auth:sanctum', 'verified:loginPage','cors'])
+->middleware(['auth:sanctum','cors'])
 ->group(function ()
 {
     Route::prefix('/update')->group(function ()
@@ -82,7 +82,7 @@ Route::prefix('/v1/account')
 });
 
 Route::prefix('/v1/cars')
-->middleware(['auth:sanctum', 'verified:loginPage','cors'])
+->middleware(['auth:sanctum','cors'])
 ->group(function ()
 {
     Route::post('/add', [CarController::class, 'create'])->middleware('validate.create.car');
@@ -109,7 +109,7 @@ Route::prefix('/v1/cars')
     });
 });
 Route::prefix('/v1/refueling')
-    ->middleware(['auth:sanctum', 'verified:loginPage','cors'])
+    ->middleware(['auth:sanctum','cors'])
     ->group(function (){
         Route::post('/add', [RefuelingController::class, 'create'])->middleware('validate.create.refueling');
         Route::get('/', [RefuelingController::class, 'get']);
@@ -118,7 +118,7 @@ Route::prefix('/v1/refueling')
     });
 
 Route::prefix('/v1/car-budget/{budget}')
-->middleware(['auth:sanctum', 'verified:loginPage','cors'])
+->middleware(['auth:sanctum','cors'])
 ->group(function ()
 {
     Route::get('/', [BudgetController::class, 'get']);
@@ -128,7 +128,7 @@ Route::prefix('/v1/car-budget/{budget}')
 });
 
 Route::prefix('/v1/last-parked-location')
-->middleware(['auth:sanctum', 'verified:loginPage','cors'])
+->middleware(['auth:sanctum','cors'])
 ->group(function ()
 {
     Route::get('/', [LastParkedLocationController::class, 'get']);
